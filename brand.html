@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brand System / Pratik Mehta</title>
+<meta name="description" content="The brand system behind mehtapratik.com. Color, type, layout, motion, and voice, documented as a standalone case study in how the site was designed and built." />
+<meta property="og:title" content="Brand System / Pratik Mehta" />
+<meta property="og:description" content="How the portfolio was designed and built. A living brand system: color, type, motion, and voice." />
+<meta property="og:image" content="https://cdn.mehtapratik.com/og/og-work.webp" />
+<meta property="og:type" content="article" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  /* Brand-page-only specimen styles */
+  .bsec{padding:5rem 0;border-top:1px solid var(--line)}
+  .bsec:first-of-type{border-top:none}
+  .lead{font-family:var(--mono);font-size:clamp(1rem,1.6vw,1.2rem);color:#cfcfcf;max-width:60ch;line-height:1.7}
+  .sub{font-family:var(--mono);font-size:.84rem;color:var(--muted);max-width:62ch;line-height:1.7;margin-top:1rem}
+
+  /* color swatches */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-top:2.4rem}
+  .sw{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg-2)}
+  .sw .chip{height:120px}
+  .sw .meta{padding:.9rem 1rem 1.1rem;font-family:var(--mono)}
+  .sw .nm{font-size:.9rem;color:var(--fg)}
+  .sw .hx{font-size:.78rem;color:var(--muted);margin-top:.25rem;text-transform:uppercase}
+  .sw .role{font-size:.72rem;color:var(--muted);margin-top:.5rem;line-height:1.45}
+
+  /* accent logic two-up */
+  .logic{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.4rem}
+  .logic .box{border:1px solid var(--line);border-radius:6px;padding:1.6rem}
+  .logic .box h4{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem}
+  .logic .teal h4{color:var(--accent)} .logic .coral h4{color:var(--accent-2)}
+  .logic ul{list-style:none;font-family:var(--mono);font-size:.85rem;line-height:1.9;color:#cfcfcf}
+  .logic .teal li::before{content:"▸ ";color:var(--accent)}
+  .logic .coral li::before{content:"▸ ";color:var(--accent-2)}
+  @media(max-width:680px){.logic{grid-template-columns:1fr}}
+
+  /* type specimens */
+  .spec{border:1px solid var(--line);border-radius:6px;padding:2rem;margin-top:1.4rem;background:var(--bg-2)}
+  .spec .tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2);margin-bottom:1.2rem}
+  .spec .disp{font-family:var(--disp);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:-.03em;font-size:clamp(2.2rem,6vw,4.5rem)}
+  .spec .sans{font-family:var(--sans);font-size:1.05rem;line-height:1.6;color:#dcdcdc;margin-top:1rem;max-width:60ch}
+  .spec .mono{font-family:var(--mono);font-size:.85rem;color:var(--muted);margin-top:1rem;letter-spacing:.04em}
+  .ramp{display:flex;flex-wrap:wrap;gap:1.4rem;align-items:baseline;margin-top:1.4rem}
+  .ramp span{font-family:var(--disp);font-weight:800;text-transform:uppercase;color:var(--fg);line-height:1}
+
+  /* do / dont */
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2rem}
+  .dd .col{border:1px solid var(--line);border-radius:6px;padding:1.6rem}
+  .dd .col.do{border-color:rgba(31,224,200,.4)}
+  .dd .col.dont{border-color:rgba(255,111,97,.4)}
+  .dd h4{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem}
+  .dd .do h4{color:var(--accent)} .dd .dont h4{color:var(--accent-2)}
+  .dd ul{list-style:none;font-family:var(--sans);font-size:.95rem;line-height:1.7;color:#dcdcdc}
+  .dd li{padding:.4rem 0;border-bottom:1px solid var(--line)}
+  .dd li:last-child{border-bottom:none}
+  @media(max-width:680px){.dd{grid-template-columns:1fr}}
+
+  /* spec table */
+  .qref{width:100%;border-collapse:collapse;margin-top:2rem;font-family:var(--mono);font-size:.86rem}
+  .qref td{padding:.85rem 1rem;border-bottom:1px solid var(--line);vertical-align:top}
+  .qref td:first-child{color:var(--muted);width:34%;text-transform:uppercase;font-size:.74rem;letter-spacing:.06em;padding-top:1rem}
+  .qref td:last-child{color:#e4e4e4}
+
+  /* principle grid */
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;margin-top:2.4rem}
+  .principles .p-card{border:1px solid var(--line);border-radius:6px;padding:1.6rem}
+  .principles .pn{font-family:var(--mono);font-size:.75rem;color:var(--accent-2);margin-bottom:.7rem}
+  .principles h4{font-family:var(--disp);font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:-.01em;margin-bottom:.6rem}
+  .principles p{font-family:var(--sans);font-size:.92rem;color:#cfcfcf;line-height:1.6}
+
+  /* motion demo */
+  .mdemo{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2rem}
+  .mdemo .m{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--bg-2)}
+  .mdemo .m .vis{height:130px;overflow:hidden;position:relative}
+  .mdemo .m .vis img{width:100%;height:100%;object-fit:cover;filter:grayscale(.25);transition:transform .8s var(--ease),filter .4s var(--ease)}
+  .mdemo .m:hover .vis img{transform:scale(1.05);filter:grayscale(0)}
+  .mdemo .m .cap{padding:1rem 1.1rem;font-family:var(--mono);font-size:.78rem;color:var(--muted);line-height:1.5}
+  .mdemo .m .cap b{color:var(--accent);display:block;margin-bottom:.3rem;font-weight:400}
+  @media(max-width:680px){.mdemo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <a class="brand" href="index.html">Pratik Mehta©</a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="brand.html" class="active">Brand</a>
+    <a href="reel.html">Reel</a>
+    <a href="work.html">Work</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact↗</a>
+  </div>
+</div></nav>
+
+<header class="cs-hero has-cover" style="--cover:url('https://cdn.mehtapratik.com/cover%20images/cover-work.webp')"><div class="wrap">
+  <div class="tagline"><span class="blink"></span> Case study · Designing the system</div>
+  <h1 class="page-title">The Brand<br/><span class="a">System</span></h1>
+  <p class="page-intro">How this portfolio was designed and built. Not a static style sheet, a living system: color, type, layout, motion, and voice, each shown in the same code that runs the site.</p>
+</div></header>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(00)</span><h2>The Brief</h2></div>
+  <p class="lead">One person, two audiences. Hiring managers and brand leadership scanning fast for range and seniority, and design-literate viewers judging taste and craft. The system had to land a strong first impression and hold up on the second and third look.</p>
+  <p class="sub">The brand sits where most people keep three things apart: design taste, engineering systems-thinking, and marketing accountability. A CS degree from NYU is the reason the work thinks in systems first and ties to measurable outcomes. The site is built to prove that, not just claim it.</p>
+  <div class="principles">
+    <div class="p-card"><div class="pn">01</div><h4>Systems-minded</h4><p>Structured and built to scale. Nothing one-off that should have been a system. One stylesheet drives every page.</p></div>
+    <div class="p-card"><div class="pn">02</div><h4>Cross-channel</h4><p>Brand, motion, UI/UX, social, and performance read as one connected practice, never separate tracks.</p></div>
+    <div class="p-card"><div class="pn">03</div><h4>Audience-first</h4><p>Leads with what the viewer knows and responds to. Organizational detail layers in after.</p></div>
+    <div class="p-card"><div class="pn">04</div><h4>Accountable</h4><p>Outcomes attached. Real numbers, never inflated, never vague.</p></div>
+    <div class="p-card"><div class="pn">05</div><h4>Quietly confident</h4><p>Lets the work carry the weight. No overclaiming, no jargon, no filler.</p></div>
+  </div>
+</div></section>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(01)</span><h2>Color</h2></div>
+  <p class="lead">A near-black and a warm off-white anchor everything, carried over from the original site so the rebuild feels continuous. Two accents sit on top: electric teal leads, coral annotates.</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#0a0a0a;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">Ink</div><div class="hx">#0A0A0A</div><div class="role">Primary background</div></div></div>
+    <div class="sw"><div class="chip" style="background:#fafafa"></div><div class="meta"><div class="nm">Bone</div><div class="hx">#FAFAFA</div><div class="role">Primary text, warm not clinical</div></div></div>
+    <div class="sw"><div class="chip" style="background:#141414;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">Graphite</div><div class="hx">#141414</div><div class="role">Cards and raised surfaces</div></div></div>
+    <div class="sw"><div class="chip" style="background:#7d7d7d"></div><div class="meta"><div class="nm">Slate</div><div class="hx">#7D7D7D</div><div class="role">Secondary text, metadata</div></div></div>
+    <div class="sw"><div class="chip" style="background:#1fe0c8"></div><div class="meta"><div class="nm">Electric Teal</div><div class="hx">#1FE0C8</div><div class="role">Lead accent: identity &amp; interaction</div></div></div>
+    <div class="sw"><div class="chip" style="background:#ff6f61"></div><div class="meta"><div class="nm">Coral</div><div class="hx">#FF6F61</div><div class="role">Secondary accent: the annotation layer</div></div></div>
+  </div>
+  <h3 style="font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:1.2rem;color:var(--accent);margin:3rem 0 0;letter-spacing:-.01em">The two-accent rule</h3>
+  <p class="sub">The accents never cross. Teal carries identity and interaction; coral marks the annotation layer. This keeps both meaningful instead of decorative, and it is the rule that makes the palette feel designed rather than busy.</p>
+  <div class="logic">
+    <div class="box teal"><h4>Teal · identity &amp; interaction</h4><ul>
+      <li>Links, hovers, and focus states</li><li>Filters and active nav</li><li>The marquee</li><li>Heading accent words</li><li>Result-box outline</li>
+    </ul></div>
+    <div class="box coral"><h4>Coral · annotation layer</h4><ul>
+      <li>Project years</li><li>Section index numbers</li><li>Experience &amp; chapter numbers</li><li>Result labels</li><li>Availability dot, footer CTA hover</li>
+    </ul></div>
+  </div>
+  <p class="sub">No pure white or pure black anywhere. Accents never fill large areas or set body copy, the one exception being the marquee, which is deliberately loud. All text holds WCAG AA contrast.</p>
+</div></section>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(02)</span><h2>Typography</h2></div>
+  <p class="lead">Type is the primary visual identity. A wide, heavy display face for personality; a clean workhorse for everything readable; a mono for the data and labels.</p>
+  <div class="spec">
+    <div class="tag">Display · Archivo Expanded · 700–900</div>
+    <div class="disp">Brand systems<br/>that <span style="color:var(--accent)">scale.</span></div>
+    <div class="ramp">
+      <span style="font-size:3.5rem">Aa</span><span style="font-size:2.5rem">Aa</span><span style="font-size:1.8rem">Aa</span><span style="font-size:1.2rem">Aa</span>
+    </div>
+    <div class="mono">Used for the wordmark, hero, section heads, and card titles. Tracked tight at -0.03em, always uppercase.</div>
+  </div>
+  <div class="spec">
+    <div class="tag">Workhorse · Archivo · 400–600</div>
+    <div class="sans">The body face keeps long copy and interface text clean and legible. It carries case study narrative, descriptors, and every paragraph that needs to be read at length without fatigue. One typeface change per element, never three faces in a line.</div>
+  </div>
+  <div class="spec">
+    <div class="tag">Mono · Space Grotesk</div>
+    <div class="mono" style="font-size:1rem;color:#cfcfcf;letter-spacing:.04em">( 01 )  SELECTED WORK · 2023 / 2024 · BRAND / CAMPAIGN / MOTION · RESULT →</div>
+    <div class="mono">Reserved for indices, years, tags, captions, and labels, the connective tissue that makes the layout read like a system.</div>
+  </div>
+  <p class="sub">All three are free, performant Google Fonts so the build stays fast. Hard rule, absolute across every format: no em-dashes, anywhere. Use a period, a comma, or restructure.</p>
+</div></section>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(03)</span><h2>Wordmark</h2></div>
+  <p class="lead">No illustrated logo, and the brand does not need one. The wordmark is typographic: the name in the display face, heavy and uppercase, with a small © as a signature mark.</p>
+  <div class="spec" style="text-align:center;padding:3.5rem 2rem">
+    <div style="font-family:var(--disp);font-weight:800;font-size:clamp(1.6rem,5vw,3rem);text-transform:uppercase;letter-spacing:.02em">Pratik Mehta<span style="color:var(--accent)">©</span></div>
+    <div class="mono" style="margin-top:1.4rem">Monogram for favicon and avatars: <span style="color:var(--fg);font-weight:500">PM</span></div>
+  </div>
+  <p class="sub">Role descriptor uses one of three exact forms, never invented variants: Creative Director / Creative Director and Brand Strategist / Creative Director, Brand and Marketing. Clear space equals the cap-height of the name. Minimum 16px cap-height so it stays legible in the nav.</p>
+</div></section>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(04)</span><h2>Motion</h2></div>
+  <p class="lead">Motion is a core discipline in the work, so the site moves, but with intent. It supports hierarchy and rewards attention. It never blocks reading.</p>
+  <div class="mdemo">
+    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-sportime.webp" alt="Hover scale demo" loading="lazy"/></div><div class="cap"><b>Hover · scale 1.05</b>Images scale and clear from grayscale to color over 0.8s. Hover this card.</div></a>
+    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-dealnews.webp" alt="Grayscale clear demo" loading="lazy"/></div><div class="cap"><b>Reward attention</b>The grid reads graphic at rest; color is the payoff for engaging.</div></a>
+    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-frc.webp" alt="Scroll reveal demo" loading="lazy"/></div><div class="cap"><b>Scroll reveal</b>Cards fade and rise in, staggered, as they enter the viewport.</div></a>
+  </div>
+</div></section>
+<div class="marq"><div class="track">
+  <span>ease cubic-bezier(.2,.7,.2,1)</span><span>✦</span><span>hover 0.8s</span><span>✦</span><span>reveal translateY 28px</span><span>✦</span><span>respects reduced-motion</span><span>✦</span><span>one marquee per page</span><span>✦</span><span>ease cubic-bezier(.2,.7,.2,1)</span><span>✦</span><span>hover 0.8s</span><span>✦</span><span>reveal translateY 28px</span><span>✦</span><span>respects reduced-motion</span><span>✦</span><span>one marquee per page</span><span>✦</span>
+</div></div>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(05)</span><h2>Layout &amp; Imagery</h2></div>
+  <p class="lead">A 12-column grid, generous vertical rhythm, hairline dividers, and asymmetry that lets type break the grid. Whitespace is structural, never filler.</p>
+  <table class="qref">
+    <tr><td>Grid</td><td>12-column, ~1380px max width, 4vw gutters</td></tr>
+    <tr><td>Section rhythm</td><td>5 to 6rem vertical space between sections</td></tr>
+    <tr><td>Dividers</td><td>Hairline at 14% tint above section heads, never solid rules</td></tr>
+    <tr><td>Corner radius</td><td>4 to 6px. Never pill-rounded</td></tr>
+    <tr><td>Image treatment</td><td>Slight grayscale at rest, clears to full color on hover</td></tr>
+    <tr><td>Galleries</td><td>True masonry, equal gaps, no letterbox bars</td></tr>
+    <tr><td>Covers</td><td>Abstract teal backgrounds on heroes and cards; real stills as video posters</td></tr>
+    <tr><td>Cards</td><td>Thumbnail, name, year, outcome line, discipline tags, in that order</td></tr>
+  </table>
+</div></section>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(06)</span><h2>Voice</h2></div>
+  <p class="lead">The writing is as much a part of the brand as the visuals: concise, technically fluent, outcome-led, no preamble. Lead with the problem and the result, then show how it was made.</p>
+  <div class="dd">
+    <div class="col do">
+      <h4>Do</h4>
+      <ul>
+        <li>Lead with the outcome, then the process</li>
+        <li>Use specific, verified numbers</li>
+        <li>Short, declarative sentences</li>
+        <li>Treat method as a production layer, not a novelty</li>
+        <li>Match tone to the audience and seniority</li>
+      </ul>
+    </div>
+    <div class="col dont">
+      <h4>Avoid</h4>
+      <ul>
+        <li>Em-dashes, in any format, absolute</li>
+        <li>Fabricated metrics, titles, or credentials</li>
+        <li>Generic filler phrasing: unlock, elevate, seamless, passionate</li>
+        <li>Vague superlatives with no number behind them</li>
+        <li>Over-formal résumé-speak and stacked adjectives</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section class="bsec"><div class="wrap">
+  <div class="sec-top"><span class="idx">(07)</span><h2>Quick Reference</h2></div>
+  <table class="qref">
+    <tr><td>Anchor dark</td><td>#0A0A0A Ink</td></tr>
+    <tr><td>Anchor light</td><td>#FAFAFA Bone</td></tr>
+    <tr><td>Surface</td><td>#141414 Graphite</td></tr>
+    <tr><td>Muted</td><td>#7D7D7D Slate</td></tr>
+    <tr><td>Lead accent</td><td>#1FE0C8 Electric Teal · identity &amp; interaction</td></tr>
+    <tr><td>Second accent</td><td>#FF6F61 Coral · annotation layer</td></tr>
+    <tr><td>Display</td><td>Archivo Expanded, 700 to 900</td></tr>
+    <tr><td>Workhorse</td><td>Archivo, 400 to 600</td></tr>
+    <tr><td>Mono</td><td>Space Grotesk</td></tr>
+    <tr><td>Easing</td><td>cubic-bezier(.2,.7,.2,1)</td></tr>
+    <tr><td>Hard rules</td><td>No em-dashes. No fabricated metrics. No pure white or black. Teal for interaction, coral for annotation, never crossed.</td></tr>
+  </table>
+  <p class="sub">Built and documented in June 2026. The full written guidelines run deeper across foundation, applications, and voice registers; this page is the visual summary, rendered in the system it describes.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fbig">See the<br/>system at<br/><a href="work.html">work↗</a></div>
+  <div class="frow">
+    <div>Pratik Mehta · New York · 2026</div>
+    <div><a href="mailto:mehtadpratik@gmail.com">Email</a> / <a href="https://linkedin.com/in/pratikm96" target="_blank" rel="noopener noreferrer">LinkedIn</a> / <a href="https://behance.net/pratikm96" target="_blank" rel="noopener noreferrer">Behance</a></div>
+  </div>
+</div></footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

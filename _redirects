@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects (https://developers.cloudflare.com/pages/configuration/redirects/)
+# Pretty URLs are handled automatically by Pages (/about serves /about.html).
+# Add custom redirects here if you retire or rename pages, e.g.:
+# /old-url   /new-url   301

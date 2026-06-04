@@ -1,0 +1,28 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/
+
+# never commit source/working files into the deploy repo
+*.indd
+*.ai
+*.psd
+*.aep
+*.cr2
+*.heic
+
+# local notes / backups (keep the deploy repo clean)
+assets-original-backup/
+_unused-assets/
+
+# Media is hosted on Cloudflare R2 (cdn.mehtapratik.com), not in the repo.
+# Keep the lightweight local assets (CSS, JS, PDF) tracked; ignore the heavy media.
+assets/**/*.webp
+assets/**/*.mp4
+
+# dev tooling, not part of the deployed site
+cdnify.py
+DEPLOY.md
