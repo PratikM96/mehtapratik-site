@@ -69,8 +69,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;mix-blend-mode:difference}
 
 /* ---------- shared headline atoms ---------- */
 .tagline{font-family:var(--mono);font-size:.82rem;color:var(--accent);display:flex;align-items:center;gap:.6rem;margin-bottom:1.4rem;padding-left:.2rem}
-.tagline .blink{width:8px;height:8px;background:var(--accent-2);border-radius:50%;animation:bl 1.4s steps(2) infinite}
-@keyframes bl{50%{opacity:0}}
+.tagline .blink{width:8px;height:8px;background:var(--accent-2);border-radius:50%;animation:bl 2s ease-in-out infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
 
 h1.mega{font-family:var(--disp);font-weight:900;font-size:clamp(3rem,13.5vw,13rem);line-height:.84;letter-spacing:-.03em;text-transform:uppercase}
 h1.mega .o{-webkit-text-stroke:2px var(--fg);color:transparent}
@@ -99,10 +99,7 @@ h1.mega .a{color:var(--accent)}
 .p .img{overflow:hidden;position:relative}
 /* base: black & white project photo */
 .p .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),filter .5s var(--ease);filter:grayscale(1) contrast(1.05)}
-/* overlay: the project's abstract texture, screen-blended over the B&W photo for a teal-tinted card */
-.p .img::after{content:"";position:absolute;inset:0;background-image:var(--texture);background-size:cover;background-position:center;mix-blend-mode:screen;opacity:.78;transition:opacity .5s var(--ease);pointer-events:none}
-.p:hover .img img{transform:scale(1.05);filter:grayscale(.15)}
-.p:hover .img::after{opacity:.5}
+.p:hover .img img{transform:scale(1.05);filter:grayscale(.25) contrast(1.05)}
 .p .num{position:absolute;top:1rem;left:1.1rem;font-family:var(--mono);font-size:.8rem;color:var(--fg);z-index:2;mix-blend-mode:difference}
 .p .lab{padding:1.3rem 1.4rem 1.5rem;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
 .p .lab h3{font-family:var(--disp);font-weight:800;font-size:1.3rem;text-transform:uppercase;letter-spacing:-.01em}
@@ -181,7 +178,7 @@ h1.mega .a{color:var(--accent)}
 .cs-hero{padding:8.5rem 0 2rem;position:relative}
 /* Cover background: set --cover:url(...) on the .cs-hero element. Dark gradient keeps title legible. */
 .cs-hero.has-cover{padding-top:9.5rem}
-.cs-hero.has-cover::before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(to bottom,rgba(10,10,10,.55),rgba(10,10,10,.85) 70%,var(--bg) 100%),var(--cover);background-size:cover;background-position:center;background-repeat:no-repeat}
+.cs-hero.has-cover::before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(to bottom,rgba(10,10,10,.72),rgba(10,10,10,.92) 65%,var(--bg) 100%),var(--cover);background-size:cover;background-position:center;background-repeat:no-repeat}
 .cs-hero.has-cover .wrap{position:relative}
 .cs-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:1.8rem 0;margin-top:2.4rem}
 .cs-meta .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem}

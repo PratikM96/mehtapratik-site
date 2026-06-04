@@ -1,5 +1,21 @@
 /* Pratik Mehta / Kinetic Teal. Shared behavior: scroll reveal + work filter. */
 (function () {
+  // Random hero texture background. Picks one of the abstract textures on every
+  // page load and sets it as the hero cover. Skips the resume header (kept clean
+  // for scanning and print).
+  var TEXTURES = [
+    'texture-dealnews', 'texture-fiveeighty', 'texture-frc', 'texture-jmtp',
+    'texture-photography', 'texture-pipeline', 'texture-raa', 'texture-sportime',
+    'texture-srlc'
+  ];
+  var hero = document.querySelector('header');
+  if (hero && !hero.querySelector('.rsum')) {
+    var pick = TEXTURES[Math.floor(Math.random() * TEXTURES.length)];
+    var url = 'https://cdn.mehtapratik.com/cover%20images/' + pick + '.webp';
+    hero.classList.add('cs-hero', 'has-cover');
+    hero.style.setProperty('--cover', "url('" + url + "')");
+  }
+
   // Scroll reveal for project cards
   var cards = document.querySelectorAll('.p');
   if ('IntersectionObserver' in window && cards.length) {
