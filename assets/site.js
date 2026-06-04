@@ -1,5 +1,37 @@
 /* Pratik Mehta / Kinetic Teal. Shared behavior: scroll reveal + work filter. */
 (function () {
+  // Image load resilience. Lazy-loaded CDN images can have their request dropped
+  // under connection load (more often in Firefox), and a failed lazy image never
+  // auto-retries, so it stays broken until reload. Retry each failed image up to
+  // twice with a short backoff and a cache-busting param to dodge a cached miss.
+  function retryBrokenImages() {
+    var imgs = document.querySelectorAll('img[src*="cdn.mehtapratik.com"]');
+    Array.prototype.forEach.call(imgs, function (img) {
+      if (img.dataset.retry) return;
+      var attempts = 0;
+      var onErr = function () {
+        if (attempts >= 3) { img.removeEventListener('error', onErr); return; }
+        attempts++;
+        var base = (img.currentSrc || img.src).split('#')[0].split('?')[0];
+        setTimeout(function () {
+          // Preload into a fresh Image first; only swap the visible src once the
+          // bytes are confirmed. More reliable than reassigning src on a failed img.
+          var pre = new Image();
+          pre.onload = function () { img.src = pre.src; };
+          pre.src = base + '?r=' + attempts + '-' + Date.now();
+        }, 500 * attempts);
+      };
+      img.addEventListener('error', onErr);
+      img.dataset.retry = '1';
+      // Catch images that already failed before this handler attached.
+      if (img.complete && img.naturalWidth === 0) onErr();
+    });
+  }
+  retryBrokenImages();
+  if (document.readyState !== 'complete') {
+    window.addEventListener('load', retryBrokenImages);
+  }
+
   // Random hero texture background. Picks one of the abstract textures on every
   // page load and sets it as the hero cover. Skips the resume header (kept clean
   // for scanning and print).
