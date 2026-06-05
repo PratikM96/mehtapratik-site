@@ -42,6 +42,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:60;mix-blend-mode:difference}
 .nav-links{display:flex;gap:1.8rem;font-family:var(--mono);font-size:.82rem}
 .nav-links a{transition:color .2s var(--ease)}
 .nav-links a:hover,.nav-links a.active{color:var(--accent)}
+/* Reel is not live yet: grey out the nav link and disable it site-wide */
+.nav-links a[href$="reel.html"]{color:var(--muted);opacity:.45;pointer-events:none;cursor:default}
 /* hamburger button: hidden on desktop */
 .nav-toggle{display:none;background:none;border:0;cursor:pointer;width:30px;height:22px;position:relative;z-index:62;padding:0}
 .nav-toggle span{display:block;position:absolute;left:0;right:0;height:2px;background:var(--fg);transition:transform .3s var(--ease),opacity .2s var(--ease)}
@@ -100,6 +102,11 @@ h1.mega .a{color:var(--accent)}
 /* base: black & white project photo */
 .p .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),filter .5s var(--ease);filter:grayscale(1) contrast(1.05)}
 .p:hover .img img{transform:scale(1.05);filter:grayscale(.25) contrast(1.05)}
+/* generated/gradient covers (no <img>): match the grayscale-to-color and zoom-on-hover behavior */
+.p .img.gen{filter:grayscale(1) contrast(1.05);transition:filter .5s var(--ease)}
+.p:hover .img.gen{filter:grayscale(.2) contrast(1.05)}
+.p .img.gen>*{transition:transform .8s var(--ease)}
+.p:hover .img.gen>*{transform:scale(1.05)}
 .p .num{position:absolute;top:1rem;left:1.1rem;font-family:var(--mono);font-size:.8rem;color:var(--fg);z-index:2;mix-blend-mode:difference}
 .p .lab{padding:1.3rem 1.4rem 1.5rem;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
 .p .lab h3{font-family:var(--disp);font-weight:800;font-size:1.3rem;text-transform:uppercase;letter-spacing:-.01em}
