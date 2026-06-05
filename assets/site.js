@@ -36,9 +36,13 @@
   // page load and sets it as the hero cover. Skips the resume header (kept clean
   // for scanning and print).
   var TEXTURES = [
-    'texture-dealnews', 'texture-fiveeighty', 'texture-frc', 'texture-jmtp',
-    'texture-photography', 'texture-pipeline', 'texture-raa', 'texture-sportime',
-    'texture-srlc'
+    'texture-dealnews', 'texture-fiveeighty', 'texture-frc', 'texture-pipeline',
+    'texture-raa', 'texture-sportime', 'texture-srlc',
+    // Added June 2026: extra abstract teal/blue backgrounds (upload these webp to the CDN cover-images folder)
+    'texture-gold-particles', 'texture-blue-wood', 'texture-blue-black',
+    'texture-space-shimmer', 'texture-blue-swirls', 'texture-feather',
+    'texture-teal-swirls', 'texture-teal-leaves', 'texture-ocean',
+    'texture-grunge', 'texture-green'
   ];
   var hero = document.querySelector('header');
   if (hero && !hero.querySelector('.rsum')) {
