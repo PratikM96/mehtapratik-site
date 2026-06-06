@@ -119,4 +119,46 @@
     pl.textContent = 'Privacy';
     bl.parentNode.appendChild(pl);
   }
+
+  // ---- GA4 portfolio events: contact intent + engagement (see ga4-event-tracking-plan) ----
+  function track(name, params) { if (typeof gtag === 'function') gtag('event', name, params || {}); }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('a, button');
+    if (!el) return;
+    if (el.matches('.filters button')) {
+      track('work_filter_use', { filter: el.getAttribute('data-filter') || el.textContent.trim() });
+      return;
+    }
+    if (el.tagName !== 'A') return;
+    var href = el.getAttribute('href') || '';
+    if (href.indexOf('mailto:') === 0) {
+      track('email_click', { location: el.closest('footer') ? 'footer' : 'contact' });
+    } else if (/-resume\.pdf|\.pdf($|\?)/i.test(href)) {
+      track('resume_download', { file_name: href.split('/').pop().split('?')[0] });
+    } else if (/linkedin\.com/i.test(href)) {
+      track('social_click', { network: 'linkedin' });
+    } else if (/behance\.net/i.test(href)) {
+      track('social_click', { network: 'behance' });
+    } else if (el.textContent.indexOf('↗') !== -1 && !el.closest('nav') && href.indexOf('http') !== 0) {
+      track('cta_click', { cta_text: el.textContent.replace(/\s+/g, ' ').trim(), destination: href });
+    }
+  }, true);
+
+  var leadForm = document.querySelector('form[action^="mailto:"]');
+  if (leadForm) leadForm.addEventListener('submit', function () {
+    track('generate_lead', { lead_source: 'contact_form', method: 'email' });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('video'), function (v) {
+    v.addEventListener('play', function () {
+      if (v.dataset.evtracked) return;
+      v.dataset.evtracked = '1';
+      var csm = v.closest('.cs-media');
+      var cap = csm && csm.querySelector('.cap');
+      var poster = v.getAttribute('poster') || '';
+      var title = cap ? cap.textContent.trim() : (poster ? poster.split('/').pop().replace(/\.\w+$/, '') : (location.pathname.split('/').pop() || 'video'));
+      track('video_play', { video_title: title, page: location.pathname });
+    });
+  });
 })();
