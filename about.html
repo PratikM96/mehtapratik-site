@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <!-- Google Analytics (GA4) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G5ZSN5RXX0"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G5ZSN5RXX0');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.addEventListener('load',function(){gtag('js',new Date());gtag('config','G-G5ZSN5RXX0');var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=G-G5ZSN5RXX0';document.head.appendChild(s);});</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -24,6 +23,8 @@
 <meta name="twitter:image" content="https://cdn.mehtapratik.com/og/og-about.webp" />
 <meta property="og:url" content="https://mehtapratik.com/about" />
 <link rel="canonical" href="https://mehtapratik.com/about" />
+<link rel="preconnect" href="https://cdn.mehtapratik.com" crossorigin />
+<link rel="preload" href="assets/fonts/Archivo-Expanded-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="assets/site.css" />
 </head>
 <body>
@@ -53,7 +54,7 @@
     <div class="big">Audience first. Systems always.
       <em>My approach starts at the audience level. Before anything gets designed or built, I want to understand what the people on the other end actually know, what they need, and what they respond to. Everything else layers in after that. Work built the other way around usually shows.<br/><br/>The practice covers brand identity, motion, UI/UX, social, and performance marketing, not as separate tracks but as one connected process. A CS degree from NYU means I think in systems first. And Gen AI is embedded throughout, not as a novelty but as a production layer that cuts turnaround and extends range without the shortcuts showing.</em>
     </div>
-    <div class="ph"><img src="https://cdn.mehtapratik.com/about/about-headshot-01.webp" alt="Pratik Mehta" loading="lazy"/></div>
+    <div class="ph"><img src="https://cdn.mehtapratik.com/about/about-headshot-01.webp" width="2000" height="2667" srcset="https://cdn.mehtapratik.com/about/about-headshot-01-480.webp 480w, https://cdn.mehtapratik.com/about/about-headshot-01-960.webp 960w, https://cdn.mehtapratik.com/about/about-headshot-01-1600.webp 1600w, https://cdn.mehtapratik.com/about/about-headshot-01.webp 2000w" sizes="(max-width: 760px) 80vw, 440px" alt="Pratik Mehta" fetchpriority="high" decoding="async"/></div>
   </div>
 </div></section>
 
@@ -125,6 +126,6 @@
   </div>
 </div></footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js" defer></script>
 </body>
 </html>

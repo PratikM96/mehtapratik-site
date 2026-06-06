@@ -14,8 +14,6 @@
         attempts++;
         var base = (img.currentSrc || img.src).split('#')[0].split('?')[0];
         setTimeout(function () {
-          // Preload into a fresh Image first; only swap the visible src once the
-          // bytes are confirmed. More reliable than reassigning src on a failed img.
           var pre = new Image();
           pre.onload = function () { img.src = pre.src; };
           pre.src = base + '?r=' + attempts + '-' + Date.now();
@@ -23,7 +21,6 @@
       };
       img.addEventListener('error', onErr);
       img.dataset.retry = '1';
-      // Catch images that already failed before this handler attached.
       if (img.complete && img.naturalWidth === 0) onErr();
     });
   }
@@ -32,13 +29,10 @@
     window.addEventListener('load', retryBrokenImages);
   }
 
-  // Random hero texture background. Picks one of the abstract textures on every
-  // page load and sets it as the hero cover. Skips the resume header (kept clean
-  // for scanning and print).
+  // Random hero texture background. Skips the resume header (kept clean for print).
   var TEXTURES = [
     'texture-dealnews', 'texture-fiveeighty', 'texture-frc', 'texture-pipeline',
     'texture-raa', 'texture-sportime', 'texture-srlc',
-    // Added June 2026: extra abstract teal/blue backgrounds (upload these webp to the CDN cover-images folder)
     'texture-gold-particles', 'texture-blue-wood', 'texture-blue-black',
     'texture-space-shimmer', 'texture-blue-swirls', 'texture-feather',
     'texture-teal-swirls', 'texture-teal-leaves', 'texture-ocean',
@@ -46,10 +40,14 @@
   ];
   var hero = document.querySelector('header');
   if (hero && !hero.querySelector('.rsum')) {
-    var pick = TEXTURES[Math.floor(Math.random() * TEXTURES.length)];
-    var url = 'https://cdn.mehtapratik.com/cover%20images/' + pick + '.webp';
+    // Gradient shows immediately via the --cover:none default in CSS. Only fetch
+    // the decorative texture on larger screens, so phones skip the big download.
     hero.classList.add('cs-hero', 'has-cover');
-    hero.style.setProperty('--cover', "url('" + url + "')");
+    if (window.innerWidth > 880) {
+      var pick = TEXTURES[Math.floor(Math.random() * TEXTURES.length)];
+      var url = 'https://cdn.mehtapratik.com/cover%20images/' + pick + '.webp';
+      hero.style.setProperty('--cover', "url('" + url + "')");
+    }
   }
 
   // Scroll reveal for project cards
@@ -72,7 +70,6 @@
   var toggle = document.querySelector('.nav-toggle');
   var links = document.querySelector('.nav-links');
   if (toggle && links) {
-    // inject a scrim that dims the page behind the open menu
     var scrim = document.createElement('div');
     scrim.className = 'nav-scrim';
     document.body.appendChild(scrim);
@@ -86,11 +83,9 @@
       setOpen(!links.classList.contains('open'));
     });
     scrim.addEventListener('click', function () { setOpen(false); });
-    // close when a link is tapped
     links.addEventListener('click', function (e) {
       if (e.target.tagName === 'A') setOpen(false);
     });
-    // close on Escape
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') setOpen(false);
     });

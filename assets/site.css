@@ -5,7 +5,38 @@
    No em-dashes anywhere, per brand rule.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Expanded:wght@700;800;900&family=Space+Grotesk:wght@400;500&display=swap');
+/* Self-hosted variable fonts, served same-origin from assets/fonts/ so they ride
+   the connection already open for the page and never depend on the CDN or CORS.
+   Paths are relative to this stylesheet (assets/site.css). Archivo Expanded is the
+   width axis pinned to 125 (its own instanced file). woff2 with font-display:swap,
+   so text paints in a fallback immediately and swaps in. */
+@font-face {
+  font-family: 'Archivo';
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/Archivo-VariableFont_wdth_wght.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Archivo Expanded';
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/Archivo-Expanded-VariableFont_wght.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('fonts/SpaceGrotesk-VariableFont_wght.woff2') format('woff2');
+}
+
+/* Metric-matched fallbacks: the system font (Arial) reshaped to each webfont's
+   real metrics so the swap from fallback to webfont does not reflow text (CLS).
+   Values computed from the actual font files. Used as the second stack entry. */
+@font-face{font-family:'Archivo Expanded Fallback';src:local('Arial');size-adjust:132.6%;ascent-override:66.2%;descent-override:15.8%;line-gap-override:0%}
+@font-face{font-family:'Archivo Fallback';src:local('Arial');size-adjust:102.5%;ascent-override:85.7%;descent-override:20.5%;line-gap-override:0%}
+@font-face{font-family:'Space Grotesk Fallback';src:local('Arial');size-adjust:111.5%;ascent-override:88.3%;descent-override:26.2%;line-gap-override:0%}
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -18,11 +49,12 @@
   --accent-2:#ff6f61;      /* Coral, rare second highlight */
   --line:rgba(250,250,250,.14);
   --line-2:rgba(250,250,250,.28);
-  --disp:'Archivo Expanded','Archivo',sans-serif;
-  --sans:'Archivo',sans-serif;
-  --mono:'Space Grotesk',ui-monospace,monospace;
+  --disp:'Archivo Expanded','Archivo Expanded Fallback','Archivo',sans-serif;
+  --sans:'Archivo','Archivo Fallback',sans-serif;
+  --mono:'Space Grotesk','Space Grotesk Fallback',ui-monospace,monospace;
   --ease:cubic-bezier(.2,.7,.2,1);
   --max:1380px;
+  --cover:none;          /* default so the cover gradient paints without waiting on JS */
 }
 
 html{scroll-behavior:smooth}
@@ -99,10 +131,7 @@ h1.mega .a{color:var(--accent)}
 .p{position:relative;display:block;overflow:hidden;border-radius:4px;background:var(--bg-2);opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .p.in{opacity:1;transform:none}
 .p .img{overflow:hidden;position:relative}
-/* base: black & white project photo */
-.p .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease),filter .5s var(--ease);filter:grayscale(1) contrast(1.05)}
-.p:hover .img img{transform:scale(1.05);filter:grayscale(.25) contrast(1.05)}
-/* generated/gradient covers (no <img>): match the grayscale-to-color and zoom-on-hover behavior */
+/* gradient covers (no <img>): grayscale-to-color and zoom-on-hover */
 .p .img.gen{filter:grayscale(1) contrast(1.05);transition:filter .5s var(--ease)}
 .p:hover .img.gen{filter:grayscale(.2) contrast(1.05)}
 .p .img.gen>*{transition:transform .8s var(--ease)}
@@ -113,9 +142,9 @@ h1.mega .a{color:var(--accent)}
 .p .lab .yr{font-family:var(--mono);font-size:.72rem;color:var(--accent-2);display:block;margin-top:.3rem;letter-spacing:.04em}
 .p .lab p{font-family:var(--mono);font-size:.82rem;color:var(--muted);margin-top:.4rem;max-width:34ch;line-height:1.5}
 .p .lab .t{font-family:var(--mono);font-size:.7rem;color:var(--accent);text-align:right;text-transform:uppercase;line-height:1.7;white-space:nowrap}
-.c7{grid-column:span 7}.c5{grid-column:span 5}.c6{grid-column:span 6}.c4{grid-column:span 4}.c12{grid-column:span 12}
-.c7 .img{aspect-ratio:16/10}.c5 .img{aspect-ratio:16/10}.c6 .img{aspect-ratio:3/2}.c4 .img{aspect-ratio:1/1}.c12 .img{aspect-ratio:21/9}
-@media(max-width:880px){.c7,.c5,.c6,.c4,.c12{grid-column:span 12}.c12 .img{aspect-ratio:16/10}}
+.c7{grid-column:span 7}.c5{grid-column:span 5}.c6{grid-column:span 6}.c4{grid-column:span 4}
+.c7 .img{aspect-ratio:16/10}.c5 .img{aspect-ratio:16/10}.c6 .img{aspect-ratio:3/2}.c4 .img{aspect-ratio:1/1}
+@media(max-width:880px){.c7,.c5,.c6,.c4{grid-column:span 12}}
 
 /* ---------- filters ---------- */
 .filters{display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:2.6rem}
@@ -202,7 +231,7 @@ h1.mega .a{color:var(--accent)}
 .cs-result .rl{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);margin-bottom:.5rem}
 .cs-result p{margin:0;font-size:1rem}
 .cs-media{margin:2.4rem 0}
-.cs-media img,.cs-media video{border-radius:6px;width:100%}
+.cs-media img,.cs-media video{border-radius:6px;width:100%;height:auto}
 .cs-media .cap{font-family:var(--mono);font-size:.76rem;color:var(--muted);margin-top:.7rem}
 .cs-media.full{max-width:none}
 /* Tall full-page screenshots: crop to the top portion as a fixed preview (no internal scroll) */
@@ -275,7 +304,6 @@ footer{border-top:2px solid var(--fg);padding:5rem 0 3rem;margin-top:5rem}
 /* equal breathing room above and below the CTA band, regardless of neighbor section padding */
 .sec:has(+ .cta-marq){padding-bottom:4rem}
 .cta-marq + .sec{padding-top:4rem}
-
 
 
 /* ---------- accent links: teal by default, coral on hover (site-wide) ---------- */

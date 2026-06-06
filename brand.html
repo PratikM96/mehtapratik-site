@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <!-- Google Analytics (GA4) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G5ZSN5RXX0"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-G5ZSN5RXX0');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.addEventListener('load',function(){gtag('js',new Date());gtag('config','G-G5ZSN5RXX0');var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id=G-G5ZSN5RXX0';document.head.appendChild(s);});</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -25,6 +24,8 @@
 <meta name="twitter:image" content="https://cdn.mehtapratik.com/og/og-work.webp" />
 <meta property="og:url" content="https://mehtapratik.com/brand" />
 <link rel="canonical" href="https://mehtapratik.com/brand" />
+<link rel="preconnect" href="https://cdn.mehtapratik.com" crossorigin />
+<link rel="preload" href="assets/fonts/Archivo-Expanded-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="assets/site.css" />
 <style>
   /* Brand-page-only specimen styles */
@@ -192,9 +193,9 @@
   <div class="sec-top"><span class="idx">(04)</span><h2>Motion</h2></div>
   <p class="lead">Motion is a core discipline in the work, so the site moves, but with intent. It supports hierarchy and rewards attention. It never blocks reading.</p>
   <div class="mdemo">
-    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-sportime.webp" alt="Hover scale demo" loading="lazy"/></div><div class="cap"><b>Hover · scale 1.05</b>Images scale and clear from grayscale to color over 0.8s. Hover this card.</div></a>
-    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-dealnews.webp" alt="Grayscale clear demo" loading="lazy"/></div><div class="cap"><b>Reward attention</b>The grid reads graphic at rest; color is the payoff for engaging.</div></a>
-    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-frc.webp" alt="Scroll reveal demo" loading="lazy"/></div><div class="cap"><b>Scroll reveal</b>Cards fade and rise in, staggered, as they enter the viewport.</div></a>
+    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-sportime.webp" width="2000" height="1333" srcset="https://cdn.mehtapratik.com/cover%20images/cover-sportime-480.webp 480w, https://cdn.mehtapratik.com/cover%20images/cover-sportime-960.webp 960w, https://cdn.mehtapratik.com/cover%20images/cover-sportime-1600.webp 1600w, https://cdn.mehtapratik.com/cover%20images/cover-sportime.webp 2000w" sizes="(max-width: 760px) 92vw, 760px" alt="Hover scale demo" decoding="async" loading="lazy"/></div><div class="cap"><b>Hover · scale 1.05</b>Images scale and clear from grayscale to color over 0.8s. Hover this card.</div></a>
+    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-dealnews.webp" width="2000" height="1333" srcset="https://cdn.mehtapratik.com/cover%20images/cover-dealnews-480.webp 480w, https://cdn.mehtapratik.com/cover%20images/cover-dealnews-960.webp 960w, https://cdn.mehtapratik.com/cover%20images/cover-dealnews-1600.webp 1600w, https://cdn.mehtapratik.com/cover%20images/cover-dealnews.webp 2000w" sizes="(max-width: 760px) 92vw, 760px" alt="Grayscale clear demo" decoding="async" loading="lazy"/></div><div class="cap"><b>Reward attention</b>The grid reads graphic at rest; color is the payoff for engaging.</div></a>
+    <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-frc.webp" width="2000" height="1423" srcset="https://cdn.mehtapratik.com/cover%20images/cover-frc-480.webp 480w, https://cdn.mehtapratik.com/cover%20images/cover-frc-960.webp 960w, https://cdn.mehtapratik.com/cover%20images/cover-frc-1600.webp 1600w, https://cdn.mehtapratik.com/cover%20images/cover-frc.webp 2000w" sizes="(max-width: 760px) 92vw, 760px" alt="Scroll reveal demo" decoding="async" loading="lazy"/></div><div class="cap"><b>Scroll reveal</b>Cards fade and rise in, staggered, as they enter the viewport.</div></a>
   </div>
 </div></section>
 <div class="marq"><div class="track">
@@ -269,6 +270,6 @@
   </div>
 </div></footer>
 
-<script src="assets/site.js"></script>
+<script src="assets/site.js" defer></script>
 </body>
 </html>
