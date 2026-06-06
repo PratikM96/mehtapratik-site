@@ -13,9 +13,9 @@
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#0a0a0a" />
 <title>Brand System / Pratik Mehta</title>
-<meta name="description" content="The brand system behind mehtapratik.com. Color, type, layout, motion, and voice, documented as a standalone case study in how the site was designed and built." />
+<meta name="description" content="The full brand system behind mehtapratik.com. Positioning, color, type, identity, motion, components, voice, and applications, documented and rendered in the code that runs the site." />
 <meta property="og:title" content="Brand System / Pratik Mehta" />
-<meta property="og:description" content="How the portfolio was designed and built. A living brand system: color, type, motion, and voice." />
+<meta property="og:description" content="How the portfolio was designed and built. A living brand system: positioning, color, type, identity, motion, components, voice, and applications." />
 <meta property="og:image" content="https://cdn.mehtapratik.com/og/og-work.webp" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -34,6 +34,7 @@
   .bsec:first-of-type{border-top:none}
   .lead{font-family:var(--mono);font-size:clamp(1rem,1.6vw,1.2rem);color:#cfcfcf;max-width:60ch;line-height:1.7}
   .sub{font-family:var(--mono);font-size:.84rem;color:var(--muted);max-width:62ch;line-height:1.7;margin-top:1rem}
+  .h3b{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:1.2rem;color:var(--accent);margin:3rem 0 0;letter-spacing:-.01em}
 
   /* color swatches */
   .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-top:2.4rem}
@@ -97,6 +98,57 @@
   .mdemo .m .cap{padding:1rem 1.1rem;font-family:var(--mono);font-size:.78rem;color:var(--muted);line-height:1.5}
   .mdemo .m .cap b{color:var(--accent);display:block;margin-bottom:.3rem;font-weight:400}
   @media(max-width:680px){.mdemo{grid-template-columns:1fr}}
+
+  /* --- added for the full guide --- */
+  /* contrast matrix */
+  .cmx{width:100%;border-collapse:collapse;margin-top:1.6rem;font-family:var(--mono);font-size:.82rem}
+  .cmx th,.cmx td{padding:.7rem .8rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+  .cmx th{color:var(--muted);font-weight:400;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em}
+  .cmx td .r{color:#e4e4e4}
+  .badge{display:inline-block;font-family:var(--mono);font-size:.64rem;border:1px solid var(--line-2);border-radius:30px;padding:.12rem .55rem;letter-spacing:.06em}
+  .badge.aaa{color:var(--accent);border-color:rgba(31,224,200,.45)}
+  .badge.aa{color:#e4e4e4}
+  .badge.warn{color:var(--accent-2);border-color:rgba(255,111,97,.45)}
+  .dot{display:inline-block;width:13px;height:13px;border-radius:3px;border:1px solid var(--line);vertical-align:-2px;margin-right:.5rem}
+
+  /* marks + lockups */
+  .marks{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.4rem;margin-top:2.4rem}
+  .mk{border:1px solid var(--line);border-radius:6px;padding:2rem 1.4rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;background:var(--bg-2);min-height:170px;text-align:center}
+  .mk .cap{font-family:var(--mono);font-size:.72rem;color:var(--muted);line-height:1.5}
+  .wm-lg{font-family:var(--disp);font-weight:800;font-size:1.5rem;text-transform:uppercase;letter-spacing:.02em}
+  .wm-lg .c{color:var(--accent)}
+  .wm-role{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:.5rem}
+  .mono-pm{font-family:var(--disp);font-weight:900;font-size:2.2rem;letter-spacing:-.02em}
+
+  /* component specimens */
+  .comp{border:1px solid var(--line);border-radius:6px;margin-top:1.4rem;overflow:hidden}
+  .comp .ct{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2);padding:.95rem 1.4rem;border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .comp .cb{padding:1.8rem 1.4rem}
+  .comp .cn{font-family:var(--mono);font-size:.78rem;color:var(--muted);padding:0 1.4rem 1.3rem;line-height:1.6}
+  .comp .cn b{color:#cfcfcf;font-weight:400}
+
+  /* register cards */
+  .reg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1.6rem}
+  .reg .rc{border:1px solid var(--line);border-radius:6px;padding:1.5rem;background:var(--bg-2)}
+  .reg .rc h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+  .reg .rc p{font-family:var(--sans);font-size:.95rem;line-height:1.6;color:#dcdcdc}
+  @media(max-width:760px){.reg{grid-template-columns:1fr}}
+
+  /* bios */
+  .bio{border:1px solid var(--line);border-radius:6px;padding:1.6rem;margin-top:1.4rem;background:var(--bg-2)}
+  .bio .bt{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2);margin-bottom:.9rem}
+  .bio p{font-family:var(--sans);font-size:1rem;line-height:1.7;color:#dcdcdc}
+
+  /* changelog */
+  .log{font-family:var(--mono);font-size:.84rem;margin-top:2rem;border-top:1px solid var(--line)}
+  .log .lr{display:grid;grid-template-columns:150px 1fr;gap:1.4rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+  .log .lv{color:var(--accent-2)} .log .ld{color:#cfcfcf;line-height:1.6}
+  @media(max-width:560px){.log .lr{grid-template-columns:1fr;gap:.3rem}}
+
+  /* in-page contents */
+  .toc{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:2.4rem}
+  .toc a{font-family:var(--mono);font-size:.76rem;border:1px solid var(--line-2);color:var(--muted);padding:.45rem .9rem;border-radius:40px;transition:all .2s var(--ease)}
+  .toc a:hover{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -115,15 +167,30 @@
 </div></nav>
 
 <header class="cs-hero has-cover" style=""><div class="wrap">
-  <div class="tagline"><span class="blink"></span> Case study · Designing the system</div>
+  <div class="tagline"><span class="blink"></span> Brand guide · v1.0 · June 2026</div>
   <h1 class="page-title">The Brand<br/><span class="a">System</span></h1>
-  <p class="page-intro">How this portfolio was designed and built. Not a static style sheet, a living system: color, type, layout, motion, and voice, each shown in the same code that runs the site.</p>
+  <p class="page-intro">The full system behind mehtapratik.com. A working brand guide and a case study in one, documented and rendered in the same code that runs the site.</p>
+  <div class="toc">
+    <a href="#brief">00 Brief</a>
+    <a href="#positioning">01 Positioning</a>
+    <a href="#color">02 Color</a>
+    <a href="#type">03 Type</a>
+    <a href="#logo">04 Logo</a>
+    <a href="#motion">05 Motion</a>
+    <a href="#layout">06 Layout</a>
+    <a href="#components">07 Components</a>
+    <a href="#voice">08 Voice</a>
+    <a href="#applications">09 Applications</a>
+    <a href="#method">10 Method</a>
+    <a href="#access">11 Accessibility</a>
+    <a href="#ref">12 Reference</a>
+  </div>
 </div></header>
 
-<section class="bsec"><div class="wrap">
+<section class="bsec" id="brief"><div class="wrap">
   <div class="sec-top"><span class="idx">(00)</span><h2>The Brief</h2></div>
   <p class="lead">One person, two audiences. Hiring managers and brand leadership scanning fast for range and seniority, and design-literate viewers judging taste and craft. The system had to land a strong first impression and hold up on the second and third look.</p>
-  <p class="sub">The brand sits where most people keep three things apart: design taste, engineering systems-thinking, and marketing accountability. A CS degree from NYU is the reason the work thinks in systems first and ties to measurable outcomes. The site is built to prove that, not just claim it.</p>
+  <p class="sub">The brand sits where most people keep three things apart: design taste, engineering systems-thinking, and marketing accountability. A CS degree from NYU is the reason the work thinks in systems first and ties to measurable outcomes. The site is built to prove that, not just claim it. This page does double duty: a reference guide anyone could build against, and a case study that demonstrates the thinking it documents.</p>
   <div class="principles">
     <div class="p-card"><div class="pn">01</div><h4>Systems-minded</h4><p>Structured and built to scale. Nothing one-off that should have been a system. One stylesheet drives every page.</p></div>
     <div class="p-card"><div class="pn">02</div><h4>Cross-channel</h4><p>Brand, motion, UI/UX, social, and performance read as one connected practice, never separate tracks.</p></div>
@@ -133,8 +200,35 @@
   </div>
 </div></section>
 
-<section class="bsec"><div class="wrap">
-  <div class="sec-top"><span class="idx">(01)</span><h2>Color</h2></div>
+<section class="bsec" id="positioning"><div class="wrap">
+  <div class="sec-top"><span class="idx">(01)</span><h2>Positioning &amp; Messaging</h2></div>
+  <p class="lead">One line for what this brand is, three pillars for what it says, and a tagline that travels. Everything written about Pratik draws from here so the story stays consistent across the site, the reel, and every application.</p>
+
+  <h3 class="h3b">Positioning statement</h3>
+  <p class="sub" style="color:#dcdcdc;font-size:1.05rem;max-width:64ch">A creative director who works across brand, motion, UI/UX, and growth, building brand systems that scale and the campaigns that run on them. Designs like a systems engineer and measures like a marketer.</p>
+
+  <h3 class="h3b">Tagline</h3>
+  <div class="spec" style="text-align:center;padding:2.6rem 2rem">
+    <div style="font-family:var(--disp);font-weight:900;font-size:clamp(1.4rem,4vw,2.4rem);text-transform:uppercase;letter-spacing:-.02em;line-height:1.05">Brand systems that <span style="color:var(--accent)">scale</span>.<br/>Campaigns that <span style="color:var(--accent)">convert</span>.</div>
+  </div>
+  <p class="sub">Approved alternates, never invented variants: "Brand systems that scale and campaigns that convert" (single line) and "The full creative stack, usually on the same project" (about-page register).</p>
+
+  <h3 class="h3b">Messaging pillars</h3>
+  <div class="principles">
+    <div class="p-card"><div class="pn">A</div><h4>Systems, not one-offs</h4><p>Identity, product, and campaign built to repeat and scale, not as disconnected deliverables.</p></div>
+    <div class="p-card"><div class="pn">B</div><h4>One connected practice</h4><p>Brand, motion, UI/UX, social, and performance handled together, often on the same project.</p></div>
+    <div class="p-card"><div class="pn">C</div><h4>Tied to outcomes</h4><p>Work that ships and moves a number. Decisions trace back to what the audience does.</p></div>
+  </div>
+
+  <h3 class="h3b">Boilerplate bios</h3>
+  <p class="sub">Three lengths, all built from verified facts only. Drop in specific clients, titles, and metrics from the resume before publishing; never invent them to fill a gap.</p>
+  <div class="bio"><div class="bt">One line</div><p>Pratik Mehta is a New York creative director and marketing specialist building brand systems that scale and the campaigns that run on them.</p></div>
+  <div class="bio"><div class="bt">Short · about 55 words</div><p>Pratik Mehta is a New York creative director and marketing specialist with a decade across design, development, and marketing. He works at the seam of brand identity, UI/UX, motion, and growth, building systems that hold up across every channel they touch. A CS degree from NYU is why the work thinks in systems first and ties to outcomes.</p></div>
+  <div class="bio"><div class="bt">Long · about 95 words</div><p>Pratik Mehta is a creative director and marketing specialist based in New York, working independently and open to creative-director and brand-or-marketing-leadership roles. His work spans brand identity, UI/UX, motion graphics, and growth marketing across fintech, sports and entertainment, e-commerce, and global events. A CS degree from NYU shapes a practice that designs in systems and measures like a marketer, with generative AI built in as a workflow layer rather than a novelty. The result is brand systems that scale and campaigns that convert, handled as one connected practice rather than separate tracks.</p></div>
+</div></section>
+
+<section class="bsec" id="color"><div class="wrap">
+  <div class="sec-top"><span class="idx">(02)</span><h2>Color</h2></div>
   <p class="lead">A near-black and a warm off-white anchor everything, carried over from the original site so the rebuild feels continuous. Two accents sit on top: electric teal leads, coral annotates.</p>
   <div class="swatches">
     <div class="sw"><div class="chip" style="background:#0a0a0a;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">Ink</div><div class="hx">#0A0A0A</div><div class="role">Primary background</div></div></div>
@@ -144,7 +238,8 @@
     <div class="sw"><div class="chip" style="background:#1fe0c8"></div><div class="meta"><div class="nm">Electric Teal</div><div class="hx">#1FE0C8</div><div class="role">Lead accent: identity &amp; interaction</div></div></div>
     <div class="sw"><div class="chip" style="background:#ff6f61"></div><div class="meta"><div class="nm">Coral</div><div class="hx">#FF6F61</div><div class="role">Secondary accent: the annotation layer</div></div></div>
   </div>
-  <h3 style="font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:1.2rem;color:var(--accent);margin:3rem 0 0;letter-spacing:-.01em">The two-accent rule</h3>
+
+  <h3 class="h3b">The two-accent rule</h3>
   <p class="sub">The accents never cross. Teal carries identity and interaction; coral marks the annotation layer. This keeps both meaningful instead of decorative, and it is the rule that makes the palette feel designed rather than busy.</p>
   <div class="logic">
     <div class="box teal"><h4>Teal · identity &amp; interaction</h4><ul>
@@ -154,14 +249,45 @@
       <li>Project years</li><li>Section index numbers</li><li>Experience &amp; chapter numbers</li><li>Result labels</li><li>Availability dot, footer CTA hover</li>
     </ul></div>
   </div>
-  <p class="sub">No pure white or pure black anywhere. Accents never fill large areas or set body copy, the one exception being the marquee, which is deliberately loud. All text holds WCAG AA contrast.</p>
+  <p class="sub">No pure white or pure black anywhere. Accents never fill large areas or set body copy, the one exception being the marquee, which is deliberately loud.</p>
+
+  <h3 class="h3b">Text tokens &amp; tints</h3>
+  <p class="sub">The greys between Bone and Slate do the quiet work. These are the exact values the stylesheet ships.</p>
+  <table class="qref">
+    <tr><td>Body text</td><td>#DCDCDC on Ink. Long-form and case-study copy</td></tr>
+    <tr><td>Mono / caption</td><td>#CFCFCF on Ink. Secondary reading text and intros</td></tr>
+    <tr><td>Muted / meta</td><td>#7D7D7D Slate. Labels, metadata, captions</td></tr>
+    <tr><td>Hairline</td><td>rgba(250,250,250,.14). Dividers above section heads</td></tr>
+    <tr><td>Hairline strong</td><td>rgba(250,250,250,.28). Input and pill borders</td></tr>
+    <tr><td>Result tint</td><td>rgba(31,224,200,.05). Fill inside teal result boxes</td></tr>
+    <tr><td>Selection</td><td>Teal background, Ink text</td></tr>
+  </table>
+
+  <h3 class="h3b">Contrast, verified</h3>
+  <p class="sub">Measured WCAG 2.1 ratios, not assumed. AAA is 7:1 and up for normal text, AA is 4.5:1, AA Large is 3:1 for text at 24px or 19px bold.</p>
+  <table class="cmx">
+    <tr><th>Foreground</th><th>On Ink #0A0A0A</th><th>On Graphite #141414</th></tr>
+    <tr><td><span class="dot" style="background:#fafafa"></span><span class="r">Bone</span></td><td>18.97:1 <span class="badge aaa">AAA</span></td><td>17.65:1 <span class="badge aaa">AAA</span></td></tr>
+    <tr><td><span class="dot" style="background:#dcdcdc"></span><span class="r">Body #DCDCDC</span></td><td>14.44:1 <span class="badge aaa">AAA</span></td><td>13.43:1 <span class="badge aaa">AAA</span></td></tr>
+    <tr><td><span class="dot" style="background:#cfcfcf"></span><span class="r">Mono #CFCFCF</span></td><td>12.71:1 <span class="badge aaa">AAA</span></td><td>11.82:1 <span class="badge aaa">AAA</span></td></tr>
+    <tr><td><span class="dot" style="background:#1fe0c8"></span><span class="r">Electric Teal</span></td><td>11.84:1 <span class="badge aaa">AAA</span></td><td>11.01:1 <span class="badge aaa">AAA</span></td></tr>
+    <tr><td><span class="dot" style="background:#ff6f61"></span><span class="r">Coral</span></td><td>7.26:1 <span class="badge aaa">AAA</span></td><td>6.75:1 <span class="badge aa">AA</span></td></tr>
+    <tr><td><span class="dot" style="background:#7d7d7d"></span><span class="r">Slate</span></td><td>4.81:1 <span class="badge aa">AA</span></td><td>4.48:1 <span class="badge warn">AA Large</span></td></tr>
+  </table>
+  <p class="sub">One real constraint: Slate on Graphite lands at 4.48:1, just under the 4.5 AA line for normal text. On cards, set normal-size secondary text in Mono #CFCFCF, and reserve Slate for labels at 19px bold and up, where AA Large applies.</p>
+
+  <h3 class="h3b">Cover &amp; gradient treatment</h3>
+  <p class="sub">Hero and card covers use abstract teal-on-ink backgrounds when no single still earns the space. Over any cover, titles sit on a fixed legibility wash: a top-to-bottom gradient from rgba(10,10,10,.72) to .92 at 65% and into solid Ink, so type stays readable no matter the image behind it.</p>
+
+  <h3 class="h3b">Light contexts</h3>
+  <p class="sub">The brand is dark-native. Where a surface must be light, like the resume PDF, print, or a logo card, the system inverts cleanly: Ink #0A0A0A text on Bone #FAFAFA, both accents holding AA or better on the light ground (teal and coral pass against Ink, which becomes the text). Keep the same three typefaces and the two-accent rule. Never introduce a third accent to compensate for the lighter field.</p>
 </div></section>
 
-<section class="bsec"><div class="wrap">
-  <div class="sec-top"><span class="idx">(02)</span><h2>Typography</h2></div>
+<section class="bsec" id="type"><div class="wrap">
+  <div class="sec-top"><span class="idx">(03)</span><h2>Typography</h2></div>
   <p class="lead">Type is the primary visual identity. A wide, heavy display face for personality; a clean workhorse for everything readable; a mono for the data and labels.</p>
   <div class="spec">
-    <div class="tag">Display · Archivo Expanded · 700–900</div>
+    <div class="tag">Display · Archivo Expanded · 700 to 900</div>
     <div class="disp">Brand systems<br/>that <span style="color:var(--accent)">scale.</span></div>
     <div class="ramp">
       <span style="font-size:3.5rem">Aa</span><span style="font-size:2.5rem">Aa</span><span style="font-size:1.8rem">Aa</span><span style="font-size:1.2rem">Aa</span>
@@ -169,7 +295,7 @@
     <div class="mono">Used for the wordmark, hero, section heads, and card titles. Tracked tight at -0.03em, always uppercase.</div>
   </div>
   <div class="spec">
-    <div class="tag">Workhorse · Archivo · 400–600</div>
+    <div class="tag">Workhorse · Archivo · 400 to 600</div>
     <div class="sans">The body face keeps long copy and interface text clean and legible. It carries case study narrative, descriptors, and every paragraph that needs to be read at length without fatigue. One typeface change per element, never three faces in a line.</div>
   </div>
   <div class="spec">
@@ -177,49 +303,189 @@
     <div class="mono" style="font-size:1rem;color:#cfcfcf;letter-spacing:.04em">( 01 )  SELECTED WORK · 2023 / 2024 · BRAND / CAMPAIGN / MOTION · RESULT →</div>
     <div class="mono">Reserved for indices, years, tags, captions, and labels, the connective tissue that makes the layout read like a system.</div>
   </div>
-  <p class="sub">All three are free, performant Google Fonts so the build stays fast. Hard rule, absolute across every format: no em-dashes, anywhere. Use a period, a comma, or restructure.</p>
+
+  <h3 class="h3b">The scale</h3>
+  <p class="sub">Sizes are fluid with clamp, so type scales with the viewport instead of snapping at breakpoints. Min and max shown.</p>
+  <table class="qref">
+    <tr><td>Mega title</td><td>Archivo Expanded 900 · clamp 3 to 13rem · uppercase · -.03em</td></tr>
+    <tr><td>Page title</td><td>Archivo Expanded 900 · clamp 2.6 to 7.5rem · uppercase · -.03em</td></tr>
+    <tr><td>Section head</td><td>Archivo Expanded 800 · clamp 1.8 to 3rem · uppercase · -.02em</td></tr>
+    <tr><td>Card / project title</td><td>Archivo Expanded 800 · 1.3rem · uppercase · -.01em</td></tr>
+    <tr><td>Standfirst</td><td>Archivo 500 · clamp 1.15 to 1.4rem · line 1.5</td></tr>
+    <tr><td>Body</td><td>Archivo 400 · 1.05 to 1.08rem · line 1.7 to 1.78</td></tr>
+    <tr><td>Label / mono</td><td>Space Grotesk · .72 to .86rem · tracking .04 to .12em · uppercase</td></tr>
+  </table>
+  <p class="sub">Measure is capped: roughly 60 to 70ch for body, 46ch for intros, so no line runs too long to track. Numerals in stats and tables use the display face at weight 900 for impact; set data in tabular figures so columns align. All three faces are free, performant, self-hosted variable fonts, so the build stays fast.</p>
+  <p class="sub">Hard rule, absolute across every format: no em-dashes, anywhere. Use a period, a comma, or restructure.</p>
 </div></section>
 
-<section class="bsec"><div class="wrap">
-  <div class="sec-top"><span class="idx">(03)</span><h2>Wordmark</h2></div>
-  <p class="lead">No illustrated logo, and the brand does not need one. The wordmark is typographic: the name in the display face, heavy and uppercase, with a small © as a signature mark.</p>
-  <div class="spec" style="text-align:center;padding:3.5rem 2rem">
+<section class="bsec" id="logo"><div class="wrap">
+  <div class="sec-top"><span class="idx">(04)</span><h2>Logo &amp; Wordmark</h2></div>
+  <p class="lead">The identity is typographic first: the name set in the display face, heavy and uppercase, with a small © as a signature. There is one graphic mark, the aperture, scoped to the places a wordmark is too small to read.</p>
+
+  <div class="spec" style="text-align:center;padding:3.2rem 2rem">
     <div style="font-family:var(--disp);font-weight:800;font-size:clamp(1.6rem,5vw,3rem);text-transform:uppercase;letter-spacing:.02em">Pratik Mehta<span style="color:var(--accent)">©</span></div>
-    <div class="mono" style="margin-top:1.4rem">Monogram for favicon and avatars: <span style="color:var(--fg);font-weight:500">PM</span></div>
+    <div class="mono" style="margin-top:1.4rem">Primary wordmark</div>
   </div>
-  <p class="sub">Role descriptor uses one of three exact forms, never invented variants: Creative Director / Creative Director and Brand Strategist / Creative Director, Brand and Marketing. Clear space equals the cap-height of the name. Minimum 16px cap-height so it stays legible in the nav.</p>
+
+  <h3 class="h3b">Lockups</h3>
+  <div class="marks">
+    <div class="mk"><div class="wm-lg">Pratik Mehta<span class="c">©</span></div><div class="cap">Primary · nav, footer, headers</div></div>
+    <div class="mk"><div><div class="wm-lg">Pratik Mehta<span class="c">©</span></div><div class="wm-role">Creative Director, Brand &amp; Marketing</div></div><div class="cap">With role descriptor · decks, signatures</div></div>
+    <div class="mk"><div class="mono-pm">PM</div><div class="cap">Monogram · avatars, tight spaces</div></div>
+    <div class="mk">
+      <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true"><rect width="64" height="64" rx="13" fill="#0A0A0A" stroke="rgba(250,250,250,.14)"/><path d="M32 12 A20 20 0 1 1 32 52" fill="none" stroke="#FF6F61" stroke-width="2.8" stroke-linecap="round"/><path d="M32 14.5 A17.5 17.5 0 1 1 32 49.5 Z" fill="#1FE0C8"/><circle cx="32" cy="32" r="5.5" fill="#0A0A0A"/></svg>
+      <div class="cap">Aperture mark · favicon, app icon</div>
+    </div>
+  </div>
+  <p class="sub">The aperture reads as a lens iris and a half-disc: coral outer arc, teal body, ink pupil, the two accents in their fixed roles. It is the only illustrated mark in the system and exists for sizes and surfaces where the wordmark cannot be read, never as a replacement for the name in normal use.</p>
+
+  <h3 class="h3b">Role descriptor</h3>
+  <p class="sub">One of three exact forms, never invented variants: Creative Director / Creative Director and Brand Strategist / Creative Director, Brand and Marketing. Clear space around the wordmark equals the cap-height of the name. Minimum 16px cap-height so it stays legible in the nav.</p>
+
+  <h3 class="h3b">Misuse</h3>
+  <div class="dd">
+    <div class="col do"><h4>Do</h4><ul>
+      <li>Keep the wordmark in the display face, uppercase</li>
+      <li>Recolor only the © (teal) and the full mark in Ink or Bone</li>
+      <li>Give it clear space equal to the cap-height</li>
+      <li>Use the aperture only at favicon and app-icon scale</li>
+    </ul></div>
+    <div class="col dont"><h4>Avoid</h4><ul>
+      <li>Stretching, condensing, or re-weighting the name</li>
+      <li>Recoloring the wordmark in teal or coral</li>
+      <li>Drop shadows, outlines, gradients, or effects</li>
+      <li>Filling the aperture pupil or swapping its accent roles</li>
+      <li>Setting it over a busy photo without the legibility wash</li>
+    </ul></div>
+  </div>
 </div></section>
 
-<section class="bsec"><div class="wrap">
-  <div class="sec-top"><span class="idx">(04)</span><h2>Motion</h2></div>
+<section class="bsec" id="motion"><div class="wrap">
+  <div class="sec-top"><span class="idx">(05)</span><h2>Motion</h2></div>
   <p class="lead">Motion is a core discipline in the work, so the site moves, but with intent. It supports hierarchy and rewards attention. It never blocks reading.</p>
   <div class="mdemo">
     <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-sportime.webp" width="2000" height="1333" srcset="https://cdn.mehtapratik.com/cover%20images/cover-sportime-480.webp 480w, https://cdn.mehtapratik.com/cover%20images/cover-sportime-960.webp 960w, https://cdn.mehtapratik.com/cover%20images/cover-sportime-1600.webp 1600w, https://cdn.mehtapratik.com/cover%20images/cover-sportime.webp 2000w" sizes="(max-width: 760px) 92vw, 760px" alt="Hover scale demo" decoding="async" loading="lazy"/></div><div class="cap"><b>Hover · scale 1.05</b>Images scale and clear from grayscale to color over 0.8s. Hover this card.</div></a>
     <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-dealnews.webp" width="2000" height="1333" srcset="https://cdn.mehtapratik.com/cover%20images/cover-dealnews-480.webp 480w, https://cdn.mehtapratik.com/cover%20images/cover-dealnews-960.webp 960w, https://cdn.mehtapratik.com/cover%20images/cover-dealnews-1600.webp 1600w, https://cdn.mehtapratik.com/cover%20images/cover-dealnews.webp 2000w" sizes="(max-width: 760px) 92vw, 760px" alt="Grayscale clear demo" decoding="async" loading="lazy"/></div><div class="cap"><b>Reward attention</b>The grid reads graphic at rest; color is the payoff for engaging.</div></a>
     <a class="m"><div class="vis"><img src="https://cdn.mehtapratik.com/cover%20images/cover-frc.webp" width="2000" height="1423" srcset="https://cdn.mehtapratik.com/cover%20images/cover-frc-480.webp 480w, https://cdn.mehtapratik.com/cover%20images/cover-frc-960.webp 960w, https://cdn.mehtapratik.com/cover%20images/cover-frc-1600.webp 1600w, https://cdn.mehtapratik.com/cover%20images/cover-frc.webp 2000w" sizes="(max-width: 760px) 92vw, 760px" alt="Scroll reveal demo" decoding="async" loading="lazy"/></div><div class="cap"><b>Scroll reveal</b>Cards fade and rise in, staggered, as they enter the viewport.</div></a>
   </div>
+
+  <h3 class="h3b">Tokens</h3>
+  <table class="qref">
+    <tr><td>Easing</td><td>cubic-bezier(.2,.7,.2,1). One curve, used everywhere</td></tr>
+    <tr><td>Hover</td><td>0.8s image scale and grayscale clear; 0.2s color on links</td></tr>
+    <tr><td>Scroll reveal</td><td>translateY 28px and fade, 0.7s, staggered on entry</td></tr>
+    <tr><td>Nav and UI</td><td>0.2 to 0.35s transitions on color, transform, and panels</td></tr>
+    <tr><td>Marquee</td><td>26s linear loop, one marquee per page</td></tr>
+    <tr><td>Reduced motion</td><td>prefers-reduced-motion disables all animation and reveal</td></tr>
+  </table>
+  <p class="sub">The reel uses the same vocabulary as the site: the same easing curve and the grayscale-to-color reveal carry across its four chapters, Brand and Identity, Motion and Animation, Campaign and Social, UX and Digital, so the moving work and the static site read as one system.</p>
 </div></section>
 <div class="marq"><div class="track">
   <span>ease cubic-bezier(.2,.7,.2,1)</span><span>✦</span><span>hover 0.8s</span><span>✦</span><span>reveal translateY 28px</span><span>✦</span><span>respects reduced-motion</span><span>✦</span><span>one marquee per page</span><span>✦</span><span>ease cubic-bezier(.2,.7,.2,1)</span><span>✦</span><span>hover 0.8s</span><span>✦</span><span>reveal translateY 28px</span><span>✦</span><span>respects reduced-motion</span><span>✦</span><span>one marquee per page</span><span>✦</span>
 </div></div>
 
-<section class="bsec"><div class="wrap">
-  <div class="sec-top"><span class="idx">(05)</span><h2>Layout &amp; Imagery</h2></div>
+<section class="bsec" id="layout"><div class="wrap">
+  <div class="sec-top"><span class="idx">(06)</span><h2>Layout &amp; Imagery</h2></div>
   <p class="lead">A 12-column grid, generous vertical rhythm, hairline dividers, and asymmetry that lets type break the grid. Whitespace is structural, never filler.</p>
   <table class="qref">
     <tr><td>Grid</td><td>12-column, ~1380px max width, 4vw gutters</td></tr>
     <tr><td>Section rhythm</td><td>5 to 6rem vertical space between sections</td></tr>
     <tr><td>Dividers</td><td>Hairline at 14% tint above section heads, never solid rules</td></tr>
     <tr><td>Corner radius</td><td>4 to 6px. Never pill-rounded</td></tr>
-    <tr><td>Image treatment</td><td>Slight grayscale at rest, clears to full color on hover</td></tr>
+    <tr><td>Card spans</td><td>7/5 and 6/4 column splits; aspect 16/10, 3/2, or 1/1</td></tr>
     <tr><td>Galleries</td><td>True masonry, equal gaps, no letterbox bars</td></tr>
-    <tr><td>Covers</td><td>Abstract teal backgrounds on heroes and cards; real stills as video posters</td></tr>
-    <tr><td>Cards</td><td>Thumbnail, name, year, outcome line, discipline tags, in that order</td></tr>
   </table>
+
+  <h3 class="h3b">Art direction</h3>
+  <table class="qref">
+    <tr><td>Photography</td><td>Grayscale .25 to .3 at rest, clears to full color on hover. Subject-centered, documentary not staged</td></tr>
+    <tr><td>Crops</td><td>4/5 portrait for the about photo; 16/10 for work cards; 1/1 for the square headshot and avatars</td></tr>
+    <tr><td>Covers</td><td>Abstract teal-on-ink backgrounds where no single still earns the space; real stills as video posters</td></tr>
+    <tr><td>Logo cards</td><td>Client marks sit on a light #F0EDE8 card so dark or transparent logos stay visible on the dark page</td></tr>
+  </table>
+
+  <h3 class="h3b">Symbols</h3>
+  <p class="sub">No icon library. The system uses a small, fixed set of glyphs: the teal triangle marker for lists, the ✦ separator in the marquee, the ↗ arrow for external links and CTAs, and the blinking coral dot for availability. Anything beyond these is a one-off and should become a rule before it ships.</p>
 </div></section>
 
-<section class="bsec"><div class="wrap">
-  <div class="sec-top"><span class="idx">(06)</span><h2>Voice</h2></div>
+<section class="bsec" id="components"><div class="wrap">
+  <div class="sec-top"><span class="idx">(07)</span><h2>Components</h2></div>
+  <p class="lead">One stylesheet drives every page. These are the actual components it produces, rendered live in the same classes the site ships. This is the system behind the claim.</p>
+
+  <div class="comp">
+    <div class="ct">Section header</div>
+    <div class="cb"><div class="sec-top" style="margin:0"><span class="idx">(07)</span><h2 style="font-size:1.8rem">Example</h2></div></div>
+    <div class="cn">Coral index number set in mono, display-face title. Pattern: <b>.sec-top &gt; .idx + h2</b>. The index anchors every section to the system.</div>
+  </div>
+
+  <div class="comp">
+    <div class="ct">Project card</div>
+    <div class="cb">
+      <div class="proj" style="display:block">
+        <div class="p in" style="max-width:420px">
+          <div class="img gen" style="aspect-ratio:16/10;background:linear-gradient(135deg,#0a0a0a,#0f3b38 60%,#1fe0c8)"><span class="num">01</span></div>
+          <div class="lab"><div><h3>Example Project</h3><span class="yr">2024</span><p>One line on the problem and what shipped.</p></div><div class="t">Brand<br/>Motion<br/>UX</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cn">Cover, then name, year, outcome line, discipline tags, in that order. Pattern: <b>.p &gt; .img.gen + .lab</b>. Year in coral, tags in teal, grayscale cover clears on hover.</div>
+  </div>
+
+  <div class="comp">
+    <div class="ct">Result box</div>
+    <div class="cb">
+      <div class="cs-result" style="margin:0"><div class="rl">Result</div><p>The outcome, stated plainly with a verified number. Teal outline, faint teal fill, coral label.</p></div>
+    </div>
+    <div class="cn">Pattern: <b>.cs-result &gt; .rl + p</b>. The one place a number gets a frame. Never used without a real figure.</div>
+  </div>
+
+  <div class="comp">
+    <div class="ct">Stat bar</div>
+    <div class="cb">
+      <div class="cs-statbar" style="margin:0">
+        <div><div class="n">12</div><div class="l">Case studies</div></div>
+        <div><div class="n">10+</div><div class="l">Years in practice</div></div>
+        <div><div class="n">4</div><div class="l">Disciplines, one practice</div></div>
+        <div><div class="n">1</div><div class="l">Stylesheet</div></div>
+      </div>
+    </div>
+    <div class="cn">Display-face numerals in teal, mono labels. Pattern: <b>.cs-statbar &gt; .n + .l</b>. For projected or benchmark figures, label them as such.</div>
+  </div>
+
+  <div class="comp">
+    <div class="ct">Filters and button</div>
+    <div class="cb">
+      <div class="filters" style="margin:0 0 1.4rem"><button class="on">All</button><button>Brand</button><button>Motion</button><button>UX</button><button>Campaign</button></div>
+      <button class="btn">Send it</button>
+    </div>
+    <div class="cn">Pill filters fill teal when active or hovered. Primary button is a teal pill that lifts and goes Bone on hover. Patterns: <b>.filters button.on</b>, <b>.btn</b>.</div>
+  </div>
+
+  <div class="comp">
+    <div class="ct">Form field</div>
+    <div class="cb">
+      <div class="contact-card" style="padding:0;border:none">
+        <label>Your email</label>
+        <input type="text" placeholder="name@company.com" />
+        <label>Message</label>
+        <textarea placeholder="What are you building?"></textarea>
+      </div>
+    </div>
+    <div class="cn">Graphite field, strong-hairline border, teal border on focus. Pattern: <b>.contact-card label + input / textarea</b>. Focus state is the only accent.</div>
+  </div>
+
+  <div class="comp">
+    <div class="ct">Links</div>
+    <div class="cb" style="font-family:var(--sans);font-size:1.05rem;color:#dcdcdc">
+      A line with a <a href="#components" style="color:var(--accent)">teal link</a> that turns coral on hover, the one interaction color shift in body copy.
+    </div>
+    <div class="cn">Teal by default, coral on hover, site-wide. Interaction always teal-first; coral is annotation only.</div>
+  </div>
+</div></section>
+
+<section class="bsec" id="voice"><div class="wrap">
+  <div class="sec-top"><span class="idx">(08)</span><h2>Voice</h2></div>
   <p class="lead">The writing is as much a part of the brand as the visuals: concise, technically fluent, outcome-led, no preamble. Lead with the problem and the result, then show how it was made.</p>
   <div class="dd">
     <div class="col do">
@@ -237,30 +503,81 @@
       <ul>
         <li>Em-dashes, in any format, absolute</li>
         <li>Fabricated metrics, titles, or credentials</li>
-        <li>Generic filler phrasing: unlock, elevate, seamless, passionate</li>
+        <li>Generic filler: unlock, elevate, seamless, passionate</li>
         <li>Vague superlatives with no number behind them</li>
-        <li>Over-formal résumé-speak and stacked adjectives</li>
+        <li>Over-formal resume-speak and stacked adjectives</li>
       </ul>
     </div>
   </div>
+
+  <h3 class="h3b">One message, three registers</h3>
+  <p class="sub">The same idea, "I build the brand system and the campaign that runs on it," tuned to who is reading. Tone shifts; the facts never do.</p>
+  <div class="reg">
+    <div class="rc"><h4>Fintech CFO</h4><p>One system for identity, product, and campaign means less rework and a faster path from brief to launch. The brand scales without a redesign every quarter, and every decision ties back to a number you can track.</p></div>
+    <div class="rc"><h4>Sports-venue brand</h4><p>The look has to hit from the upper deck and the feed, the same energy on a jumbotron and a phone. I build the identity and the motion and the social engine together so game day feels like one thing, everywhere fans see it.</p></div>
+    <div class="rc"><h4>Hiring manager</h4><p>I run brand, UI/UX, motion, and growth on the same project instead of handing them off. The CS degree is why I think in systems and ship things that scale. The portfolio shows the range; the results are attached.</p></div>
+  </div>
+  <p class="sub">Naming stays consistent too: role descriptor uses the three approved forms only, and project and file names follow the site's lowercase-kebab convention.</p>
 </div></section>
 
-<section class="bsec"><div class="wrap">
-  <div class="sec-top"><span class="idx">(07)</span><h2>Quick Reference</h2></div>
+<section class="bsec" id="applications"><div class="wrap">
+  <div class="sec-top"><span class="idx">(09)</span><h2>Applications</h2></div>
+  <p class="lead">The system off the homepage. Cross-channel is the positioning, so the brand has to hold on a social card, an inbox, a deck, and a printed page. Specs below; each doubles as a working asset.</p>
+  <table class="qref">
+    <tr><td>Open Graph card</td><td>1200 x 630 webp, Ink ground, wordmark plus page title in display face, one accent. Square 1200 x 1200 headshot for the search and profile thumbnail</td></tr>
+    <tr><td>Email signature</td><td>Name in display face, role descriptor in mono Slate, then email / LinkedIn / Behance. Teal links. No image, so it renders everywhere</td></tr>
+    <tr><td>LinkedIn banner</td><td>1584 x 396, Ink with abstract teal cover, tagline in display face, left-aligned to clear the avatar</td></tr>
+    <tr><td>Social post template</td><td>Square or 4/5, Ink ground, coral index plus display headline, mono caption strip, one image with the grayscale-to-color treatment</td></tr>
+    <tr><td>Resume / CV</td><td>Light inversion: Ink text on Bone, same three faces, coral for section markers, teal for links. Matches the live resume PDF</td></tr>
+    <tr><td>Deck</td><td>16:9, Ink slides, numbered section dividers echoing the site index, one idea per slide, mono footer with name and page</td></tr>
+    <tr><td>Business card</td><td>Ink face with the aperture mark, Bone reverse with wordmark and role descriptor. 4 to 6px corner radius only if stock allows</td></tr>
+  </table>
+  <p class="sub">Drop real client names, links, and metrics from the resume into these before they ship. The template defines the look, not the claims.</p>
+</div></section>
+
+<section class="bsec" id="method"><div class="wrap">
+  <div class="sec-top"><span class="idx">(10)</span><h2>Method</h2></div>
+  <p class="lead">How the work is made, because the process is part of the brand. The order is deliberate: audience first, organization second, channel never in isolation.</p>
+  <p class="sub" style="color:#dcdcdc;font-size:1rem;max-width:64ch">Every project starts at the audience level, what the person on the other end already knows and responds to, then builds the organizational need in after. Concepting runs cross-channel from the first sketch: brand, motion, UI/UX, social, and performance considered together, not bolted on. Generative AI is built into the workflow as a layer, used for rapid concepting, variation, and production acceleration, the same way a designer uses a grid or a comp. It is methodology, not a feature to list next to Figma or After Effects. And nothing ships with a number that has not been verified. Honest framing beats an inflated result, every time.</p>
+</div></section>
+
+<section class="bsec" id="access"><div class="wrap">
+  <div class="sec-top"><span class="idx">(11)</span><h2>Accessibility</h2></div>
+  <p class="lead">Accessibility is the engineering rigor the brand claims, made checkable. Not an afterthought, a constraint the system is built inside.</p>
+  <table class="qref">
+    <tr><td>Contrast</td><td>All body and label text meets WCAG AA or better, verified, not assumed. See the matrix in Color</td></tr>
+    <tr><td>Focus states</td><td>Visible teal border on every focusable field and control. Focus is never removed</td></tr>
+    <tr><td>Reduced motion</td><td>prefers-reduced-motion disables all animation, reveals, and the marquee</td></tr>
+    <tr><td>Structure</td><td>One h1 per page, headings in order, nav and footer as landmarks, semantic HTML throughout</td></tr>
+    <tr><td>Images</td><td>Real alt text on content images; decorative covers marked aria-hidden</td></tr>
+    <tr><td>Color is never alone</td><td>Meaning carried by color is always backed by text or position, never color only</td></tr>
+    <tr><td>Targets</td><td>Tap targets and nav links sized for touch; mobile menu is full-height and opaque</td></tr>
+  </table>
+</div></section>
+
+<section class="bsec" id="ref"><div class="wrap">
+  <div class="sec-top"><span class="idx">(12)</span><h2>Quick Reference</h2></div>
   <table class="qref">
     <tr><td>Anchor dark</td><td>#0A0A0A Ink</td></tr>
     <tr><td>Anchor light</td><td>#FAFAFA Bone</td></tr>
     <tr><td>Surface</td><td>#141414 Graphite</td></tr>
-    <tr><td>Muted</td><td>#7D7D7D Slate</td></tr>
+    <tr><td>Body / secondary</td><td>#DCDCDC body · #CFCFCF mono · #7D7D7D Slate</td></tr>
     <tr><td>Lead accent</td><td>#1FE0C8 Electric Teal · identity &amp; interaction</td></tr>
     <tr><td>Second accent</td><td>#FF6F61 Coral · annotation layer</td></tr>
-    <tr><td>Display</td><td>Archivo Expanded, 700 to 900</td></tr>
+    <tr><td>Display</td><td>Archivo Expanded, 700 to 900, uppercase, -.03em</td></tr>
     <tr><td>Workhorse</td><td>Archivo, 400 to 600</td></tr>
     <tr><td>Mono</td><td>Space Grotesk</td></tr>
     <tr><td>Easing</td><td>cubic-bezier(.2,.7,.2,1)</td></tr>
+    <tr><td>Tagline</td><td>Brand systems that scale. Campaigns that convert.</td></tr>
     <tr><td>Hard rules</td><td>No em-dashes. No fabricated metrics. No pure white or black. Teal for interaction, coral for annotation, never crossed.</td></tr>
   </table>
-  <p class="sub">Built and documented in June 2026. The full written guidelines run deeper across foundation, applications, and voice registers; this page is the visual summary, rendered in the system it describes.</p>
+
+  <h3 class="h3b">Maintenance</h3>
+  <p class="sub">A living system, versioned. This page is rendered in the same stylesheet it documents, so it cannot drift from the site without the change showing here first.</p>
+  <div class="log">
+    <div class="lr"><div class="lv">v1.0 · Jun 2026</div><div class="ld">Initial system documented alongside the site launch: brief, color, type, wordmark, motion, layout, voice, quick reference.</div></div>
+    <div class="lr"><div class="lv">v1.1 · Jun 2026</div><div class="ld">Built out to a full guide: positioning and messaging, verified contrast matrix, type scale, aperture mark and lockups, motion tokens, component library, voice registers, applications, method, and accessibility.</div></div>
+  </div>
 </div></section>
 
 <footer><div class="wrap">
