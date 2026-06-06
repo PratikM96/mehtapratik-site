@@ -46,3 +46,6 @@
 # --- Old standalone pages ---
 /services         /          301
 /privacy-policy   /privacy   301
+
+# --- Fallback: serve the styled 404 page for any unmatched route ---
+/*   /404.html   404
