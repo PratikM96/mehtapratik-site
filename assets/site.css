@@ -139,9 +139,9 @@ h1.mega .a{color:var(--accent)}
 .p .lab .yr{font-family:var(--mono);font-size:.72rem;color:var(--accent-2);display:block;margin-top:.3rem;letter-spacing:.04em}
 .p .lab p{font-family:var(--mono);font-size:.82rem;color:var(--muted);margin-top:.4rem;max-width:34ch;line-height:1.5}
 .p .lab .t{font-family:var(--mono);font-size:.7rem;color:var(--accent);text-align:right;text-transform:uppercase;line-height:1.7;white-space:nowrap}
-.c7{grid-column:span 7}.c5{grid-column:span 5}.c6{grid-column:span 6}.c4{grid-column:span 4}
-.c7 .img{aspect-ratio:16/10}.c5 .img{aspect-ratio:16/10}.c6 .img{aspect-ratio:3/2}.c4 .img{aspect-ratio:1/1}
-@media(max-width:880px){.c7,.c5,.c6,.c4{grid-column:span 12}}
+.c7{grid-column:span 7}.c5{grid-column:span 5}.c6{grid-column:span 6}
+.c7 .img{aspect-ratio:16/10}.c5 .img{aspect-ratio:16/10}.c6 .img{aspect-ratio:3/2}
+@media(max-width:880px){.c7,.c5,.c6{grid-column:span 12}}
 
 /* ---------- home feature: editorial split rows (random 4 pulled from work.html via JS) ---------- */
 .proj--rows{display:block;gap:0}
