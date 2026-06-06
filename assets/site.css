@@ -326,7 +326,6 @@ a[style*="color:var(--accent)"]:hover{color:var(--accent-2)!important;border-col
 .brand-marq .track{animation-duration:64s;font-family:var(--mono);font-weight:400;font-size:.82rem;text-transform:uppercase;letter-spacing:.2em;padding:1.15rem 0}
 .brand-marq .track span{padding:0 1.3rem;color:#5c5c5c}
 .brand-marq .track span.sep{color:#3a3a3a;padding:0}
-.brand-marq:hover .track{animation-play-state:paused}
 
 /* ---------- testimonials ---------- */
 .tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1rem}

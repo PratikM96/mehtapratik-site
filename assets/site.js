@@ -149,6 +149,22 @@
     });
   }
 
+  // Work grid: randomize the project order each load so no project is permanently first or last.
+  // Scoped to the full work grid only (.proj), never the home rows (.proj--rows). Renumbers 01..N after shuffle.
+  var workGrid = document.querySelector('.proj:not(.proj--rows)');
+  if (workGrid) {
+    var pcards = Array.prototype.slice.call(workGrid.querySelectorAll('.p'));
+    for (var si = pcards.length - 1; si > 0; si--) {
+      var sj = (Math.random() * (si + 1)) | 0;
+      var tmp = pcards[si]; pcards[si] = pcards[sj]; pcards[sj] = tmp;
+    }
+    pcards.forEach(function (c, idx) {
+      workGrid.appendChild(c);
+      var nm = c.querySelector('.num');
+      if (nm) nm.textContent = ('0' + (idx + 1)).slice(-2);
+    });
+  }
+
   // Footer privacy link, injected site-wide so the policy is always one click away.
   var bl = document.querySelector('footer a[href*="behance.net"]');
   if (bl && !bl.parentNode.querySelector('a[href="/privacy.html"]')) {
