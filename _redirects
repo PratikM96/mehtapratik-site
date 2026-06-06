@@ -1,4 +1,27 @@
 # Cloudflare Pages redirects (https://developers.cloudflare.com/pages/configuration/redirects/)
-# Pretty URLs are handled automatically by Pages (/about serves /about.html).
-# Add custom redirects here if you retire or rename pages, e.g.:
-# /old-url   /new-url   301
+# Format:  /source  /destination  STATUS    (one rule per line, first match wins)
+#
+# Pages already handles these automatically, so they need NO rules here:
+#   - pretty URLs:      /about     serves    /about.html
+#   - trailing slashes: /about/    redirects to  /about
+#
+# Use 301 for anything that permanently moved or was retired (passes SEO link
+# equity). 302 is temporary. 303 exists but is meant for post-form redirects,
+# not content migration, so it is not used below.
+
+# --- Old WordPress sitemap files (from the previous WP site) -> current sitemap ---
+# Google discovered these from the old sitemap index; send them to the live one.
+/sitemap-misc.xml       /sitemap.xml   301
+/post-sitemap.xml       /sitemap.xml   301
+/page-sitemap.xml       /sitemap.xml   301
+/category-sitemap.xml   /sitemap.xml   301
+/post_tag-sitemap.xml   /sitemap.xml   301
+/archives-sitemap.xml   /sitemap.xml   301
+
+# --- Retired / renamed pages: map old WordPress URLs to the new pages ---
+# Fill these from Search Console > Indexing > Pages > "Not found (404)".
+# One line per old URL. Examples (delete or edit to match your real old paths):
+# /portfolio                 /work.html                          301
+# /projects                  /work.html                          301
+# /resume.pdf                /resume.html                        301
+# /2024/06/pickleball-brand  /blog/pickleball-brand-from-zero.html   301
