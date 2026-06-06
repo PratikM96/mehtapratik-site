@@ -107,7 +107,7 @@ h1.mega{font-family:var(--disp);font-weight:900;font-size:clamp(2.6rem,10vw,11re
 h1.mega .o{-webkit-text-stroke:2px var(--fg);color:transparent}
 h1.mega .a{color:var(--accent)}
 
-.page-title{font-family:var(--disp);font-weight:900;font-size:clamp(2.6rem,9vw,7.5rem);line-height:.88;letter-spacing:-.03em;text-transform:uppercase}
+.page-title{font-family:var(--disp);font-weight:900;font-size:clamp(2.4rem,6vw,5.2rem);line-height:.9;letter-spacing:-.03em;text-transform:uppercase}
 .page-title .a{color:var(--accent)}
 .page-intro{font-family:var(--mono);font-size:clamp(1rem,1.5vw,1.15rem);color:#cfcfcf;max-width:46ch;line-height:1.65;margin-top:1.6rem}
 
