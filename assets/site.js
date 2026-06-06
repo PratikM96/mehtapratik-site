@@ -109,4 +109,14 @@
       });
     });
   }
+
+  // Footer privacy link, injected site-wide so the policy is always one click away.
+  var bl = document.querySelector('footer a[href*="behance.net"]');
+  if (bl && !bl.parentNode.querySelector('a[href="/privacy.html"]')) {
+    bl.parentNode.appendChild(document.createTextNode(' / '));
+    var pl = document.createElement('a');
+    pl.href = '/privacy.html';
+    pl.textContent = 'Privacy';
+    bl.parentNode.appendChild(pl);
+  }
 })();

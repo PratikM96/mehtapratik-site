@@ -5,12 +5,10 @@
 #   - pretty URLs:      /about     serves    /about.html
 #   - trailing slashes: /about/    redirects to  /about
 #
-# Use 301 for anything that permanently moved or was retired (passes SEO link
-# equity). 302 is temporary. 303 exists but is meant for post-form redirects,
-# not content migration, so it is not used below.
+# 301 = permanent (passes SEO link equity). Targets use pretty URLs (no .html)
+# to match the canonical tags and avoid a second hop. Sources from Search Console.
 
-# --- Old WordPress sitemap files (from the previous WP site) -> current sitemap ---
-# Google discovered these from the old sitemap index; send them to the live one.
+# --- Old WordPress sitemap files -> current sitemap ---
 /sitemap-misc.xml       /sitemap.xml   301
 /post-sitemap.xml       /sitemap.xml   301
 /page-sitemap.xml       /sitemap.xml   301
@@ -18,10 +16,33 @@
 /post_tag-sitemap.xml   /sitemap.xml   301
 /archives-sitemap.xml   /sitemap.xml   301
 
-# --- Retired / renamed pages: map old WordPress URLs to the new pages ---
-# Fill these from Search Console > Indexing > Pages > "Not found (404)".
-# One line per old URL. Examples (delete or edit to match your real old paths):
-# /portfolio                 /work.html                          301
-# /projects                  /work.html                          301
-# /resume.pdf                /resume.html                        301
-# /2024/06/pickleball-brand  /blog/pickleball-brand-from-zero.html   301
+# --- Old project URLs -> current case studies ---
+/sportime-social             /work/sportime-clubs   301
+/dealnews-website            /work/dealnews          301
+/dealnews-ui                 /work/dealnews          301
+/work/dealnews-app           /work/dealnews          301
+/work/dealnews-marketplace   /work/dealnews          301
+/work/jmtp-proam             /work/jmtp              301
+/work/frc-history            /work/frc               301
+
+# --- Old blog posts -> current posts (best-guess matches, verify slugs) ---
+/blog/ux-business        /blog/ux-starts-with-the-business-problem   301
+/blog/creative-science   /blog/cs-degree-taught-me-about-design      301
+
+# --- Old blog posts with no clear 1:1 -> blog index ---
+/blog/ai-workflow          /blog   301
+/blog/creative-lead        /blog   301
+/blog/creative-strategy    /blog   301
+/blog/wireframe-to-live    /blog   301
+/blog/video-first-trending /blog   301
+
+# --- Old WordPress archives (tags, categories, dates) -> blog / work index ---
+/blog/tag/*             /blog   301
+/blog/category/*        /blog   301
+/blog/2026/*            /blog   301
+/project-type/*         /work   301
+/project-attributes/*   /work   301
+
+# --- Old standalone pages ---
+/services         /          301
+/privacy-policy   /privacy   301
