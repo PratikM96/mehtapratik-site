@@ -346,6 +346,14 @@ footer{border-top:2px solid var(--fg);padding:clamp(3rem,8vw,5rem) 0 3rem;margin
 .frow{margin-top:3rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.82rem;color:var(--muted)}
 .frow a{color:var(--fg)}
 .frow a:hover{color:var(--accent)}
+/* ---------- testimonials: What People Say (3-up card wall) ---------- */
+.tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.4rem}
+.tcard{margin:0;display:flex;flex-direction:column;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;padding:1.7rem 1.6rem 1.5rem}
+.tcard .mk{font-family:var(--disp);font-weight:900;font-size:2.4rem;line-height:.45;color:var(--accent);height:1rem}
+.tcard p{font-family:var(--sans);font-size:1rem;line-height:1.65;color:#dcdcdc;margin:1rem 0 1.4rem;flex:1 0 auto}
+.tcard .by{display:flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tcard .by::before{content:"";flex:none;width:22px;height:2px;background:var(--accent-2)}
+@media(max-width:880px){.tcards{grid-template-columns:1fr;gap:1rem}}
 
 
 /* ---------- CTA marquee (about, reel) ---------- */
