@@ -38,13 +38,17 @@
 <link rel="stylesheet" href="assets/site.css" />
 <style>
   /* Resume-page-only styles, built on the shared kinetic-teal system */
+  /* Light mode: this page renders as a clean, printable light document on screen and in print */
+  :root{ --bg:#ffffff; --bg-2:#f3f2f0; --fg:#161616; --muted:#6b6b6b; --accent:#0c9a89; --accent-2:#e0573e; --line:rgba(0,0,0,.13); }
+  nav{ mix-blend-mode:normal !important; }
+  body{ background:var(--bg); color:var(--fg); }
   .rsum{max-width:980px;margin:0 auto}
   .rsum-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.4rem;border-bottom:1px solid var(--line);padding-bottom:1.8rem}
   .rsum-head .role{font-family:var(--mono);font-size:.9rem;color:var(--accent);margin-top:.8rem;letter-spacing:.02em}
   .rsum-contact{font-family:var(--mono);font-size:.82rem;color:var(--muted);text-align:right;line-height:1.9}
   .rsum-contact a{color:var(--fg)} .rsum-contact a:hover{color:var(--accent)}
   .rsum-actions{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:1.8rem}
-  .rsum-summary{font-family:var(--sans);font-size:clamp(1.05rem,1.7vw,1.25rem);line-height:1.6;color:#dcdcdc;margin:2.4rem 0 1rem}
+  .rsum-summary{font-family:var(--sans);font-size:clamp(1.05rem,1.7vw,1.25rem);line-height:1.6;color:#2a2a2a;margin:2.4rem 0 1rem}
   .rsum-summary b{color:var(--fg);font-weight:600}
 
   .rsum-grid{display:grid;grid-template-columns:200px 1fr;gap:2.4rem;border-top:1px solid var(--line);padding-top:2.4rem;margin-top:2.4rem}
@@ -58,36 +62,41 @@
   .xp .co{font-family:var(--mono);font-size:.86rem;color:var(--accent);margin-top:.2rem}
   .xp .rh .yr{font-family:var(--mono);font-size:.78rem;color:var(--accent-2);letter-spacing:.04em;white-space:nowrap}
   .xp .meta{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin:.3rem 0 .7rem;letter-spacing:.04em;text-transform:uppercase}
-  .xp .row p{font-family:var(--sans);font-size:1rem;color:#cfcfcf;line-height:1.65;max-width:74ch}
+  .xp .row p{font-family:var(--sans);font-size:1rem;color:#333;line-height:1.65;max-width:74ch}
 
   .skl{display:grid;gap:1.4rem}
   .skl .grp .k{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
-  .skl .grp .v{font-family:var(--sans);font-size:1rem;color:#dcdcdc;line-height:1.7}
+  .skl .grp .v{font-family:var(--sans);font-size:1rem;color:#2a2a2a;line-height:1.7}
   
   .edu h3{font-family:var(--disp);font-weight:800;font-size:1.2rem;text-transform:uppercase;letter-spacing:-.01em}
   .edu .co{font-family:var(--mono);font-size:.86rem;color:var(--accent);margin-top:.3rem}
   .edu .yr{font-family:var(--mono);font-size:.78rem;color:var(--accent-2);margin-top:.3rem}
-  .edu p{font-family:var(--sans);font-size:1rem;color:#cfcfcf;line-height:1.65;margin-top:.6rem;max-width:74ch}
+  .edu p{font-family:var(--sans);font-size:1rem;color:#333;line-height:1.65;margin-top:.6rem;max-width:74ch}
 
   /* hidden on screen, revealed in print/PDF only (phone number) */
   .print-only{display:none}
 
-  /* ---------- print / PDF ---------- */
+  /* ---------- print / PDF: light, two-page layout ---------- */
   @media print{
-    @page{ size:Letter; margin:14mm 16mm; }
+    @page{ size:Letter; margin:11mm 13mm; }
+    html,body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     nav, footer, .rsum-actions, .nav-scrim{ display:none !important; }
-    html,body{ background:#0a0a0a !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    header{ padding:0 0 .5rem !important; }
+    header{ padding:0 0 .18rem !important; }
     .wrap{ padding:0 !important; max-width:none !important; }
     .print-only{ display:inline !important; }
-    .rsum-summary{ font-size:11pt; margin:1rem 0 .5rem; }
     .sec{ padding:0 !important; }
-    .rsum-grid{ gap:1.4rem; padding-top:1.2rem; margin-top:1.2rem; }
-    .xp .row{ break-inside:avoid; page-break-inside:avoid; padding-bottom:.9rem; margin-bottom:.9rem; }
-    .xp .rh h3{ font-size:12pt; }
-    .xp .row p{ font-size:9.5pt; line-height:1.45; }
-    h1.page-title{ font-size:34pt !important; }
-    .rsum-head{ padding-bottom:1rem; }
+    h1.page-title{ font-size:23pt !important; }
+    .rsum-head{ padding-bottom:.45rem !important; }
+    .rsum-head .role{ font-size:.78rem !important; }
+    .rsum-summary{ font-size:8.5pt !important; margin:.45rem 0 .25rem !important; line-height:1.38 !important; }
+    .rsum-grid{ gap:.9rem !important; padding-top:.5rem !important; margin-top:.5rem !important; grid-template-columns:132px 1fr !important; }
+    .xp .row{ break-inside:avoid; padding-bottom:.38rem !important; margin-bottom:.38rem !important; }
+    .xp .rh h3{ font-size:10.4pt !important; }
+    .xp .co{ font-size:7.5pt !important; }
+    .xp .meta{ font-size:6.9pt !important; margin:.1rem 0 .28rem !important; }
+    .xp .row p{ font-size:8.5pt !important; line-height:1.4 !important; }
+    .skl .grp .v{ font-size:8.5pt !important; line-height:1.5 !important; }
+    .edu p{ font-size:8.5pt !important; }
   }
 </style>
 </head>
@@ -148,7 +157,7 @@
         <div class="rh"><h3>Social &amp; Motion Director</h3><span class="yr">2022</span></div>
         <div class="co">The Forest Road Company · Remote · Full-time</div>
         <div class="meta">Series B media-finance firm</div>
-        <p>Directed motion graphics and content strategy for a Series B media-finance firm in the film tax-credit and lending space, translating complex financial products into investor-facing narratives. Produced a $28M Series B milestone motion asset used across fundraising, and built executive analytics frameworks tracking CAC, engagement, and ROI across LinkedIn and investor channels.</p>
+        <p>Directed motion graphics and content strategy for a Series B media-finance firm in the film tax-credit and lending space, translating complex financial products into investor-facing narratives. Produced a $28M Series B milestone motion asset used across fundraising and seen by 4,000 to 6,000 investors and partners in its first month, and built executive analytics frameworks tracking CAC, engagement, and ROI across LinkedIn and investor channels.</p>
       </div>
 
       <div class="row">
@@ -162,7 +171,7 @@
         <div class="rh"><h3>Associate Design Manager</h3><span class="yr">2019</span></div>
         <div class="co">Richard Attias &amp; Associates · New York, NY · Full-time</div>
         <div class="meta">Future Investment Initiative, Riyadh</div>
-        <p>Led environmental, digital, and print creative for the 2019 Future Investment Initiative in Riyadh, a globally broadcast summit hosting 6,000+ attendees and 250 leaders from 30+ countries. Delivered large-format installs, bilingual print, social content, and app prototypes under internationally broadcast deadlines.</p>
+        <p>Led environmental, digital, and print creative for the 2019 Future Investment Initiative in Riyadh, a globally broadcast summit hosting 6,000+ attendees and 250 leaders from 110 countries. Delivered large-format installs, bilingual print, social content, and app prototypes under internationally broadcast deadlines.</p>
       </div>
 
       <div class="row">

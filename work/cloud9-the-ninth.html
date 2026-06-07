@@ -245,6 +245,10 @@
 
   @media(max-width:820px){.meta,.stat,.pal,.princ{grid-template-columns:repeat(2,1fr)}.vgrid,.a-row{grid-template-columns:1fr 1fr}.s-port{grid-template-columns:1fr}.rung{grid-template-columns:30px 1fr;row-gap:6px}.rung .desc{grid-column:1/-1}.rung .st{justify-self:start}}
   @media(max-width:560px){.cards,.pal,.princ,.a-row,.s-tpls{grid-template-columns:1fr 1fr}.s-tpls{grid-template-columns:repeat(3,1fr)}}
+  /* Reflection band, matched to The Ninth's light palette (self-contained: page does not link site.css) */
+  .cs-reflect{background:linear-gradient(180deg,rgba(41,171,226,.07),rgba(244,248,251,.6));border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(2.6rem,6vw,3.8rem) 0;margin:clamp(1.4rem,4vw,2.4rem) 0 clamp(2rem,5vw,3rem)}
+  .cs-reflect .eyebrow{font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--c9);margin:0 0 14px}
+  .cs-reflect p{font-family:var(--text);font-size:17px;line-height:1.7;margin:0;color:var(--ink);max-width:680px}
 </style>
 </head>
 <body>
@@ -265,7 +269,7 @@
   <header class="hero">
     <span class="tag">Self-initiated concept · Esports · 2025</span>
     <h1>The <span class="a">Ninth</span></h1>
-    <p class="snap">A self-initiated concept for Cloud9, not a client engagement. A membership OS that turns watching into belonging. One system across brand, product, a working <b>AI moment-clipper</b>, broadcast motion, and a social engine, built to move a fandom from buying merch to belonging to something.</p>
+    <p class="snap">A self-initiated concept for Cloud9, not a client engagement. A membership OS that turns watching into belonging. One system across brand, product, a working <b>AI moment-clipper</b>, broadcast motion, and a social engine, built to <a href="../blog/sports-fans-and-ai.html" style="color:var(--accent);text-decoration:underline;text-underline-offset:2px">move a fandom from buying merch to belonging</a> to something.</p>
     <div class="meta">
       <div><div class="k">Concept for</div><div class="v">Cloud9 (unaffiliated)</div></div>
       <div><div class="k">Role</div><div class="v">Creative direction, strategy, design, prototype</div></div>
@@ -642,6 +646,11 @@
   </section>
 
 </div>
+
+<section class="cs-reflect"><div class="wrap"><div class="cs-reflect-inner">
+  <div class="eyebrow">What it taught me</div>
+  <p>The Ninth was me designing for belonging instead of buying. An esports org has a fandom with no year-round home, so I built a concept that turns watching into membership, with a working AI moment-clipper at its center. Prototyping that feature for real instead of faking it in a mockup is how I keep GenAI a method I actually ship, not one I just describe. Self-initiated work at this scope is how I prove I can set direction, not just execute someone else's.</p>
+</div></div></section>
 
 <footer class="foot"><div class="wrap">
   <div class="big">Next:<br/><a href="wisp.html">Wisp ↗</a></div>
