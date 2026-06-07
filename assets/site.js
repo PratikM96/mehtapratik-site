@@ -49,7 +49,7 @@
           '<a href="/brand.html">Brand</a>' +
           '<a href="/work.html">Work</a>' +
           '<a href="/blog.html">Blog</a>' +
-          '<a href="/contact.html">Contact↗</a>' +
+          '<a href="/contact.html">Contact ↗\uFE0E</a>' +
         '</div>' +
       '</div>';
   }
@@ -59,11 +59,11 @@
     var type = f.getAttribute('data-foot');
     var top = '';
     if (type === 'cta')
-      top = '<div class="fbig">Let\'s work<br/><a href="/contact.html">together↗</a></div>';
+      top = '<div class="fbig">Let\'s work<br/><a href="/contact.html">together↗\uFE0E</a></div>';
     else if (type === 'work')
-      top = '<div class="fbig fbig-next">Next:<br/><a class="js-next-project" href="/work.html">More work ↗</a></div>';
+      top = '<div class="fbig fbig-next">Next:<br/><a class="js-next-project" href="/work.html">More work ↗\uFE0E</a></div>';
     else if (type === 'blog')
-      top = '<div class="fbig fbig-next">Next:<br/><a class="js-next-post" href="/blog.html">More writing ↗</a></div>';
+      top = '<div class="fbig fbig-next">Next:<br/><a class="js-next-post" href="/blog.html">More writing ↗\uFE0E</a></div>';
     var credit = '<div>Pratik Mehta <span class="brand-c">©</span> · New York · 2026</div>';
     var social = '<div>' +
       '<a href="mailto:mehtadpratik@gmail.com">Email</a> / ' +
@@ -101,7 +101,7 @@
           var t = pick.querySelector(titleSel);
           var href = pick.getAttribute('href').replace(/^(\.\.\/)+/, '').replace(/^\//, '');
           link.setAttribute('href', '/' + href);
-          link.textContent = (t ? t.textContent.trim() : 'Next') + ' ↗';
+          link.textContent = (t ? t.textContent.trim() : 'Next') + ' ↗\uFE0E';
         });
       })
       .catch(function () { /* keep the static fallback link */ });
