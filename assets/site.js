@@ -90,10 +90,10 @@
       .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
       .then(function (html) {
         var doc = new DOMParser().parseFromString(html, 'text/html');
-        var here = location.pathname.split('/').pop();
+        var here = location.pathname.replace(/\/$/, '').split('/').pop().replace(/\.html$/, '');
         var pool = Array.prototype.slice.call(doc.querySelectorAll(cardSel)).filter(function (a) {
           var h = a.getAttribute('href') || '';
-          return h && h.charAt(0) !== '#' && h.split('/').pop() !== here;
+          return h && h.charAt(0) !== '#' && h.split('/').pop().replace(/\.html$/, '') !== here;
         });
         if (!pool.length) return;
         Array.prototype.forEach.call(links, function (link) {
