@@ -78,25 +78,28 @@
 
   /* ---------- print / PDF: light, two-page layout ---------- */
   @media print{
-    @page{ size:Letter; margin:11mm 13mm; }
+    @page{ size:Letter; margin:9mm 12mm; }
     html,body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     nav, footer, .rsum-actions, .nav-scrim{ display:none !important; }
-    header{ padding:0 0 .18rem !important; }
+    header{ padding:0 !important; }
     .wrap{ padding:0 !important; max-width:none !important; }
     .print-only{ display:inline !important; }
     .sec{ padding:0 !important; }
-    h1.page-title{ font-size:23pt !important; }
-    .rsum-head{ padding-bottom:.45rem !important; }
-    .rsum-head .role{ font-size:.78rem !important; }
-    .rsum-summary{ font-size:8.5pt !important; margin:.45rem 0 .25rem !important; line-height:1.38 !important; }
-    .rsum-grid{ gap:.9rem !important; padding-top:.5rem !important; margin-top:.5rem !important; grid-template-columns:132px 1fr !important; }
-    .xp .row{ break-inside:avoid; padding-bottom:.38rem !important; margin-bottom:.38rem !important; }
-    .xp .rh h3{ font-size:10.4pt !important; }
-    .xp .co{ font-size:7.5pt !important; }
-    .xp .meta{ font-size:6.9pt !important; margin:.1rem 0 .28rem !important; }
-    .xp .row p{ font-size:8.5pt !important; line-height:1.4 !important; }
-    .skl .grp .v{ font-size:8.5pt !important; line-height:1.5 !important; }
-    .edu p{ font-size:8.5pt !important; }
+    h1.page-title{ font-size:20pt !important; }
+    .rsum-head{ padding-bottom:.3rem !important; }
+    .rsum-head .role{ font-size:.74rem !important; }
+    .rsum-summary{ font-size:8pt !important; margin:.3rem 0 .15rem !important; line-height:1.3 !important; }
+    .rsum-grid{ gap:.55rem !important; padding-top:.3rem !important; margin-top:.3rem !important; grid-template-columns:112px 1fr !important; }
+    .xp .row{ break-inside:avoid; padding-bottom:.22rem !important; margin-bottom:.22rem !important; }
+    .xp .rh h3{ font-size:9.6pt !important; }
+    .xp .co{ font-size:7.2pt !important; }
+    .xp .meta{ font-size:6.6pt !important; margin:.05rem 0 .15rem !important; }
+    .xp .row p{ font-size:8pt !important; line-height:1.3 !important; }
+    .skl{ gap:.4rem !important; }
+    .skl .grp .k{ margin-bottom:.15rem !important; }
+    .skl .grp .v{ font-size:8pt !important; line-height:1.35 !important; }
+    .edu h3{ font-size:9.6pt !important; }
+    .edu p{ font-size:8pt !important; margin-top:.15rem !important; }
   }
 </style>
 </head>
