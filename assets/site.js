@@ -230,7 +230,7 @@
     var grid0 = document.querySelector('.proj:not(.proj--rows)');
     var cards0 = grid0 ? Array.prototype.slice.call(grid0.querySelectorAll('.p')) : [];
     if (cards0.length) {
-      var FEAT = ['work/sportime-clubs.html', 'work/level.html'];
+      var FEAT = ['work/sportime-clubs.html', 'work/cloud9-the-ninth.html'];
       var parse = function (c) {
         var im = c.querySelector('.img img');
         var src = im ? (im.getAttribute('src') || '') : '';
@@ -259,7 +259,7 @@
         }).join('') + '</div>';
 
       var cats = [['all', 'All'], ['brand', 'Brand'], ['uiux', 'UI/UX'], ['motion', 'Motion'], ['photo', 'Photo'], ['ai', 'AI']];
-      var barHtml = '<div class="wk-bar"><div class="wk-lab">Index — newest first</div><div class="wk-chips">' +
+      var barHtml = '<div class="wk-bar"><div class="wk-lab">Index, newest first</div><div class="wk-chips">' +
         cats.map(function (c, i) { return '<button class="wk-chip' + (i === 0 ? ' on' : '') + '" data-f="' + c[0] + '">' + c[1] + '</button>'; }).join('') + '</div></div>';
 
       var idxHtml = '<div class="wk-index">' + rest.map(function (p, i) {

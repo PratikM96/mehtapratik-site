@@ -2,7 +2,6 @@
    Pratik Mehta / Kinetic Teal
    Shared stylesheet for all pages. Direction C of the design options,
    with Electric Teal as the lead accent and Coral as the rare second highlight.
-   No em-dashes anywhere, per brand rule.
    ========================================================================== */
 
 /* Self-hosted variable fonts, served same-origin from assets/fonts/ so they ride
@@ -477,7 +476,8 @@ body.kin h1.mega .kw.go{animation:kwrise .7s var(--ease) forwards}
 .hw-sup a:hover .cov img{transform:scale(1.04)}
 .hw-sup h5{font-family:var(--disp);font-weight:800;text-transform:uppercase;font-size:1rem;margin:.7rem 0 .25rem;transition:color .2s var(--ease)}
 .hw-sup a:hover h5{color:var(--accent)}
-.hw-sup .disc{font-family:var(--mono);font-size:.68rem;letter-spacing:.05em;color:var(--accent);text-transform:uppercase}
+.hw-sup .disc{font-family:var(--mono);font-size:.68rem;letter-spacing:.05em;color:var(--accent);text-transform:uppercase;transition:color .2s var(--ease)}
+.hw-sup a:hover .disc{color:var(--accent-2)}
 @media(max-width:760px){.hw-hero{grid-template-columns:1fr;gap:1.1rem}.hw-sup{grid-template-columns:1fr;gap:1.7rem}}
 /* ===== Home Journal, featured lead + rows (Option A) ===== */
 .hb-lead{display:block;border-bottom:1px solid var(--line);padding-bottom:1.6rem;margin-bottom:.2rem}
