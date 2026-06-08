@@ -498,3 +498,6 @@ body.kin h1.mega .kw.go{animation:kwrise .7s var(--ease) forwards}
 .hb-row .pt{font-family:var(--disp);font-weight:700;text-transform:uppercase;font-size:clamp(1.1rem,2vw,1.35rem);transition:color .2s var(--ease)}
 .hb-row:hover .pt{color:var(--accent)}
 .hb-row .m{font-family:var(--mono);font-size:.7rem;color:var(--accent-2);margin-top:.4rem;text-transform:uppercase;letter-spacing:.04em}
+
+.inds-lab{font-family:var(--mono);font-size:.76rem;color:var(--muted);margin:1.9rem 0 .7rem;letter-spacing:.01em}
+.inds-lab + .inds{margin-top:.2rem}
