@@ -48,7 +48,7 @@
           '<a href="/about.html">About</a>' +
           '<a href="/brand.html">Brand</a>' +
           '<a href="/work.html">Work</a>' +
-          '<a href="/blog.html">Blog</a>' +
+          '<a href="/blog.html">Journal</a>' +
           '<a href="/contact.html">Contact ↗\uFE0E</a>' +
         '</div>' +
       '</div>';
@@ -115,58 +115,70 @@
   // discoverable early instead of being injected here by this deferred script.
   // The cs-hero/has-cover classes live in page markup. Resume stays clean (no snippet).
 
-  // Home feature: pull the full project list from work.html and show a random 4
-  // as editorial split rows. This keeps the home page in sync with the work index
-  // automatically. Nothing is hard-coded here, so new projects added to work.html
-  // become eligible on the home page with no edits to index.html.
-  var homeRows = document.querySelector('.proj--rows');
-  if (homeRows) {
+  // Home: featured Selected Work (SPORTIME pinned hero + the rest by recency).
+  var homeWork = document.getElementById('home-work');
+  if (homeWork) {
     fetch('work.html', { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.text() : Promise.reject(r.status); })
       .then(function (html) {
         var doc = new DOMParser().parseFromString(html, 'text/html');
-        var pool = Array.prototype.slice.call(doc.querySelectorAll('.proj .p'));
-        if (!pool.length) return;
-        for (var i = pool.length - 1; i > 0; i--) {
-          var j = Math.floor(Math.random() * (i + 1));
-          var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
-        }
-        pool.slice(0, 4).forEach(function (node, idx) {
-          var a = document.importNode(node, true);
-          var num = a.querySelector('.num');
-          var img = a.querySelector('.img');
-          if (num) { num.textContent = '0' + (idx + 1); if (img) img.appendChild(num); }
-          homeRows.appendChild(a);
-          requestAnimationFrame(function () {
-            setTimeout(function () { a.classList.add('in'); }, idx * 90);
-          });
-        });
+        var cards = Array.prototype.slice.call(doc.querySelectorAll('.proj .p'));
+        if (!cards.length) return;
+        var parse = function (c) {
+          var im = c.querySelector('.img img'); var src = im ? (im.getAttribute('src') || '') : '';
+          var tEl = c.querySelector('.t');
+          var disc = tEl ? tEl.innerHTML.replace(/<br\s*\/?>/gi, ' ').replace(/\s+/g, ' ').trim() : '';
+          var h3 = c.querySelector('h3'), pEl = c.querySelector('.lab p'), yrEl = c.querySelector('.yr');
+          var yr = yrEl ? yrEl.textContent : ''; var yrs = (yr.match(/\d{4}/g) || []).map(Number);
+          return { href: c.getAttribute('href') || '#', title: h3 ? h3.textContent : '', yr: yr, disc: disc,
+            desc: pEl ? pEl.textContent : '', srcset: im ? (im.getAttribute('srcset') || '') : '',
+            mid: src.replace('.webp', '-960.webp'), sort: yrs.length ? Math.max.apply(null, yrs) : 0 };
+        };
+        var all = cards.map(parse);
+        var HERO = 'work/sportime-clubs.html';
+        var hero = all.filter(function (p) { return p.href === HERO; })[0] || all[0];
+        var sup = all.filter(function (p) { return p.href !== hero.href; })
+                     .sort(function (a, b) { return b.sort - a.sort; }).slice(0, 3);
+        var img = function (p, w) { return '<img src="' + p.mid + '" srcset="' + p.srcset + '" sizes="' + w + '" alt="' + p.title + '" loading="lazy" decoding="async"/>'; };
+        var heroHtml = '<div class="hw-hero"><a class="hw-cov" href="' + hero.href + '"><div class="cov">' + img(hero, '(max-width:760px) 92vw, 680px') + '</div></a>'
+          + '<div class="hw-meta"><div class="num">Featured</div><h4>' + hero.title + '</h4><div class="disc">' + hero.disc + '</div> <span class="yr">' + hero.yr + '</span><p>' + hero.desc + '</p></div></div>';
+        var supHtml = '<div class="hw-sup">' + sup.map(function (p) {
+          return '<a href="' + p.href + '"><div class="cov">' + img(p, '(max-width:760px) 92vw, 360px') + '</div><h5>' + p.title + '</h5><div class="disc">' + p.disc + '</div></a>';
+        }).join('') + '</div>';
+        homeWork.innerHTML = heroHtml + supHtml;
       })
-      .catch(function () { /* offline or file://; the View all work link stays as fallback */ });
+      .catch(function () { /* offline; the View all work link is the fallback */ });
   }
 
-  // Home feature: pull a random 3 posts from blog.html (real posts only, no
-  // "coming soon" placeholders). Keeps the home blog in sync with the blog index
-  // automatically; nothing is hard-coded, so new posts become eligible with no
-  // edits to index.html.
-  var blogRows = document.querySelector('.blog-rows');
-  if (blogRows) {
+  // Home: Journal teaser (featured lead = most recent, then two rows). blog.html is newest-first.
+  var homeBlog = document.getElementById('home-blog');
+  if (homeBlog) {
     fetch('blog.html', { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.text() : Promise.reject(r.status); })
       .then(function (html) {
         var doc = new DOMParser().parseFromString(html, 'text/html');
-        var pool = Array.prototype.slice.call(doc.querySelectorAll('.post-row:not(.soon)'))
+        var posts = Array.prototype.slice.call(doc.querySelectorAll('.post-row:not(.soon)'))
           .filter(function (a) { var h = a.getAttribute('href') || ''; return h && h.charAt(0) !== '#'; });
-        if (!pool.length) return;
-        for (var i = pool.length - 1; i > 0; i--) {
-          var j = Math.floor(Math.random() * (i + 1));
-          var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
-        }
-        pool.slice(0, 3).forEach(function (node) {
-          blogRows.appendChild(document.importNode(node, true));
-        });
+        if (!posts.length) return;
+        var parseP = function (a) {
+          var pt = a.querySelector('.pt'), pd = a.querySelector('.pd'), pm = a.querySelector('.pm');
+          var meta = pm ? pm.textContent.trim() : '';
+          var parts = meta.split('·').map(function (s) { return s.trim(); }).filter(Boolean);
+          var read = parts.length ? parts[parts.length - 1] : '';
+          var date = parts.length > 1 ? parts[parts.length - 2] : '';
+          var tags = parts.slice(0, Math.max(0, parts.length - 2)).join(' · ');
+          return { href: a.getAttribute('href'), title: pt ? pt.textContent : '', dek: pd ? pd.textContent : '',
+            meta: meta, tags: tags, date: date, read: read };
+        };
+        var data = posts.slice(0, 3).map(parseP);
+        var lead = data[0], rows = data.slice(1, 3);
+        var leadHtml = '<a class="hb-lead" href="' + lead.href + '"><div class="cat">' + lead.tags + '</div><h4>' + lead.title + '</h4><p>' + lead.dek + '</p><div class="m">' + lead.date + (lead.read ? ' · ' + lead.read : '') + '</div></a>';
+        var rowsHtml = rows.map(function (p) {
+          return '<a class="hb-row" href="' + p.href + '"><div class="pt">' + p.title + '</div><div class="m">' + p.meta + '</div></a>';
+        }).join('');
+        homeBlog.innerHTML = leadHtml + rowsHtml;
       })
-      .catch(function () { /* offline or file://; the Read all posts link stays as fallback */ });
+      .catch(function () { /* offline; the All writing link is the fallback */ });
   }
 
   // Scroll reveal for project cards
