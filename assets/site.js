@@ -140,10 +140,10 @@
         var sup = all.filter(function (p) { return p.href !== hero.href; })
                      .sort(function (a, b) { return b.sort - a.sort; }).slice(0, 3);
         var img = function (p, w) { return '<img src="' + p.mid + '" srcset="' + p.srcset + '" sizes="' + w + '" alt="' + p.title + '" loading="lazy" decoding="async"/>'; };
-        var heroHtml = '<div class="hw-hero"><a class="hw-cov" href="' + hero.href + '"><div class="cov">' + img(hero, '(max-width:760px) 92vw, 680px') + '</div></a>'
+        var heroHtml = '<div class="hw-hero"><a class="hw-cov" href="' + hero.href + '"><div class="cov">' + img(hero, '(max-width:760px) 92vw, 900px') + '</div></a>'
           + '<div class="hw-meta"><div class="num">Featured</div><h4>' + hero.title + '</h4><div class="disc">' + hero.disc + '</div> <span class="yr">' + hero.yr + '</span><p>' + hero.desc + '</p></div></div>';
         var supHtml = '<div class="hw-sup">' + sup.map(function (p) {
-          return '<a href="' + p.href + '"><div class="cov">' + img(p, '(max-width:760px) 92vw, 360px') + '</div><h5>' + p.title + '</h5><div class="disc">' + p.disc + '</div></a>';
+          return '<a href="' + p.href + '"><div class="cov">' + img(p, '(max-width:760px) 92vw, 600px') + '</div><h5>' + p.title + '</h5><div class="disc">' + p.disc + '</div></a>';
         }).join('') + '</div>';
         homeWork.innerHTML = heroHtml + supHtml;
       })
