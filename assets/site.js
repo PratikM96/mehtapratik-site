@@ -293,6 +293,50 @@
     }
   }
 
+  // ===== Motion system (shared, all pages). Gated behind prefers-reduced-motion and IO support. =====
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var IO_OK = 'IntersectionObserver' in window;
+
+  function animNum(el) {
+    var raw = el.dataset.target, hasComma = raw.indexOf(',') !== -1;
+    var target = parseFloat(raw.replace(/,/g, '')), dec = (raw.split('.')[1] || '').length;
+    function fmt(v) { var s = dec ? v.toFixed(dec) : String(Math.round(v)); if (hasComma) s = (+s).toLocaleString(); return s; }
+    var start = null, dur = 1500;
+    function step(ts) { if (!start) start = ts; var p = Math.min((ts - start) / dur, 1);
+      el.textContent = fmt(target * (0.1 + 0.9 * p)); if (p < 1) requestAnimationFrame(step); else el.textContent = raw; }
+    requestAnimationFrame(step);
+  }
+
+  if (!REDUCED && IO_OK) {
+    document.body.classList.add('kin');
+    // hero kinetic headline
+    Array.prototype.forEach.call(document.querySelectorAll('h1.mega .kw'), function (k, i) {
+      setTimeout(function () { k.classList.add('go'); }, 110 + i * 105);
+    });
+    // scroll reveals (consistent across pages)
+    var REVEAL_SEL = '.about, .caps-grid > .cap, .inds, .approach-grid > .item, .stats > .s, .tcards > .tcard, .contact-cta';
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' });
+    Array.prototype.forEach.call(document.querySelectorAll(REVEAL_SEL), function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < (window.innerHeight || 800) * 0.93) { el.classList.add('reveal', 'in'); }
+      else { el.classList.add('reveal'); io.observe(el); }
+    });
+    // stat count-up
+    var io3 = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { animNum(e.target); io3.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    Array.prototype.forEach.call(document.querySelectorAll('.stats .accent'), function (el) {
+      var raw = el.textContent.trim();
+      if (!/^[\d,]+(\.\d+)?$/.test(raw)) return;
+      el.dataset.target = raw;
+      var dec = (raw.split('.')[1] || '').length;
+      el.textContent = dec ? (0).toFixed(dec) : '0';
+      io3.observe(el);
+    });
+  }
+
   // ---- GA4 portfolio events: contact intent + engagement (see ga4-event-tracking-plan) ----
   function track(name, params) { if (typeof gtag === 'function') gtag('event', name, params || {}); }
 
