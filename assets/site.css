@@ -140,6 +140,7 @@ h1.mega .a{color:var(--accent)}
 .p:hover .img.gen{filter:grayscale(.2) contrast(1.05)}
 .p .img.gen>*{transition:transform .8s var(--ease)}
 .p:hover .img.gen>*{transform:scale(1.05)}
+.p .img.gen img{width:100%;height:100%;object-fit:cover;display:block}
 .p .num{position:absolute;top:1rem;left:1.1rem;font-family:var(--mono);font-size:.8rem;color:var(--fg);z-index:2;mix-blend-mode:difference}
 .p .lab{padding:1.3rem 1.4rem 1.5rem;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
 .p .lab h3{font-family:var(--disp);font-weight:800;font-size:1.3rem;text-transform:uppercase;letter-spacing:-.01em}
