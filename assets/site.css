@@ -377,3 +377,52 @@ a[style*="color:var(--accent)"]:hover{color:var(--accent-2)!important;border-col
 .brand-marq .track span.sep{color:#3a3a3a;padding:0}
 
 /* ---------- t
+
+/* ---- Work page hybrid (Featured + hover Index). JS builds this from the .p cards;
+   the raw .proj grid remains as the no-JS fallback, SEO source, and home-page feed. ---- */
+.work-app[hidden]{display:none}
+.wk-lab{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.wk-disc{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--accent);text-transform:uppercase}
+.wk-yr{color:var(--accent-2);font-family:var(--mono);font-size:.7rem;letter-spacing:.05em}
+.wk-feat{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.wk-feat>a{display:block}
+.wk-feat .img{aspect-ratio:16/10;border-radius:5px;overflow:hidden;background:var(--bg-2);position:relative}
+.wk-feat .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.wk-feat>a:hover .img img{transform:scale(1.04)}
+.wk-feat .fl{display:flex;justify-content:space-between;gap:1rem;align-items:flex-end;padding:.9rem .2rem 0}
+.wk-feat .fl h3{font-family:var(--disp);font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(1.3rem,2.4vw,1.9rem);line-height:1;margin:0}
+.wk-feat .fmeta{margin-top:.6rem;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:.3rem}
+.wk-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--line);padding-bottom:.9rem;margin:3.4rem 0 1.4rem;flex-wrap:wrap}
+.wk-chips{display:flex;gap:.5rem;flex-wrap:wrap}
+.wk-chip{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:none;border:1px solid var(--line-2);border-radius:40px;padding:.45rem 1rem;cursor:pointer;transition:all .2s var(--ease)}
+.wk-chip:hover{color:var(--fg)}
+.wk-chip.on{color:#0a0a0a;background:var(--accent);border-color:var(--accent)}
+.wk-index{position:relative}
+.wk-li{display:flex;align-items:center;gap:1.4rem;padding:1.25rem .2rem;border-bottom:1px solid var(--line);overflow:hidden;color:inherit;transition:opacity .4s var(--ease),max-height .5s var(--ease),padding .4s var(--ease);max-height:240px}
+.wk-li:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wk-li .wn{flex:none;font-family:var(--mono);font-size:.78rem;color:var(--muted);width:2.4em}
+.wk-li .wt{display:none}
+.wk-li .wm{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:1.2rem}
+.wk-li h3{font-family:var(--disp);font-weight:800;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(1.3rem,3vw,2.3rem);line-height:1.04;margin:0;color:var(--muted);transition:color .3s var(--ease),transform .35s var(--ease)}
+.wk-li:hover h3,.wk-li:focus-visible h3{color:var(--fg);transform:translateX(12px)}
+.wk-li .wr{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:.25rem;white-space:nowrap}
+.wk-li.off{opacity:0;max-height:0;padding-top:0;padding-bottom:0;border-color:transparent;pointer-events:none}
+.wk-prev{position:fixed;width:320px;aspect-ratio:16/10;border-radius:7px;overflow:hidden;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.9);transition:opacity .28s var(--ease),transform .28s var(--ease);z-index:40;box-shadow:0 34px 70px -34px rgba(0,0,0,.85)}
+.wk-prev.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.wk-prev img{width:100%;height:100%;object-fit:cover}
+.wk-empty{font-family:var(--mono);color:var(--muted);font-size:.85rem;padding:2rem .2rem;display:none}
+@media(max-width:720px){
+  .wk-feat{grid-template-columns:1fr;gap:1.8rem}
+  .wk-feat .fl{flex-direction:column;align-items:flex-start;gap:.45rem}
+  .wk-feat .fmeta{white-space:normal;align-items:flex-start;text-align:left}
+  .wk-prev{display:none}
+  .wk-li{gap:.8rem;max-height:320px;padding:1rem .1rem}
+  .wk-li .wn{align-self:flex-start;width:auto;font-size:.66rem;padding-top:3px}
+  .wk-li .wt{display:block;flex:none;width:84px;aspect-ratio:16/10;object-fit:cover;border-radius:4px;background:var(--bg-2)}
+  .wk-li .wm{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .wk-li h3{font-size:1.3rem;line-height:1.06}
+  .wk-li:hover h3,.wk-li:focus-visible h3{transform:none}
+  .wk-li .wr{align-items:flex-start;white-space:normal;gap:.3rem}
+}
+@media(hover:none){.wk-prev{display:none}}
+@media(prefers-reduced-motion:reduce){.wk-li,.wk-li h3,.wk-feat .img img,.wk-prev{transition:none}}

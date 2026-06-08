@@ -210,39 +210,87 @@
     });
   }
 
-  // Work filter
-  var filterBar = document.querySelector('.filters');
-  if (filterBar) {
-    var btns = filterBar.querySelectorAll('button');
-    var items = document.querySelectorAll('.proj .p');
-    filterBar.addEventListener('click', function (ev) {
-      var btn = ev.target.closest('button');
-      if (!btn) return;
-      btns.forEach(function (b) { b.classList.remove('on'); });
-      btn.classList.add('on');
-      var f = btn.getAttribute('data-filter');
-      items.forEach(function (it) {
-        var tags = (it.getAttribute('data-tags') || '').split(' ');
-        var show = (f === 'all') || tags.indexOf(f) !== -1;
-        it.hidden = !show;
-      });
-    });
-  }
+  // Work page: build the Featured + Index hybrid from the .p cards. The cards stay in
+  // the DOM as the no-JS fallback, the SEO source, and the home page's data source, so
+  // nothing downstream breaks. Recency order, featured pair pinned, chip filter, hover preview.
+  var workApp = document.getElementById('work-app');
+  if (workApp) {
+    var grid0 = document.querySelector('.proj:not(.proj--rows)');
+    var cards0 = grid0 ? Array.prototype.slice.call(grid0.querySelectorAll('.p')) : [];
+    if (cards0.length) {
+      var FEAT = ['work/sportime-clubs.html', 'work/level.html'];
+      var parse = function (c) {
+        var im = c.querySelector('.img img');
+        var src = im ? (im.getAttribute('src') || '') : '';
+        var tEl = c.querySelector('.t');
+        var disc = tEl ? tEl.innerHTML.replace(/<br\s*\/?>/gi, ' ').replace(/\s+/g, ' ').trim() : '';
+        var h3 = c.querySelector('h3'), yrEl = c.querySelector('.yr');
+        var yr = yrEl ? yrEl.textContent : '';
+        var yrs = (yr.match(/\d{4}/g) || []).map(Number);
+        return {
+          href: c.getAttribute('href') || '#',
+          title: h3 ? h3.textContent : '',
+          yr: yr, disc: disc, tags: c.getAttribute('data-tags') || '',
+          base: src, srcset: im ? (im.getAttribute('srcset') || '') : '',
+          small: src.replace('.webp', '-480.webp'), mid: src.replace('.webp', '-960.webp'),
+          sort: yrs.length ? Math.max.apply(null, yrs) : 0
+        };
+      };
+      var all = cards0.map(parse);
+      var feat = FEAT.map(function (h) { var m = all.filter(function (p) { return p.href === h; }); return m[0]; }).filter(Boolean);
+      var rest = all.filter(function (p) { return FEAT.indexOf(p.href) === -1; }).sort(function (a, b) { return b.sort - a.sort; });
 
-  // Work grid: randomize the project order each load so no project is permanently first or last.
-  // Scoped to the full work grid only (.proj), never the home rows (.proj--rows). Renumbers 01..N after shuffle.
-  var workGrid = document.querySelector('.proj:not(.proj--rows)');
-  if (workGrid) {
-    var pcards = Array.prototype.slice.call(workGrid.querySelectorAll('.p'));
-    for (var si = pcards.length - 1; si > 0; si--) {
-      var sj = (Math.random() * (si + 1)) | 0;
-      var tmp = pcards[si]; pcards[si] = pcards[sj]; pcards[sj] = tmp;
+      var featHtml = '<div class="wk-lab" style="padding-bottom:1.2rem;border-bottom:1px solid var(--line);margin-bottom:1.4rem">Featured</div><div class="wk-feat">' +
+        feat.map(function (p) {
+          return '<a href="' + p.href + '"><div class="img"><img src="' + p.base + '" srcset="' + p.srcset + '" sizes="(max-width: 980px) 92vw, 600px" alt="' + p.title + '" loading="lazy" decoding="async"/></div>' +
+            '<div class="fl"><h3>' + p.title + '</h3><div class="fmeta"><span class="wk-disc">' + p.disc + '</span><span class="wk-yr">' + p.yr + '</span></div></div></a>';
+        }).join('') + '</div>';
+
+      var cats = [['all', 'All'], ['brand', 'Brand'], ['uiux', 'UI/UX'], ['motion', 'Motion'], ['photo', 'Photo'], ['ai', 'AI']];
+      var barHtml = '<div class="wk-bar"><div class="wk-lab">Index — newest first</div><div class="wk-chips">' +
+        cats.map(function (c, i) { return '<button class="wk-chip' + (i === 0 ? ' on' : '') + '" data-f="' + c[0] + '">' + c[1] + '</button>'; }).join('') + '</div></div>';
+
+      var idxHtml = '<div class="wk-index">' + rest.map(function (p, i) {
+        return '<a class="wk-li" href="' + p.href + '" data-tags="' + p.tags + '" data-img="' + p.mid + '">' +
+          '<span class="wn">' + ('0' + (i + 1)).slice(-2) + '</span>' +
+          '<img class="wt" src="' + p.small + '" alt="" loading="lazy"/>' +
+          '<div class="wm"><h3>' + p.title + '</h3><div class="wr"><span class="wk-disc">' + p.disc + '</span><span class="wk-yr">' + p.yr + '</span></div></div></a>';
+      }).join('') + '</div><div class="wk-empty" id="wk-empty">No projects in this discipline.</div><div class="wk-prev" id="wk-prev"><img alt=""/></div>';
+
+      workApp.innerHTML = featHtml + barHtml + idxHtml;
+      workApp.hidden = false;
+      grid0.style.display = 'none';
+      var oldFilters = document.querySelector('.filters');
+      if (oldFilters) oldFilters.style.display = 'none';
+
+      var wchips = workApp.querySelector('.wk-chips');
+      var wlis = Array.prototype.slice.call(workApp.querySelectorAll('.wk-li'));
+      var wempty = workApp.querySelector('#wk-empty');
+      wchips.addEventListener('click', function (e) {
+        var b = e.target.closest('.wk-chip'); if (!b) return;
+        Array.prototype.slice.call(wchips.querySelectorAll('.wk-chip')).forEach(function (c) { c.classList.toggle('on', c === b); });
+        var f = b.getAttribute('data-f'), shown = 0;
+        wlis.forEach(function (li) {
+          var ok = f === 'all' || (li.getAttribute('data-tags') || '').split(' ').indexOf(f) !== -1;
+          li.classList.toggle('off', !ok); if (ok) shown++;
+        });
+        wempty.style.display = shown ? 'none' : 'block';
+        if (typeof track === 'function') track('work_filter_use', { filter: f });
+      });
+
+      var wprev = workApp.querySelector('#wk-prev'), wpim = wprev.querySelector('img');
+      wlis.forEach(function (li) {
+        var show = function () { wpim.src = li.getAttribute('data-img'); wprev.classList.add('on'); };
+        var hide = function () { wprev.classList.remove('on'); };
+        li.addEventListener('mouseenter', show);
+        li.addEventListener('mouseleave', hide);
+        li.addEventListener('focus', show);
+        li.addEventListener('blur', hide);
+      });
+      workApp.querySelector('.wk-index').addEventListener('mousemove', function (e) {
+        wprev.style.left = e.clientX + 'px'; wprev.style.top = e.clientY + 'px';
+      });
     }
-    pcards.forEach(function (c, idx) {
-      workGrid.appendChild(c);
-      var nm = c.querySelector('.num');
-      if (nm) nm.textContent = ('0' + (idx + 1)).slice(-2);
-    });
   }
 
   // ---- GA4 portfolio events: contact intent + engagement (see ga4-event-tracking-plan) ----
