@@ -276,6 +276,10 @@ h1.mega .a{color:var(--accent)}
 .cs-grid2 img.logo-card,.cs-media img.logo-card{background:#f0ede8;padding:2rem;object-fit:contain;height:240px}
 .cs-grid2 img.logo-card{width:100%}
 .cs-media .logo-card{border-radius:6px}
+/* Tier 3 photo crop: case-study photos lock to 3:2 landscape / 2:3 portrait in-frame,
+   whatever the source ratio. Use class "ph" (landscape) or "ph-v" (portrait) on any case-study photo. */
+.cs-grid2 img.ph,.cs-media img.ph{aspect-ratio:3/2;object-fit:cover;width:100%}
+.cs-grid2 img.ph-v,.cs-media img.ph-v{aspect-ratio:2/3;object-fit:cover;width:100%}
 .cs-statbar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);margin:2.4rem 0}
 .cs-statbar>div{padding:1.5rem .85rem;border-right:1px solid var(--line);min-width:0}
 .cs-statbar>div:last-child{border-right:none}
