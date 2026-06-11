@@ -171,7 +171,7 @@
   .bcols .sub{max-width:none}
   @media(max-width:760px){.bcols{grid-template-columns:1fr;gap:1.6rem}}
 </style>
-<!-- hero-cover-preload: pick + preload the hero texture in <head> so it is discoverable early, not injected by deferred JS. LCP fix. Keep this list in sync if textures change. -->
+<!-- hero-cover-preload -->
 <script>(function(){if(innerWidth<=880)return;var t=["texture-blue-swirls","texture-blue-wood","texture-feather","texture-gold-particles","texture-green","texture-grunge","texture-ocean","texture-space-shimmer","texture-sportime","texture-teal-leaves","texture-teal-swirls"];var u="https://cdn.mehtapratik.com/textures/"+t[Math.floor(Math.random()*t.length)]+".webp";var l=document.createElement("link");l.rel="preload";l.as="image";l.fetchPriority="high";l.href=u;document.head.appendChild(l);document.documentElement.style.setProperty("--cover","url('"+u+"')");})();</script>
 </head>
 <body>
@@ -222,7 +222,7 @@
 
   <h3 class="h3b">Positioning statement</h3>
   <div class="spec" style="text-align:center;padding:2.4rem 2rem">
-    <p style="font-family:var(--sans);font-size:clamp(1.1rem,1.7vw,1.35rem);line-height:1.5;color:#e8e8e8;max-width:62ch;margin:0 auto">A creative director who works across brand, motion, UI/UX, and growth, building brand systems that scale and the campaigns that run on them. Designs like a systems engineer and measures like a marketer.</p>
+    <p style="font-family:var(--sans);font-size:clamp(1.1rem,1.7vw,1.35rem);line-height:1.5;color:#e8e8e8;max-width:62ch;margin:0 auto">A creative director who works across brand, motion, UI/UX, social, and growth, building brand systems that scale and the campaigns that run on them. Designs like a systems engineer and measures like a marketer.</p>
   </div>
 
   <h3 class="h3b">Tagline</h3>

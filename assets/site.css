@@ -148,24 +148,11 @@ h1.mega .a{color:var(--accent)}
 .c7 .img{aspect-ratio:16/10}.c5 .img{aspect-ratio:16/10}.c6 .img{aspect-ratio:16/10}
 @media(max-width:880px){.c7,.c5,.c6{grid-column:span 12}}
 
-/* ---------- home feature: editorial split rows (random 4 pulled from work.html via JS) ---------- */
-.proj--rows{display:block;gap:0}
-.proj--rows .p{grid-column:auto;display:grid;grid-template-columns:300px 1fr;align-items:center;gap:2.2rem;background:transparent;border-radius:0;overflow:visible;border-top:1px solid var(--bg-2);padding:1.7rem 0}
-.proj--rows .p:last-child{border-bottom:1px solid var(--bg-2)}
-.proj--rows .p .img{border-radius:4px;aspect-ratio:16/10}
-.proj--rows .p .lab{padding:0}
-.proj--rows .p .lab p{max-width:46ch}
-@media(max-width:880px){
-  .proj--rows .p{grid-template-columns:1fr;gap:1.1rem;padding:1.4rem 0}
-  .proj--rows .p .lab{flex-direction:column;gap:.7rem}
-  .proj--rows .p .lab .t{text-align:left}
-}
-
-/* ---------- filters ---------- */
-.filters{display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:2.6rem}
-.filters button{font-family:var(--mono);font-size:.8rem;border:1px solid var(--line-2);background:none;color:var(--muted);padding:.5rem 1.05rem;border-radius:40px;cursor:pointer;transition:all .2s var(--ease)}
-.filters button.on,.filters button:hover{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
-.p[hidden]{display:none}
+/* ---------- shared utility: back links and captions ---------- */
+.backlink{font-family:var(--mono);font-size:.82rem;color:var(--accent)}
+.mt-cs{margin-top:1.4rem}
+.cap-note{font-family:var(--mono);font-size:.76rem;color:var(--muted)}
+.cs-link{font-family:var(--mono);font-size:.78rem;display:inline-block;margin-top:.7rem;color:var(--accent)}
 
 /* ---------- stats ---------- */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
@@ -174,7 +161,6 @@ h1.mega .a{color:var(--accent)}
 .stats .n{font-family:var(--disp);font-weight:900;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.03em;white-space:nowrap}
 .stats .n .accent{color:var(--accent)}
 .stats .l{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin-top:.6rem;line-height:1.5}
-.stats .l .src{display:block;margin-top:.5rem;color:var(--accent-2);font-size:.76rem;letter-spacing:.03em}
 @media(max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}.stats .s:nth-child(2){border-right:none}.stats .s:nth-child(1),.stats .s:nth-child(2){border-bottom:1px solid var(--line)}}
 
 /* ---------- about block ---------- */
@@ -262,10 +248,6 @@ h1.mega .a{color:var(--accent)}
 .cs-media img,.cs-media video{border-radius:6px;width:100%;height:auto}
 .cs-media .cap{font-family:var(--mono);font-size:.76rem;color:var(--muted);margin-top:.7rem}
 .cs-media.full{max-width:none}
-/* Tall full-page screenshots: crop to the top portion as a fixed preview (no internal scroll) */
-.cs-crop{border-radius:6px;border:1px solid var(--line);background:var(--bg-2);overflow:hidden;max-height:600px;position:relative}
-.cs-crop img{width:100%;height:auto;display:block;border-radius:0}
-.cs-crop::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(to bottom,rgba(10,10,10,0),rgba(10,10,10,.92));pointer-events:none}
 /* Image set: two-up centered grid. Each tile sizes to its own image, so there are no
    letterbox bars on any image, regardless of its aspect ratio or background. Odd counts center the orphan. */
 .cs-grid2{columns:2;column-gap:1.4rem;margin:2.4rem 0}
@@ -305,8 +287,6 @@ h1.mega .a{color:var(--accent)}
 .post-row:hover .pt{color:var(--accent)}
 .post-row .pd{font-family:var(--sans);font-size:.95rem;color:var(--muted);margin-top:.5rem;max-width:70ch;line-height:1.6}
 .post-row .pm{font-family:var(--mono);font-size:.72rem;color:var(--accent-2);margin-top:.7rem;letter-spacing:.04em;text-transform:uppercase}
-.post-row.soon{opacity:.5;pointer-events:none}
-.post-row.soon .pm{color:var(--muted)}
 
 /* ---------- blog post (long-form reading) ---------- */
 .post-hero{padding:8.5rem 0 1rem}
@@ -365,8 +345,8 @@ footer{border-top:2px solid var(--fg);padding:clamp(3rem,8vw,5rem) 0 3rem;margin
 
 
 /* ---------- accent links: teal by default, coral on hover (site-wide) ---------- */
-a[style*="color:var(--accent)"]{transition:color .2s var(--ease),border-color .2s var(--ease)}
-a[style*="color:var(--accent)"]:hover{color:var(--accent-2)!important;border-color:var(--accent-2)!important}
+a[style*="color:var(--accent)"],a.backlink,a.cs-link{transition:color .2s var(--ease),border-color .2s var(--ease)}
+a[style*="color:var(--accent)"]:hover,a.backlink:hover,a.cs-link:hover{color:var(--accent-2)!important;border-color:var(--accent-2)!important}
 
 /* ---------- brand strip (muted social-proof marquee, reuses .marq/.track) ---------- */
 .brand-marq{margin:0;background:transparent;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -374,10 +354,8 @@ a[style*="color:var(--accent)"]:hover{color:var(--accent-2)!important;border-col
 .brand-marq .track span{padding:0 1.3rem;color:#5c5c5c}
 .brand-marq .track span.sep{color:#3a3a3a;padding:0}
 
-/* ---------- t
-
-/* ---- Work page hybrid (Featured + hover Index). JS builds this from the .p cards;
-   the raw .proj grid remains as the no-JS fallback, SEO source, and home-page feed. ---- */
+/* ---------- work page hybrid (Featured + hover Index). JS builds this from the .p cards;
+   the raw .proj grid remains as the no-JS fallback, SEO source, and home-page feed. ---------- */
 .work-app[hidden]{display:none}
 .wk-lab{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .wk-disc{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:var(--accent);text-transform:uppercase}

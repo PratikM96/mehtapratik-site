@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://cdn.mehtapratik.com" crossorigin />
 <link rel="preload" href="assets/fonts/Archivo-Expanded-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="assets/site.css" />
-<!-- hero-cover-preload: pick + preload the hero texture in <head> so it is discoverable early, not injected by deferred JS. LCP fix. Keep this list in sync if textures change. -->
+<!-- hero-cover-preload -->
 <script>(function(){if(innerWidth<=880)return;var t=["texture-blue-swirls","texture-blue-wood","texture-feather","texture-gold-particles","texture-green","texture-grunge","texture-ocean","texture-space-shimmer","texture-sportime","texture-teal-leaves","texture-teal-swirls"];var u="https://cdn.mehtapratik.com/textures/"+t[Math.floor(Math.random()*t.length)]+".webp";var l=document.createElement("link");l.rel="preload";l.as="image";l.fetchPriority="high";l.href=u;document.head.appendChild(l);document.documentElement.style.setProperty("--cover","url('"+u+"')");})();</script>
 </head>
 <body>
@@ -56,7 +56,7 @@
   <p>The contact form opens your own email client and sends a message directly to me. The site does not store submissions on a server. Anything you choose to include, such as your name, email, and message, reaches me by email and is used only to reply to you.</p>
 
   <h2>Cookies</h2>
-  <p>The only cookies set are the Google Analytics cookies described above. There are no advertising or cross-site tracking cookies. Fonts are self-hosted, so no third-party font service receives your data.</p>
+  <p>The only cookies set are the Google Analytics cookies described above. There are no advertising or cross-site tracking cookies. Fonts on the portfolio pages are self-hosted, so no third-party font service receives your data there; a few interactive concept demos load their display fonts from Google Fonts, which receives standard request data when those pages are viewed.</p>
 
   <h2>Hosting and delivery</h2>
   <p>The site runs on Cloudflare Pages, and images and video are served from a Cloudflare CDN. Cloudflare may process standard server log data, such as IP address, to deliver content and protect the site.</p>

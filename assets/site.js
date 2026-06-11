@@ -271,8 +271,6 @@
       workApp.innerHTML = featHtml + barHtml + idxHtml;
       workApp.hidden = false;
       grid0.style.display = 'none';
-      var oldFilters = document.querySelector('.filters');
-      if (oldFilters) oldFilters.style.display = 'none';
 
       var wchips = workApp.querySelector('.wk-chips');
       var wlis = Array.prototype.slice.call(workApp.querySelectorAll('.wk-li'));
@@ -348,16 +346,12 @@
     });
   }
 
-  // ---- GA4 portfolio events: contact intent + engagement (see ga4-event-tracking-plan) ----
+  // ---- GA4 events: contact intent + engagement ----
   function track(name, params) { if (typeof gtag === 'function') gtag('event', name, params || {}); }
 
   document.addEventListener('click', function (e) {
     var el = e.target.closest('a, button');
     if (!el) return;
-    if (el.matches('.filters button')) {
-      track('work_filter_use', { filter: el.getAttribute('data-filter') || el.textContent.trim() });
-      return;
-    }
     if (el.tagName !== 'A') return;
     var href = el.getAttribute('href') || '';
     if (href.indexOf('mailto:') === 0) {
