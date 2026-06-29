@@ -1,0 +1,255 @@
+---
+/**
+ * The Ninth — concept case study (template proof, concept variant).
+ * Same template as the SPORTIME client case study, ported from
+ * _reference/case-study-the-ninth-concept.html. The only differences:
+ *   1. Badge + rail Type read "Concept · self-initiated" (neutral, no orange).
+ *   2. The scoreboard's headline cell is a SCOPE cell ("5 surfaces") — neutral.
+ *   3. Proof uses ScopeBox (scope counts + rationale), not a ResultBox: no
+ *      testimonial, no audience/engagement/revenue claimed for speculative work.
+ *   4. Output adds the EmbeddedDemo module linking to /concepts/the-ninth/.
+ *
+ * Self-initiated concept: scope only, never performance. Orange is reserved for
+ * verified client results and appears nowhere on this page. Copy is kept exactly
+ * as in the reference. Nothing is invented; zero SPORTIME metrics carry over.
+ */
+import Base from '../../layouts/Base.astro';
+import CaseSectionHead from '../../components/CaseSectionHead.astro';
+import Scoreboard from '../../components/Scoreboard.astro';
+import MarginRail from '../../components/MarginRail.astro';
+import SysFlow from '../../components/SysFlow.astro';
+import Decisions from '../../components/Decisions.astro';
+import OutputGrid from '../../components/OutputGrid.astro';
+import EmbeddedDemo from '../../components/EmbeddedDemo.astro';
+import ScopeBox from '../../components/ScopeBox.astro';
+
+const CDN = 'https://cdn.mehtapratik.com';
+const COVER = `${CDN}/covers/the-ninth-cover.webp`;
+
+// --- Rail (case-study variant) ---
+const sections = [
+  { ix: '01', label: 'Problem', href: '#problem' },
+  { ix: '02', label: 'System', href: '#system' },
+  { ix: '03', label: 'Decisions', href: '#decisions' },
+  { ix: '04', label: 'Output', href: '#output' },
+  { ix: '05', label: 'Proof', href: '#proof' },
+];
+// Concept rail: Type stays neutral (no `client` flag), so no orange.
+const scoreboard = [
+  { k: 'Type', v: 'Concept · self-initiated' },
+  { k: 'Role', v: 'Concept, end to end' },
+  { k: 'Year', v: '2024' },
+];
+
+// --- Hero scoreboard cells (4th cell is SCOPE, neutral — not a metric) ---
+const heroCells = [
+  { k: 'Role', v: 'Concept, brand & product, end to end' },
+  { k: 'Disciplines', v: 'Brand · UI/UX · AI · Motion' },
+  { k: 'Type', v: 'Self-initiated · 2024' },
+  { k: 'Scope', v: '5', scope: true, unit: ' surfaces' },
+];
+
+// --- System steps ---
+const sysSteps = [
+  { ix: '01', title: 'Brand & system', text: 'One identity and design language underneath every surface.' },
+  { ix: '02', title: 'Membership app', text: 'The home surface: watch, follow, and belong in one place.' },
+  { ix: '03', title: 'AI clipper + broadcast', text: 'AI turns live play into clips and a broadcast layer automatically.' },
+  { ix: '04', title: 'Social layer', text: 'Member-made clips and moments flow back into the feed.' },
+];
+
+// --- Decisions ---
+const decisions = [
+  { n: '01', title: 'One design language, four surfaces', text: 'Build the brand and component system first, then derive every surface from it, so the app, clipper, broadcast, and feed share one DNA instead of looking related by accident.' },
+  { n: '02', title: 'AI as a feature, not the pitch', text: 'The clipper and broadcast use AI to remove work, not to be the headline. The member feels the speed, not the model.' },
+  { n: '03', title: 'Membership over login', text: 'Frame the product around belonging, not access. Every surface reinforces that a member is part of something, not just signed in.' },
+  { n: '04', title: 'Motion as connective tissue', text: 'A shared motion language carries the member between surfaces so transitions feel like one product breathing, not separate apps loading.' },
+];
+
+// --- Output tiles ---
+const outputTiles = [
+  { wide: true, img: COVER, alt: 'The Ninth brand system', caption: 'Brand & identity system' },
+  { ph: 'Screen · membership app', caption: 'App · home surface' },
+  { ph: 'Screen · AI clipper', caption: 'AI clipper' },
+  { ph: 'Screen · broadcast', caption: 'Broadcast layer' },
+  { wide: true, ph: 'Frames · motion system', caption: 'Motion language across surfaces' },
+];
+const outputNote = 'Placeholder tiles represent the surface families. Real screens and motion populate from R2 at build time.';
+
+// --- Embedded demo tabs (placeholder image until per-view screens land) ---
+const demoTabs = [
+  { label: 'App', cap: 'App · membership home', img: COVER },
+  { label: 'Clipper', cap: 'AI clipper · live play to clips', img: COVER },
+  { label: 'Broadcast', cap: 'Broadcast layer', img: COVER },
+  { label: 'Social', cap: 'Social feed · member clips', img: COVER },
+  { label: 'Brand', cap: 'Brand & identity system', img: COVER },
+];
+
+// --- Proof (scope, not results) ---
+const scopeFigures = [
+  { value: '5', label: 'Product surfaces: app, clipper, broadcast, social, brand' },
+  { value: '0→1', label: 'Brand and design system built from zero' },
+  { value: 'AI', label: 'Clipper and broadcast features designed in' },
+  { value: 'Motion', label: 'One motion language across every surface' },
+];
+const scopeRationale = {
+  label: 'Why it exists · what it proves',
+  text: 'The Ninth is self-initiated. The figures above are scope, what was designed and built, not performance. No audience, engagement, or revenue results are claimed for speculative work. What it demonstrates is range: a full product brand taken from zero to a coherent, multi-surface system.',
+};
+---
+
+<Base
+  variant="case-study"
+  title="The Ninth — Case study · concept · Pratik Mehta"
+  description="A self-initiated esports membership concept, designed as one product system: brand, app, AI-driven clipper and broadcast, and a social layer, all built from zero."
+  sections={sections}
+  scoreboard={scoreboard}
+  back={{ href: '/#work', label: '← Index · all work' }}
+>
+  {/* SCOREBOARD HERO */}
+  <header class="cs-hero">
+    <span class="badge concept rev">Concept · Self-initiated</span>
+    <h1 class="rev">The Ninth</h1>
+    <p class="descr rev">A self-initiated esports membership concept, designed as one product system: brand, app, AI-driven clipper and broadcast, and a social layer, all built from zero.</p>
+    <Scoreboard cells={heroCells} />
+    <div class="cs-wall rev">
+      <img src={COVER} alt="The Ninth concept system" />
+      <span class="cap">The Ninth · esports membership concept</span>
+    </div>
+  </header>
+
+  {/* PROBLEM */}
+  <section class="cs-sec" id="problem">
+    <CaseSectionHead no="01" title="Problem" />
+    <div class="cs-body rev">
+      <div class="cs-main prose">
+        <p><strong>Esports has a membership problem.</strong> Fandom is huge and constant, but the relationship between a team and its members is scattered across a dozen apps that were never designed to work together: one for streams, another for clips, another for chat, another for merch.</p>
+        <p>The Ninth is a speculative answer: a single membership product where watching, clipping, broadcasting, and belonging live in one system. The design problem was coherence, making four very different surfaces feel like one product a member never wants to leave.</p>
+      </div>
+      <MarginRail
+        modules={[
+          {
+            type: 'meta',
+            label: 'The premise',
+            rows: [
+              { k: 'Audience', v: 'Esports members and creators' },
+              { k: 'Premise', v: 'One membership, not a dozen apps' },
+              { k: 'Design problem', v: 'Four surfaces, one product' },
+            ],
+          },
+        ]}
+      />
+    </div>
+  </section>
+
+  {/* SYSTEM */}
+  <section class="cs-sec" id="system">
+    <CaseSectionHead no="02" title="System" />
+    <div class="cs-body rev" style="margin-bottom:48px">
+      <div class="cs-main prose">
+        <p>The Ninth is built as one product system rather than a set of features. A single brand and design language runs underneath every surface, so the app, the AI clipper, the broadcast layer, and the social feed all read as one place rather than four bolted together.</p>
+      </div>
+      <MarginRail
+        modules={[
+          {
+            type: 'note',
+            label: 'Scope, not result',
+            text: 'Self-initiated concept. The counts here describe what was designed, not how it performed.',
+          },
+        ]}
+      />
+    </div>
+    <SysFlow steps={sysSteps} />
+  </section>
+
+  {/* DECISIONS */}
+  <section class="cs-sec" id="decisions">
+    <CaseSectionHead no="03" title="Decisions" />
+    <div class="cs-body rev" style="margin-bottom:40px">
+      <div class="cs-main prose">
+        <p>A few choices kept four surfaces from drifting into four separate products.</p>
+      </div>
+      <MarginRail
+        modules={[
+          { type: 'quote', quote: 'One product a member never wants to leave.', who: 'Design principle' },
+        ]}
+      />
+    </div>
+    <Decisions decisions={decisions} />
+  </section>
+
+  {/* OUTPUT */}
+  <section class="cs-sec" id="output">
+    <CaseSectionHead no="04" title="Output" />
+    <OutputGrid tiles={outputTiles} note={outputNote} />
+    <EmbeddedDemo
+      heading="Interactive demo · The Ninth"
+      tabs={demoTabs}
+      openHref="/concepts/the-ninth/"
+      foot="Live microsite embeds here at build time · each tab loads its real view · /concepts/the-ninth/"
+      alt="The Ninth demo"
+    />
+  </section>
+
+  {/* PROOF */}
+  <section class="cs-sec" id="proof">
+    <CaseSectionHead no="05" title="Proof" />
+    <ScopeBox figures={scopeFigures} rationale={scopeRationale} />
+  </section>
+
+  {/* REFLECTION + NEXT */}
+  <section class="cs-sec">
+    <CaseSectionHead no="06" title="Reflection" />
+    <div class="cs-body rev">
+      <div class="cs-main sb-reflect">
+        <p>The Ninth is where the system thinking gets to run without a client's constraints. It is proof that the same instinct behind the client work, build it as one connected system, scales to a full product brand invented from nothing.</p>
+      </div>
+      <MarginRail
+        modules={[
+          { type: 'note', label: 'Self-initiated', text: 'A concept project, labeled as such everywhere it appears. Not client work, and never presented as it.' },
+          { type: 'note', label: 'Full demo', text: 'The interactive microsite lives at /concepts/the-ninth/, embedded above and linkable on its own.' },
+        ]}
+      />
+    </div>
+    <div class="cs-next">
+      <a href="/work/sportime-clubs">
+        <div><div class="k">Next case study · Client</div><div class="t">SPORTIME Clubs</div></div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ===== SCOREBOARD HERO ===== */
+  .cs-hero { padding: 96px 0 56px; }
+  .badge { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; border-radius: var(--radius-none); display: inline-block; }
+  /* concept badge: neutral, bordered — no orange */
+  .badge.concept { background: var(--badge-concept-bg); color: var(--badge-concept-tx); border: 1px solid var(--border-strong); }
+  .cs-hero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 6.5vw, 86px); line-height: 0.95; letter-spacing: -0.035em; margin: 22px 0 0; }
+  .cs-hero .descr { font-size: 20px; line-height: 1.5; color: var(--text-secondary); max-width: 54ch; margin-top: 26px; }
+  .cs-wall { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--img-frame); margin-top: 48px; aspect-ratio: 16/8; background: var(--surface); }
+  .cs-wall img { width: 100%; height: 100%; object-fit: cover; }
+  .cs-wall .cap { position: absolute; left: 16px; bottom: 14px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: rgba(11, 11, 10, .55); backdrop-filter: blur(6px); padding: 5px 10px; border-radius: var(--radius-none); }
+
+  /* ===== SECTIONS / PROSE / BODY ===== */
+  .cs-sec { padding: 96px 0; border-top: 1px solid var(--border); }
+  .prose { max-width: 68ch; }
+  .prose p { font-size: 17px; line-height: 1.66; color: var(--text-secondary); margin-bottom: 18px; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .cs-body { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 56px; align-items: start; }
+  .cs-main { max-width: 68ch; }
+
+  /* ===== REFLECTION + NEXT ===== */
+  .sb-reflect { max-width: 64ch; }
+  .sb-reflect p { font-size: 17px; line-height: 1.66; color: var(--text-secondary); }
+  .cs-next { border-top: 1px solid var(--border); margin-top: 72px; }
+  .cs-next a { display: flex; align-items: center; justify-content: space-between; padding: 48px 0; gap: 24px; transition: padding-left .25s var(--ease-standard); }
+  .cs-next a:hover { padding-left: 12px; }
+  .cs-next .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+  .cs-next .t { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 46px); letter-spacing: -0.03em; line-height: 1; margin-top: 10px; }
+  .cs-next .arrow { font-family: var(--font-display); font-size: 34px; color: var(--accent-text); }
+
+  /* ===== responsive ===== */
+  @media (max-width: 1100px) { .cs-body { grid-template-columns: 1fr; gap: 32px; } }
+  @media (max-width: 900px) { .cs-hero { padding: 64px 0 40px; } }
+</style>

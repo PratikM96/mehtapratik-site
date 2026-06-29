@@ -1,0 +1,91 @@
+---
+/**
+ * EmbeddedDemo.astro — concept-only module. A tabbed island that previews a
+ * concept microsite inline: tab buttons swap a live caption + image in the
+ * stage, with an "Open full demo" link to the standalone microsite. This is
+ * embedded proof inside the case study, not a parallel front door.
+ *
+ * Each tab currently points at a placeholder image until the real per-view
+ * screens land from R2. The script is generic over every .embed on the page.
+ */
+type Tab = {
+  /** Tab button label (e.g. "App"). */
+  label: string;
+  /** Live caption shown over the stage when the tab is active. */
+  cap: string;
+  /** Stage image for this tab. */
+  img: string;
+};
+interface Props {
+  /** Mono label in the head, beside the live dot. */
+  heading: string;
+  /** Tabs, in order. First is active on load. */
+  tabs: Tab[];
+  /** "Open full demo" target (the standalone microsite). */
+  openHref: string;
+  /** Mono footnote under the stage. */
+  foot: string;
+  /** Stage image alt text. */
+  alt?: string;
+}
+const { heading, tabs, openHref, foot, alt = '' } = Astro.props;
+const first = tabs[0];
+---
+
+<div class="embed rev">
+  <div class="ehead">
+    <span class="el"><span class="dot"></span>{heading}</span>
+    <a class="open" href={openHref} target="_self">Open full demo ↗</a>
+  </div>
+  <div class="etabs">
+    {
+      tabs.map((t, i) => (
+        <button class:list={[i === 0 && 'on']} data-cap={t.cap} data-img={t.img}>
+          {t.label}
+        </button>
+      ))
+    }
+  </div>
+  <div class="estage">
+    <img class="estage-img" src={first.img} alt={alt} />
+    <div class="scrim"><span class="cap estage-cap">{first.cap}</span></div>
+  </div>
+  <div class="efoot">{foot}</div>
+</div>
+
+<style>
+  .embed { border: 1px solid var(--border-strong); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); margin-top: 24px; }
+  .embed .ehead { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--surface-raised); }
+  .embed .ehead .el { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); }
+  .embed .ehead .el .dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--accent-fill); }
+  .embed .ehead .open { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); display: flex; align-items: center; gap: 7px; transition: color .2s var(--ease-standard); }
+  .embed .ehead .open:hover { color: var(--accent-text); }
+  .embed .etabs { display: flex; border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .embed .etabs button { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 13px 18px; cursor: pointer; white-space: nowrap; transition: color .2s var(--ease-standard), border-color .2s var(--ease-standard); }
+  .embed .etabs button:hover { color: var(--text-secondary); }
+  .embed .etabs button.on { color: var(--text); border-bottom-color: var(--accent-fill); }
+  .embed .estage { position: relative; aspect-ratio: 16/9; background: var(--surface-raised); overflow: hidden; }
+  .embed .estage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .embed .estage .scrim { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 18px; background: linear-gradient(0deg, rgba(11, 11, 10, .55), transparent 55%); pointer-events: none; }
+  .embed .estage .scrim .cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; }
+  .embed .efoot { padding: 13px 18px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); border-top: 1px solid var(--border); }
+</style>
+
+<script is:inline>
+  (function () {
+    var embeds = Array.prototype.slice.call(document.querySelectorAll('.embed'));
+    embeds.forEach(function (embed) {
+      var tabs = Array.prototype.slice.call(embed.querySelectorAll('.etabs button'));
+      var img = embed.querySelector('.estage-img');
+      var cap = embed.querySelector('.estage-cap');
+      tabs.forEach(function (b) {
+        b.addEventListener('click', function () {
+          tabs.forEach(function (x) { x.classList.remove('on'); });
+          b.classList.add('on');
+          if (cap) cap.textContent = b.dataset.cap;
+          if (img && b.dataset.img) img.src = b.dataset.img;
+        });
+      });
+    });
+  })();
+</script>
