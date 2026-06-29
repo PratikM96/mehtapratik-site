@@ -67,6 +67,11 @@ const work = defineCollection({
       // --- hero ---
       badge: z.string(),
       lede: z.string(),
+      // Non-affiliation / self-initiated disclosure, rendered PROMINENTLY in the
+      // hero (right under the lede, above the scoreboard) — never a footnote.
+      // REQUIRED for any concept that names a real company (e.g. The Ninth →
+      // Cloud9) so the work can't read as commissioned or endorsed.
+      disclosure: z.string().optional(),
       coverAlt: z.string(),
       coverCaption: z.string(),
       hero: z.array(
@@ -107,11 +112,10 @@ const work = defineCollection({
       // client work MUST carry a verified headline metric; concept MUST carry scope.
       metric: z.object({ value: z.string(), label: z.string() }).optional(),
       scope: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
-      // client proof box: full metric row + verified testimonial
+      // client proof box: the verified metric row (testimonials removed site-wide)
       proofMetrics: z
         .array(z.object({ value: z.string(), unit: z.string().optional(), label: z.string() }))
         .optional(),
-      testimonial: z.object({ quote: z.string(), source: z.string() }).optional(),
       // concept proof box: rationale line (no results claimed)
       rationale: z.object({ label: z.string(), text: z.string() }).optional(),
       // concept embedded demo: tabbed island linking to /concepts/[project]/
@@ -121,7 +125,17 @@ const work = defineCollection({
           heading: z.string(),
           foot: z.string(),
           alt: z.string().optional(),
-          tabs: z.array(z.object({ label: z.string(), cap: z.string(), img: z.string().url() })),
+          // each tab links to its live view under /concepts/[project]/; `featured`
+          // marks the centerpiece view (shown by default).
+          tabs: z.array(
+            z.object({
+              label: z.string(),
+              cap: z.string(),
+              img: z.string().url(),
+              href: z.string(),
+              featured: z.boolean().optional(),
+            }),
+          ),
         })
         .optional(),
     })

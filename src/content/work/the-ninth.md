@@ -3,7 +3,7 @@ title: 'The Ninth'
 slug: 'the-ninth'
 type: 'concept'
 role: 'Concept, end to end'
-year: '2024'
+year: '2026'
 disciplines: ['Brand', 'UI/UX', 'AI', 'Motion']
 cover: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp'
 featured: true
@@ -11,13 +11,14 @@ description: 'A self-initiated esports membership concept, designed as one produ
 
 badge: 'Concept · Self-initiated'
 lede: 'A self-initiated esports membership concept, designed as one product system: brand, app, AI-driven clipper and broadcast, and a social layer, all built from zero.'
+disclosure: 'An unaffiliated concept built around Cloud9. Not commissioned by or affiliated with Cloud9.'
 coverAlt: 'The Ninth concept system'
 coverCaption: 'The Ninth · esports membership concept'
 hero:
   - { k: 'Role', v: 'Concept, brand & product, end to end' }
   - { k: 'Disciplines', v: 'Brand · UI/UX · AI · Motion' }
-  - { k: 'Type', v: 'Self-initiated · 2024' }
-  - { k: 'Scope', v: '5', scope: true, unit: ' surfaces' }
+  - { k: 'Type', v: 'Self-initiated · 2026' }
+  - { k: 'Scope', v: '40', scope: true, unit: ' screens' }
 
 problem:
   prose:
@@ -77,22 +78,22 @@ reflection:
 next: { kicker: 'Next case study · Client', title: 'SPORTIME Clubs', href: '/work/sportime-clubs' }
 
 scope:
-  - { value: '5', label: 'Product surfaces: app, clipper, broadcast, social, brand' }
-  - { value: '0→1', label: 'Brand and design system built from zero' }
-  - { value: 'AI', label: 'Clipper and broadcast features designed in' }
-  - { value: 'Motion', label: 'One motion language across every surface' }
+  - { value: '40', label: 'Screens designed across the membership product' }
+  - { value: '5', label: 'Live views: app, clipper, broadcast, social, brand' }
+  - { value: '3', label: 'Membership tiers' }
+  - { value: '8', label: 'AI-assisted features, led by the moment-clipper' }
 rationale:
   label: 'Why it exists · what it proves'
-  text: 'The Ninth is self-initiated. The figures above are scope, what was designed and built, not performance. No audience, engagement, or revenue results are claimed for speculative work. What it demonstrates is range: a full product brand taken from zero to a coherent, multi-surface system.'
+  text: 'The Ninth is self-initiated. The figures above are scope, what was designed and built, not performance. No audience, engagement, or revenue results are claimed for speculative work. What it demonstrates is range: a full product brand taken from zero to a working, multi-view demo, with the AI moment-clipper as its centerpiece.'
 demo:
   project: 'the-ninth'
-  heading: 'Interactive demo · The Ninth'
-  foot: 'Live microsite embeds here at build time · each tab loads its real view · /concepts/the-ninth/'
+  heading: 'Live demo · The Ninth'
+  foot: 'Five live views · the AI moment-clipper is the centerpiece · open any tab to launch it'
   alt: 'The Ninth demo'
   tabs:
-    - { label: 'App', cap: 'App · membership home', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp' }
-    - { label: 'Clipper', cap: 'AI clipper · live play to clips', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp' }
-    - { label: 'Broadcast', cap: 'Broadcast layer', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp' }
-    - { label: 'Social', cap: 'Social feed · member clips', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp' }
-    - { label: 'Brand', cap: 'Brand & identity system', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp' }
+    - { label: 'Clipper', cap: 'AI moment-clipper · three live signals fuse into an instant auto-clip', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp', href: '/concepts/the-ninth/clipper', featured: true }
+    - { label: 'App', cap: 'Membership app · watch, predict, belong, climb', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp', href: '/concepts/the-ninth/app' }
+    - { label: 'Broadcast', cap: 'Broadcast · kinetic overlay package', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp', href: '/concepts/the-ninth/broadcast' }
+    - { label: 'Social', cap: 'Social content engine · one match, a week of output', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp', href: '/concepts/the-ninth/social' }
+    - { label: 'Brand', cap: 'Brand · the altitude system', img: 'https://cdn.mehtapratik.com/covers/the-ninth-cover.webp', href: '/concepts/the-ninth/brand' }
 ---

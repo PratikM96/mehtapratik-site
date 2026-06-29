@@ -37,9 +37,9 @@ const { tiles, note } = Astro.props;
 <style>
   .out-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .out-tile { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); }
-  .out-tile .im { aspect-ratio: 4/3; overflow: hidden; background: var(--surface-raised); display: flex; align-items: center; justify-content: center; }
+  .out-tile .im { aspect-ratio: var(--ratio-classic); overflow: hidden; background: var(--surface-raised); display: flex; align-items: center; justify-content: center; }
   /* feature tiles span the full row — own row, no height mismatch beside singles. 16/9 so assets are easy to design for */
-  .out-tile.wide .im { aspect-ratio: 16/9; }
+  .out-tile.wide .im { aspect-ratio: var(--ratio-wide); }
   .out-tile .im img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease-standard); }
   .out-tile:hover .im img { transform: scale(1.03); }
   .out-tile .im .ph { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }

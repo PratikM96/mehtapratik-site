@@ -41,10 +41,10 @@ interface Props {
 }
 
 const {
-  title = 'Pratik Mehta — Creative & Marketing Strategist',
+  title = 'Pratik Mehta · Creative & Marketing Strategist',
   description,
   variant = 'default',
-  activeNav = 'work',
+  activeNav = 'home',
   sections = [],
   scoreboard = [],
   back = { href: '/#work', label: '← Index · all work' },
@@ -52,13 +52,15 @@ const {
 
 const isCase = variant === 'case-study';
 
-// Default rail nav — home-section anchors for now (single-page home).
+// Default rail nav — real page routes. `id` drives the active state per page
+// (set via the `activeNav` prop), so each page highlights only its own item.
 const nav = [
-  { ix: '01', label: 'Work', href: '#work' },
-  { ix: '02', label: 'About', href: '#about' },
-  { ix: '03', label: 'Brand', href: '#brand' },
-  { ix: '04', label: 'Journal', href: '#journal' },
-  { ix: '05', label: 'Contact', href: '#contact' },
+  { ix: '01', id: 'home', label: 'Home', href: '/' },
+  { ix: '02', id: 'work', label: 'Work', href: '/work' },
+  { ix: '03', id: 'about', label: 'About', href: '/about' },
+  { ix: '04', id: 'brand', label: 'Brand', href: '/brand' },
+  { ix: '05', id: 'journal', label: 'Journal', href: '/journal' },
+  { ix: '06', id: 'contact', label: 'Contact', href: '/contact' },
 ];
 
 const year = 2026; // static; avoids per-request Date() in the worker
@@ -115,8 +117,7 @@ const year = 2026; // static; avoids per-request Date() in the worker
         isCase ? (
           <Fragment>
             <a class="brand" href="/" aria-label="Pratik Mehta — home">
-              <Brandmark size={22} title={undefined} />
-              <span class="wm">Pratik Mehta</span>
+              <Brandmark size={26} title={undefined} />
             </a>
             <a class="back" href={back.href}>{back.label}</a>
             <nav class="cs-nav" id="cs-nav">
@@ -144,19 +145,24 @@ const year = 2026; // static; avoids per-request Date() in the worker
           </Fragment>
         ) : (
           <Fragment>
-            <a class="brand" href="#top" aria-label="Pratik Mehta — home">
+            <a class="brand" href="/" aria-label="Pratik Mehta — home">
               <Brandmark size={26} title={undefined} />
               <span class="wm">Pratik<br />Mehta</span>
             </a>
             <div class="role">Creative &amp;<br />Marketing Strategist</div>
             <nav id="rail-nav">
               {nav.map((n) => (
-                <a href={n.href} class={n.href === `#${activeNav}` ? 'active' : undefined}>
+                <a href={n.href} class={n.id === activeNav ? 'active' : undefined}>
                   <span class="ix">{n.ix}</span>
                   {n.label}
                 </a>
               ))}
             </nav>
+            {/* persistent about-me blurb (placeholder copy from the About lede; confirm in Phase 4) */}
+            <div class="rail-bio">
+              <span class="bio-k">About</span>
+              <p>Brand, social, content, UI/UX, motion, and performance, run as one connected practice.</p>
+            </div>
             <div class="spacer" />
             <div class="readout">
               <div class="status"><span class="dot" />Open to roles</div>
@@ -178,7 +184,7 @@ const year = 2026; // static; avoids per-request Date() in the worker
 
     {/* MOBILE BAR */}
     <div class="console-mobile">
-      <a class="brand" href={isCase ? '/' : '#top'} aria-label="Pratik Mehta — home">
+      <a class="brand" href="/" aria-label="Pratik Mehta — home">
         <Brandmark size={18} title={undefined} />
         <span>Pratik Mehta</span>
       </a>
@@ -188,8 +194,8 @@ const year = 2026; // static; avoids per-request Date() in the worker
             <a href={back.href}>← Work</a>
           ) : (
             <Fragment>
-              <a href="#work">Work</a>
-              <a href="#contact">Contact</a>
+              <a href="/work">Work</a>
+              <a href="/contact">Contact</a>
             </Fragment>
           )
         }
@@ -208,11 +214,11 @@ const year = 2026; // static; avoids per-request Date() in the worker
         <div class="foot">
           <span class="mono">© {year} Pratik Mehta · One system, end to end</span>
           <div class="fl">
-            <a href="/#work">Work</a>
-            <a href="/#about">About</a>
-            <a href="/#brand">Brand</a>
-            <a href="/#journal">Journal</a>
-            <a href="/#contact">Contact</a>
+            <a href="/work">Work</a>
+            <a href="/about">About</a>
+            <a href="/brand">Brand</a>
+            <a href="/journal">Journal</a>
+            <a href="/contact">Contact</a>
           </div>
         </div>
       </div>

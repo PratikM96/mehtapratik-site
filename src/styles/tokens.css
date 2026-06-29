@@ -105,6 +105,15 @@
   --radius-none: 0; --radius-sm: 4px; --radius-md: 8px;
   --radius-lg: 12px; --radius-xl: 16px; --radius-full: 9999px;
 
+  /* --- Image aspect ratios (the ONLY ratios any image slot may use) ---
+     Masters are authored 16:9 with nested safe zones so the same asset crops
+     cleanly to any of these. Never use an off-system ratio (no 16:8, 16:7, …). */
+  --ratio-wide: 16 / 9;        /* video / hero / feature */
+  --ratio-landscape: 16 / 10;  /* gallery cards */
+  --ratio-classic: 4 / 3;      /* standard tiles / preview */
+  --ratio-square: 1 / 1;       /* avatars / square posts */
+  --ratio-portrait: 9 / 16;    /* vertical / reel */
+
   /* --- Motion --- */
   --dur-fast: 120ms; --dur-base: 200ms; --dur-slow: 320ms; --dur-deliberate: 500ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);  /* entrances / most */

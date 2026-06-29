@@ -2,7 +2,7 @@
 title: 'SPORTIME Clubs'
 slug: 'sportime-clubs'
 type: 'client'
-role: 'Marketing lead · creative direction'
+role: 'Marketing Manager'
 year: '2023—2024'
 disciplines: ['Brand', 'Social', 'Content', 'Motion', 'Photo']
 cover: 'https://cdn.mehtapratik.com/covers/sportime-clubs-cover.webp'
@@ -14,7 +14,7 @@ lede: 'Brand and content built as one system across tennis and a fast-growing pi
 coverAlt: 'SPORTIME Clubs campaign system'
 coverCaption: 'Club championships system · 2023'
 hero:
-  - { k: 'Role', v: 'Marketing lead, creative direction' }
+  - { k: 'Role', v: 'Marketing Manager' }
   - { k: 'Disciplines', v: 'Brand · Social · Content · Motion · Photo' }
   - { k: 'Timeframe', v: '2023—2024 · one year' }
   - { k: 'Headline result', v: '11.7', metric: true, unit: 'M' }
@@ -84,7 +84,4 @@ proofMetrics:
   - { value: '16.8', unit: 'K', label: 'Net new followers in one year' }
   - { value: '+510', unit: '%', label: 'Instagram publishing volume' }
   - { value: '+2,115', unit: '%', label: 'Reels output' }
-testimonial:
-  quote: 'He ran our marketing end to end and built the creative structure across our clubs, with a lead in each working to his strategy. He drove 11.7M cross-platform impressions in a year.'
-  source: 'SPORTIME Clubs'
 ---

@@ -48,8 +48,8 @@ const scoreboard = [
 ];
 
 const pageTitle = isClient
-  ? `${d.title} — Case study · Pratik Mehta`
-  : `${d.title} — Case study · concept · Pratik Mehta`;
+  ? `${d.title} · Case study · Pratik Mehta`
+  : `${d.title} · Case study · concept · Pratik Mehta`;
 
 // Output tiles: map the data-driven `span` onto OutputGrid's `wide` flag.
 const outputTiles = d.output.tiles.map((t) => ({
@@ -74,6 +74,7 @@ const outputTiles = d.output.tiles.map((t) => ({
     <span class:list={['badge', isClient ? 'client' : 'concept', 'rev']}>{d.badge}</span>
     <h1 class="rev">{d.title}</h1>
     <p class="descr rev">{d.lede}</p>
+    {d.disclosure && <p class="cs-disclosure rev">{d.disclosure}</p>}
     <Scoreboard cells={d.hero} />
     <div class="cs-wall rev">
       <img src={d.cover} alt={d.coverAlt} />
@@ -141,7 +142,7 @@ const outputTiles = d.output.tiles.map((t) => ({
   <section class="cs-sec" id="proof">
     <CaseSectionHead no="05" title="Proof" />
     {isClient ? (
-      <ResultBox metrics={d.proofMetrics!} testimonial={d.testimonial!} />
+      <ResultBox metrics={d.proofMetrics!} />
     ) : (
       <ScopeBox figures={d.scope!} rationale={d.rationale!} />
     )}
@@ -176,7 +177,9 @@ const outputTiles = d.output.tiles.map((t) => ({
   .badge.concept { background: var(--badge-concept-bg); color: var(--badge-concept-tx); border: 1px solid var(--border-strong); }
   .cs-hero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 6.5vw, 86px); line-height: 0.95; letter-spacing: -0.035em; margin: 22px 0 0; }
   .cs-hero .descr { font-size: 20px; line-height: 1.5; color: var(--text-secondary); max-width: 54ch; margin-top: 26px; }
-  .cs-wall { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--img-frame); margin-top: 48px; aspect-ratio: 16/8; background: var(--surface); }
+  /* non-affiliation disclosure — a visible bordered notice, not a footnote */
+  .cs-disclosure { margin-top: 24px; padding: 11px 16px; border: 1px solid var(--border-strong); border-left: 2px solid var(--accent-fill); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5; letter-spacing: 0.02em; color: var(--text-secondary); max-width: 64ch; }
+  .cs-wall { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--img-frame); margin-top: 48px; aspect-ratio: var(--ratio-wide); background: var(--surface); }
   .cs-wall img { width: 100%; height: 100%; object-fit: cover; }
   .cs-wall .cap { position: absolute; left: 16px; bottom: 14px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: rgba(11, 11, 10, .55); backdrop-filter: blur(6px); padding: 5px 10px; border-radius: var(--radius-none); }
 

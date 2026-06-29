@@ -65,6 +65,13 @@ img { display: block; max-width: 100%; }
 .console nav a .ix { font-size: 10px; color: var(--text-muted); width: 20px; }
 .console nav a:hover, .console nav a.active { color: var(--text); }
 .console nav a.active .ix { color: var(--accent-text); }
+/* persistent about-me blurb (default rail only) */
+.console .rail-bio { margin-top: 30px; }
+.console .rail-bio .bio-k {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 9px;
+}
+.console .rail-bio p { font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); max-width: 30ch; }
 .console .spacer { flex: 1; }
 .console .readout {
   border-top: 1px solid var(--border); padding-top: 16px;
@@ -152,6 +159,9 @@ img { display: block; max-width: 100%; }
 .h3 { font-family: var(--font-sans); font-weight: 600; font-size: 19px; letter-spacing: -0.015em; line-height: 1.2; }
 .lead { font-size: 18px; line-height: 1.5; color: var(--text-secondary); max-width: 50ch; }
 .btn {
+  /* inline-block so the hover lift (transform) applies even outside a flex/grid
+     parent — transforms are ignored on plain inline elements */
+  display: inline-block;
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em;
   text-transform: uppercase; padding: 13px 20px; border-radius: var(--radius-full);
   /* transform eased a touch slower than color so the larger lift reads smooth */

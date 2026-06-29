@@ -1,0 +1,314 @@
+---
+/**
+ * Brand — One System. The site's living brand reference, rebuilt from the
+ * authoritative One-System-Brand-Guidelines (Drive) rather than the early
+ * mockup. Rules are transcribed from that source of truth; tokens (color,
+ * spacing, radius, motion) are read LIVE from src/styles/tokens.css at build
+ * time and rendered with var(), so the page can't drift from the real system.
+ *
+ * Source of truth: One-System-Brand-Guidelines v1.0. Voice rules come from
+ * System Master (the brand doc defers voice to it; summarized per CLAUDE.md).
+ * The guidelines' Formats section (social / reel / lower-third mockups) is not
+ * yet ported; masters live in Figma. Chrome from Base.astro / global.css.
+ */
+import fs from 'node:fs';
+import Base from '../layouts/Base.astro';
+import Brandmark from '../components/Brandmark.astro';
+
+const tokensCss = fs.readFileSync(new URL('../styles/tokens.css', import.meta.url), 'utf-8');
+const tokenValue = (name: string) => {
+  const m = tokensCss.match(new RegExp(`${name}\\s*:\\s*([^;]+);`));
+  return m ? m[1].trim() : '';
+};
+const hex = (name: string) => tokenValue(name).replace('#', '').toUpperCase();
+const px = (name: string) => tokenValue(name).replace('px', '');
+
+// Live ramps + scales — every value is read from the token file.
+const neutral = ['--n-0', '--n-50', '--n-100', '--n-200', '--n-300', '--n-400', '--n-500', '--n-550', '--n-600', '--n-700', '--n-800', '--n-900', '--n-950'];
+const accent = ['--accent-50', '--accent-100', '--accent-200', '--accent-300', '--accent-400', '--accent-500', '--accent-600', '--accent-700', '--accent-800', '--accent-900'];
+const spacing = [
+  { token: '--space-xs', name: 'xs' }, { token: '--space-sm', name: 'sm' },
+  { token: '--space-md', name: 'md' }, { token: '--space-lg', name: 'lg' },
+  { token: '--space-xl', name: 'xl' }, { token: '--space-2xl', name: '2xl' },
+  { token: '--space-3xl', name: '3xl' }, { token: '--space-4xl', name: '4xl' },
+];
+const radii = [
+  { token: '--radius-none', name: 'none' }, { token: '--radius-sm', name: 'sm' },
+  { token: '--radius-md', name: 'md', star: true }, { token: '--radius-lg', name: 'lg' },
+  { token: '--radius-xl', name: 'xl' }, { token: '--radius-full', name: 'full' },
+];
+const durations = [
+  { token: '--dur-fast', name: 'fast', w: 48 }, { token: '--dur-base', name: 'base', w: 80, star: true },
+  { token: '--dur-slow', name: 'slow', w: 128 }, { token: '--dur-deliberate', name: 'deliberate', w: 200 },
+];
+
+const stepOf = (t: string) => t.replace(/--(n|accent)-/, '');
+---
+
+<Base
+  title="Brand · One System · Pratik Mehta"
+  description="One System is the design system this site runs on: foundation, logo, type, color, layout, motion, and access. Rendered from the live tokens, so it can't drift."
+  activeNav="brand"
+>
+  <header class="bhero">
+    <div class="k rev">[ Brand ] · One System · v1.0</div>
+    <h1 class="rev">The brand,<br />built like a <span class="signal">product.</span></h1>
+    <p class="rev">One System is the identity this site runs on: foundation, logo, type, color, layout, motion, and access, in one place. It is a working reference and a case study of the thinking behind it. The page renders from the live tokens, so it can't drift from the real site.</p>
+  </header>
+
+  {/* 01 FOUNDATION */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 01 ]</span><span class="t">Foundation · the spine</span><span class="rule"></span></div>
+    <p class="intro">Creative built like a system and accountable to what it does after it ships. The breadth is the proof of the idea, not a separate selling point.</p>
+    <div class="frow" style="border-top:none">
+      <div class="fspec">tagline</div>
+      <div class="fsamp tagline">One system, end to end<span class="signal">.</span></div>
+    </div>
+    <div class="frow"><div class="fspec">reserve line</div><div class="fsamp">Built, not briefed.</div></div>
+    <div class="frow"><div class="fspec">accent signal</div><div class="fsamp mono">Signal orange · #{hex('--accent-500')} · used once, to do one job</div></div>
+  </section>
+
+  {/* 02 LOGO */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 02 ]</span><span class="t">Logo · the loop</span><span class="rule"></span></div>
+    <p class="intro">One continuous stroke that closes on the orange node: the system, end to end, as a mark. Default to the primary lockup. The wordmark carries the circular period; the lockups don't.</p>
+    <div class="logoset rev">
+      <div class="tile"><div class="lockrow"><Brandmark size={52} title={undefined} /><span class="wm">Pratik Mehta</span></div></div>
+      <div class="tile dark"><div class="lockrow"><Brandmark size={52} title={undefined} /><span class="wm">Pratik Mehta</span></div></div>
+      <div class="tile"><div class="lockcol"><Brandmark size={44} title={undefined} /><span class="wm" style="font-size:24px">Pratik Mehta</span></div></div>
+      <div class="tile"><span class="wm" style="font-size:31px">Pratik Mehta<span class="period"></span></span></div>
+    </div>
+    <div class="cap">primary (ink / paper) · stacked · wordmark with period. Use the mono mark where the accent can't appear.</div>
+
+    <div class="subhead">Clear space &amp; minimum size</div>
+    <div class="clearrow">
+      <div><div class="csbox"><Brandmark size={72} title={undefined} /></div><div class="cap">keep-out = 0.25 × mark height</div></div>
+      <div class="mincol"><Brandmark size={24} title={undefined} /><div class="cap">mark · 24px floor</div></div>
+      <div class="mincol"><Brandmark size={16} title={undefined} /><div class="cap">favicon cut · 16px</div></div>
+    </div>
+
+    <div class="subhead">Never do this</div>
+    <div class="dont rev">
+      <div class="dcard"><span class="x">✕</span><div class="dwrap"><div class="d-stretch"><Brandmark size={52} title={undefined} /></div><span class="dlab">stretch or distort</span></div></div>
+      <div class="dcard"><span class="x">✕</span><div class="dwrap"><div class="d-recolor"><Brandmark size={52} title={undefined} /></div><span class="dlab">recolor the node</span></div></div>
+      <div class="dcard"><span class="x">✕</span><div class="dwrap"><span class="wm" style="font-size:24px">Pratik Mehta<span class="period sq"></span></span><span class="dlab">square the period</span></div></div>
+      <div class="dcard"><span class="x">✕</span><div class="dwrap"><div class="d-shadow"><Brandmark size={52} title={undefined} /></div><span class="dlab">add effects</span></div></div>
+      <div class="dcard"><span class="x">✕</span><div class="dwrap"><div class="d-rotate"><Brandmark size={52} title={undefined} /></div><span class="dlab">rotate or tilt</span></div></div>
+      <div class="dcard"><span class="x">✕</span><div class="dwrap"><div class="d-onaccent"><Brandmark size={40} title={undefined} /></div><span class="dlab">accent node on orange</span></div></div>
+    </div>
+  </section>
+
+  {/* 03 TYPE */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 03 ]</span><span class="t">Type · three faces, one system</span><span class="rule"></span></div>
+    <p class="intro">Clash Display carries the hero. Clash Grotesk carries headings and body. Berkeley Mono (TX-02) carries the system layer: labels, data, and code. The Clash families use 400, 600, and 700. Berkeley Mono uses 400 Regular and 500 Medium, with Medium reserved for emphasis labels such as the primary button.</p>
+    <div class="ty"><div class="k">display · Clash Display 700<br />-3%</div><div class="v disp" style="font-size:clamp(36px,5vw,56px)">One system<span class="signal">.</span></div></div>
+    <div class="ty"><div class="k">h1 · Clash Grotesk 700<br />-2%</div><div class="v" style="font-weight:700;font-size:36px;letter-spacing:-0.02em">Creative as one system</div></div>
+    <div class="ty"><div class="k">h3 · Clash Grotesk 600</div><div class="v" style="font-weight:600;font-size:22px;letter-spacing:-0.015em">Selected work</div></div>
+    <div class="ty"><div class="k">body · Clash Grotesk 400<br />lh 1.65</div><div class="v" style="font-size:16px;line-height:1.65;color:var(--text-secondary)">I hold the whole thing in one head, so the work stays coherent and the loop closes.</div></div>
+    <div class="ty"><div class="k">label · TX-02<br />+8% / uppercase</div><div class="v mono" style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase">Brand · Social · Performance</div></div>
+    <div class="ty"><div class="k">emphasis · TX-02 Medium 500</div><div class="v mono" style="font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase">View work</div></div>
+  </section>
+
+  {/* 04 COLOR */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 04 ]</span><span class="t">Color · warm monochrome, one accent</span><span class="rule"></span></div>
+    <p class="intro">A warm neutral ramp from paper to ink, a single signal-orange accent, and a restrained state set. Both light and dark are first-class.</p>
+    <div class="subhead">Neutral · warm ramp</div>
+    <div class="ramp">
+      {neutral.map((t) => (
+        <div class="chip"><div class="sw" style={`background: var(${t})`}></div><div class="hx">{stepOf(t)}<br />{hex(t)}</div></div>
+      ))}
+    </div>
+    <div class="subhead">Accent · signal orange <span class="signal">★ 500</span></div>
+    <div class="ramp">
+      {accent.map((t) => (
+        <div class="chip"><div class="sw" style={`background: var(${t});${t === '--accent-500' ? ' outline:2px solid var(--text); outline-offset:1px;' : ''}`}></div><div class="hx">{stepOf(t)}{t === '--accent-500' ? '★' : ''}<br />{hex(t)}</div></div>
+      ))}
+    </div>
+    <div class="subhead">Surfaces · light &amp; dark</div>
+    <div class="panels">
+      <div class="panel" style="background:var(--n-50)"><div class="p-lab" style="color:var(--n-500)">light · paper</div><div class="p-h" style="color:var(--n-950)">One system<span style="color:var(--accent-500)">.</span></div><div class="p-b" style="color:var(--n-600)">Body in graphite on paper. The accent does one job.</div><span class="p-pill" style="background:var(--accent-50);color:var(--accent-800)">brand · social · perf</span></div>
+      <div class="panel" style="background:var(--n-950);border-color:var(--n-800)"><div class="p-lab" style="color:var(--n-400)">dark · ink</div><div class="p-h" style="color:var(--n-50)">One system<span style="color:var(--accent-500)">.</span></div><div class="p-b" style="color:var(--n-400)">Same system inverted. Orange stays the single accent.</div><span class="p-pill" style="background:var(--n-800);color:var(--accent-400)">brand · social · perf</span></div>
+    </div>
+  </section>
+
+  {/* 05 LAYOUT */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 05 ]</span><span class="t">Layout · a 4px base</span><span class="rule"></span></div>
+    <p class="intro">Everything measures from a 4px unit. Layout is a {px('--grid-cols')}-column grid, max-width {px('--grid-max-width')}, {px('--grid-gutter')} gutters, {px('--grid-margin')} margins. Radius base is {px('--radius-md')}px; the mono system layer uses sharp 0 corners.</p>
+    <div class="scale">
+      {spacing.map((s) => (
+        <div class="s-row"><div class="s-lab">{s.name} — {tokenValue(s.token)}</div><div class="s-bar" style={`width: var(${s.token})`}></div></div>
+      ))}
+    </div>
+    <div class="mono muted gridnote">{px('--grid-cols')} columns · max {px('--grid-max-width')} · gutter {px('--grid-gutter')} · margin {px('--grid-margin')}</div>
+    <div class="subhead" style="margin-top:36px">Radius</div>
+    <div class="r-row">
+      {radii.map((r) => (
+        <div><div class="r-box" style={`border-radius: var(${r.token})`}></div><div class="hx">{r.name}{r.star ? ' ★' : ''} · {r.name === 'full' ? 'pill' : px(r.token)}</div></div>
+      ))}
+    </div>
+  </section>
+
+  {/* 06 MOTION */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 06 ]</span><span class="t">Motion · functional, not decorative</span><span class="rule"></span></div>
+    <p class="intro">Quick and confident. One ease-out curve, four durations, short travel, no bounce. Reels inherit this: cuts over fades, snap transitions.</p>
+    <div class="motion">
+      <div class="durs">
+        {durations.map((d) => (
+          <div class="d-row"><div class="d-lab">{d.name} · {tokenValue(d.token)}{d.star ? ' ★' : ''}</div><div class="d-bar" style={`width:${d.w}px`}></div></div>
+        ))}
+        <div class="mono muted" style="font-size:10.5px;margin-top:14px">ease · {tokenValue('--ease-standard')}</div>
+      </div>
+      <div class="hoverdemo"><a class="btn btn-p" href="/work">View work</a><div class="mono muted" style="font-size:10.5px">Hover</div></div>
+    </div>
+  </section>
+
+  {/* 07 ACCESSIBILITY */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 07 ]</span><span class="t">Accessibility · tuned to WCAG AA</span><span class="rule"></span></div>
+    <p class="intro">The single orange signal can't sit on top of itself. Three rules carry most of it.</p>
+    <div class="rules rev">
+      <div class="rule-card"><div class="rule-k">Orange text</div><div class="rule-b">On light, orange text is accent-700 (#{hex('--accent-700')}), never 500. On dark, accent-400.</div></div>
+      <div class="rule-card"><div class="rule-k">On orange fills</div><div class="rule-b">Text and the logo on an orange surface are ink, never white. The mark goes monochrome so the node doesn't blend.</div></div>
+      <div class="rule-card"><div class="rule-k">State colors</div><div class="rule-b">State fills for indicators; the darker -text variants when used as text.</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Pair</th><th>Ratio</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Ink on paper</td><td class="r">17.6:1</td><td class="aa">AAA</td></tr>
+        <tr><td>Secondary #615D52 on paper</td><td class="r">5.9:1</td><td class="aa">AA</td></tr>
+        <tr><td>Accent-700 text on paper</td><td class="r">4.8:1</td><td class="aa">AA</td></tr>
+        <tr><td>Ink on orange fill</td><td class="r">6.3:1</td><td class="aa">AA</td></tr>
+        <tr><td>Paper on ink (dark)</td><td class="r">17.6:1</td><td class="aa">AAA</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  {/* 08 VOICE */}
+  <section class="bsec">
+    <div class="blabel"><span class="c">[ 08 ]</span><span class="t">Voice · source: System Master</span><span class="rule"></span></div>
+    <p class="intro">Direct, specific, natural, not over-polished, not obviously AI-written. Lead with the answer. No inflated claims, no buzzwords, no unsupported proof.</p>
+    <div class="voice rev">
+      <div class="vcol do"><div class="h">Do</div><ul><li>Lead with the answer</li><li>Name real numbers, verified</li><li>Plain, confident sentences</li><li>Label concept work clearly</li></ul></div>
+      <div class="vcol dont-col"><div class="h">Don't</div><ul><li>Inflate or overclaim</li><li>Reach for buzzwords</li><li>Over-polish into AI-speak</li><li>Imply concepts are client work</li></ul></div>
+    </div>
+    <div class="cap" style="margin-top:18px">The guidelines' Formats section (social, reel, and lower-third masters) is not yet ported; production masters live in Figma.</div>
+  </section>
+</Base>
+
+<style>
+  .bhero { padding: 104px 0 64px; }
+  .bhero .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 22px; }
+  .bhero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 5vw, 68px); line-height: .96; letter-spacing: -.03em; }
+  .bhero p { font-size: 18px; line-height: 1.5; color: var(--text-secondary); max-width: 60ch; margin-top: 24px; }
+  .bsec { padding: 80px 0; border-top: 1px solid var(--border); }
+  .bsec .intro { font-size: 16px; line-height: 1.6; color: var(--text-secondary); max-width: 66ch; margin-bottom: 36px; }
+  .subhead { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); margin: 40px 0 16px; }
+  .cap { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 12px; line-height: 1.5; }
+  .mono { font-family: var(--font-mono); }
+  .muted { color: var(--text-muted); }
+
+  /* foundation */
+  .frow { display: flex; align-items: baseline; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .fspec { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); width: 200px; flex-shrink: 0; }
+  .fsamp { flex: 1; min-width: 240px; color: var(--text); font-size: 16px; }
+  .fsamp.tagline { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -.02em; }
+  .fsamp.mono { font-family: var(--font-mono); font-size: 14px; }
+
+  /* logo */
+  .logoset { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+  .tile { background: var(--n-0); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; display: flex; align-items: center; justify-content: center; min-height: 140px; }
+  .tile.dark { background: var(--n-950); border-color: var(--n-800); }
+  .tile :global(.brandmark) { color: var(--n-950); }
+  .tile.dark :global(.brandmark) { color: var(--n-50); }
+  .lockrow { display: flex; align-items: center; gap: 16px; }
+  .lockcol { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .wm { font-family: var(--font-display); font-weight: 700; font-size: 30px; letter-spacing: -.025em; color: var(--n-950); }
+  .tile.dark .wm { color: var(--n-50); }
+  .period { display: inline-block; width: .16em; height: .16em; border-radius: 50%; background: var(--accent-fill); vertical-align: baseline; margin-left: .04em; }
+  .period.sq { border-radius: 0; }
+  .clearrow { display: flex; align-items: flex-end; gap: 48px; flex-wrap: wrap; }
+  .clearrow :global(.brandmark) { color: var(--text); }
+  .csbox { display: inline-block; border: 1px dashed var(--accent-fill); padding: 24px; border-radius: var(--radius-sm); }
+  .mincol { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+  /* don'ts */
+  .dont { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+  .dcard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; position: relative; min-height: 124px; display: flex; align-items: center; justify-content: center; }
+  .dcard :global(.brandmark) { color: var(--text); }
+  .x { position: absolute; top: 12px; left: 12px; width: 20px; height: 20px; border-radius: 50%; background: var(--danger); color: #fff; font-family: var(--font-mono); font-size: 12px; line-height: 20px; text-align: center; }
+  .dwrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .dlab { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-secondary); text-align: center; line-height: 1.5; }
+  .d-stretch :global(.brandmark) { transform: scaleX(1.7); }
+  .d-recolor :global(.node) { fill: #2A4DFF; }
+  .d-shadow :global(.brandmark) { filter: drop-shadow(3px 4px 3px rgba(0, 0, 0, .4)); }
+  .d-rotate :global(.brandmark) { transform: rotate(15deg); }
+  .d-onaccent { background: var(--accent-fill); padding: 14px; border-radius: var(--radius-md); display: flex; }
+
+  /* type */
+  .ty { display: flex; align-items: baseline; gap: 24px; padding: 16px 0; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .ty .k { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); width: 220px; flex-shrink: 0; line-height: 1.5; }
+  .ty .v { flex: 1; min-width: 240px; color: var(--text); }
+  .ty .v.disp { font-family: var(--font-display); font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+
+  /* color */
+  .ramp { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .chip { width: 62px; }
+  .sw { height: 46px; border-radius: var(--radius-sm); border: 1px solid rgba(128, 128, 128, .18); }
+  .hx { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+  .panel { border-radius: var(--radius-lg); padding: 22px; border: 1px solid rgba(128, 128, 128, .18); }
+  .p-lab { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+  .p-h { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -.02em; margin-bottom: 8px; }
+  .p-b { font-size: 13px; line-height: 1.55; margin-bottom: 14px; }
+  .p-pill { display: inline-block; font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; padding: 6px 11px; border-radius: var(--radius-sm); }
+
+  /* layout */
+  .s-row { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .s-lab { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); width: 128px; flex-shrink: 0; }
+  .s-bar { height: 14px; background: var(--accent-fill); border-radius: 2px; }
+  .gridnote { font-size: 10.5px; margin-top: 10px; }
+  .r-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  .r-box { width: 60px; height: 60px; background: var(--surface); border: 1.5px solid var(--text); }
+
+  /* motion */
+  .motion { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
+  .durs { flex: 1; min-width: 240px; }
+  .d-row { display: flex; align-items: center; gap: 14px; margin-bottom: 9px; }
+  .d-lab { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); width: 160px; flex-shrink: 0; }
+  .d-bar { height: 8px; background: var(--accent-fill); border-radius: 2px; }
+  /* hover demo: label sits below and centered on the button (it lifts upward on hover) */
+  .hoverdemo { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+  /* a11y */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 8px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); font-weight: 400; }
+  td.r { font-family: var(--font-mono); color: var(--text); }
+  .aa { color: var(--success-text); font-family: var(--font-mono); font-size: 12px; }
+  .rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 32px; }
+  .rule-card { border: 1px solid var(--border); border-left: 2px solid var(--accent-fill); border-radius: var(--radius-md); padding: 18px; }
+  .rule-k { font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 9px; }
+  .rule-b { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
+
+  /* voice */
+  .voice { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .vcol { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; background: var(--surface); }
+  .vcol .h { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px; }
+  .vcol.do .h { color: var(--accent-text); }
+  .vcol.dont-col .h { color: var(--text-muted); }
+  .vcol ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .vcol li { font-size: 14px; color: var(--text-secondary); padding-left: 16px; position: relative; }
+  .vcol li::before { content: "·"; position: absolute; left: 2px; color: var(--accent-text); }
+
+  @media (max-width: 1000px) {
+    .logoset, .panels, .rules, .voice { grid-template-columns: 1fr; }
+    .dont { grid-template-columns: 1fr 1fr; }
+    .fspec, .ty .k { width: 100%; }
+  }
+  @media (max-width: 900px) { .bhero { padding: 56px 0 0; } }
+  @media (max-width: 560px) { .dont { grid-template-columns: 1fr; } }
+</style>

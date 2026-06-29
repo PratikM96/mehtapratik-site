@@ -1,73 +1,78 @@
 ---
 /**
- * EmbeddedDemo.astro — concept-only module. A tabbed island that previews a
- * concept microsite inline: tab buttons swap a live caption + image in the
- * stage, with an "Open full demo" link to the standalone microsite. This is
- * embedded proof inside the case study, not a parallel front door.
+ * EmbeddedDemo.astro — concept launcher. A tabbed island that previews the live
+ * concept views and links into them: each tab is an anchor to its real view
+ * under /concepts/[project]/, and the stage opens whichever view is previewed.
+ * Hover/focus a tab to preview it in the stage; click to launch it live. The
+ * `featured` view (the AI moment-clipper) is shown by default as the centerpiece.
  *
- * Each tab currently points at a placeholder image until the real per-view
- * screens land from R2. The script is generic over every .embed on the page.
+ * The script is generic over every .embed on the page.
  */
 type Tab = {
-  /** Tab button label (e.g. "App"). */
+  /** Tab label (e.g. "Clipper"). */
   label: string;
-  /** Live caption shown over the stage when the tab is active. */
+  /** Caption shown over the stage when active. */
   cap: string;
-  /** Stage image for this tab. */
+  /** Stage preview image for this view. */
   img: string;
+  /** Live view URL under /concepts/[project]/. */
+  href: string;
+  /** Centerpiece view, shown by default. */
+  featured?: boolean;
 };
 interface Props {
-  /** Mono label in the head, beside the live dot. */
   heading: string;
-  /** Tabs, in order. First is active on load. */
   tabs: Tab[];
-  /** "Open full demo" target (the standalone microsite). */
+  /** "Open full demo" target (the concept index). */
   openHref: string;
-  /** Mono footnote under the stage. */
   foot: string;
-  /** Stage image alt text. */
   alt?: string;
 }
 const { heading, tabs, openHref, foot, alt = '' } = Astro.props;
-const first = tabs[0];
+const featuredIndex = tabs.findIndex((t) => t.featured);
+const activeIndex = featuredIndex >= 0 ? featuredIndex : 0;
+const active = tabs[activeIndex] ?? tabs[0];
 ---
 
 <div class="embed rev">
   <div class="ehead">
-    <span class="el"><span class="dot"></span>{heading}</span>
-    <a class="open" href={openHref} target="_self">Open full demo ↗</a>
+    <span class="el">{heading}</span>
+    <a class="open" href={openHref}>Open full demo ↗</a>
   </div>
   <div class="etabs">
     {
       tabs.map((t, i) => (
-        <button class:list={[i === 0 && 'on']} data-cap={t.cap} data-img={t.img}>
+        <a class:list={['etab', i === activeIndex && 'on']} href={t.href} data-cap={t.cap} data-img={t.img}>
           {t.label}
-        </button>
+        </a>
       ))
     }
   </div>
-  <div class="estage">
-    <img class="estage-img" src={first.img} alt={alt} />
-    <div class="scrim"><span class="cap estage-cap">{first.cap}</span></div>
-  </div>
+  <a class="estage" href={active.href} aria-label={`Open the ${active.label} view`}>
+    <img class="estage-img" src={active.img} alt={alt} />
+    <div class="scrim"><span class="cap estage-cap">{active.cap}</span></div>
+    <span class="estage-go">Open ↗</span>
+  </a>
   <div class="efoot">{foot}</div>
 </div>
 
 <style>
   .embed { border: 1px solid var(--border-strong); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); margin-top: 24px; }
   .embed .ehead { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--border); background: var(--surface-raised); }
-  .embed .ehead .el { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); }
-  .embed .ehead .el .dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--accent-fill); }
+  .embed .ehead .el { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); }
   .embed .ehead .open { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); display: flex; align-items: center; gap: 7px; transition: color .2s var(--ease-standard); }
   .embed .ehead .open:hover { color: var(--accent-text); }
   .embed .etabs { display: flex; border-bottom: 1px solid var(--border); overflow-x: auto; }
-  .embed .etabs button { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 13px 18px; cursor: pointer; white-space: nowrap; transition: color .2s var(--ease-standard), border-color .2s var(--ease-standard); }
-  .embed .etabs button:hover { color: var(--text-secondary); }
-  .embed .etabs button.on { color: var(--text); border-bottom-color: var(--accent-fill); }
-  .embed .estage { position: relative; aspect-ratio: 16/9; background: var(--surface-raised); overflow: hidden; }
-  .embed .estage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .embed .estage .scrim { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 18px; background: linear-gradient(0deg, rgba(11, 11, 10, .55), transparent 55%); pointer-events: none; }
-  .embed .estage .scrim .cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; }
+  .embed .etabs .etab { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 13px 18px; cursor: pointer; white-space: nowrap; transition: color .2s var(--ease-standard), border-color .2s var(--ease-standard); }
+  .embed .etabs .etab:hover { color: var(--text-secondary); }
+  .embed .etabs .etab.on { color: var(--text); border-bottom-color: var(--accent-fill); }
+  .embed .estage { position: relative; display: block; aspect-ratio: var(--ratio-wide); background: var(--surface-raised); overflow: hidden; }
+  .embed .estage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease-standard); }
+  .embed .estage:hover img { transform: scale(1.02); }
+  .embed .estage .scrim { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 18px; background: linear-gradient(0deg, rgba(11, 11, 10, .6), transparent 55%); pointer-events: none; }
+  .embed .estage .scrim .cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; max-width: 60ch; }
+  .embed .estage .estage-go { position: absolute; top: 14px; right: 14px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; background: rgba(11, 11, 10, .55); backdrop-filter: blur(6px); padding: 5px 10px; border-radius: var(--radius-none); opacity: 0; transition: opacity .2s var(--ease-standard); }
+  .embed .estage:hover .estage-go, .embed .estage:focus-visible .estage-go { opacity: 1; }
   .embed .efoot { padding: 13px 18px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); border-top: 1px solid var(--border); }
 </style>
 
@@ -75,16 +80,21 @@ const first = tabs[0];
   (function () {
     var embeds = Array.prototype.slice.call(document.querySelectorAll('.embed'));
     embeds.forEach(function (embed) {
-      var tabs = Array.prototype.slice.call(embed.querySelectorAll('.etabs button'));
+      var tabs = Array.prototype.slice.call(embed.querySelectorAll('.etabs .etab'));
+      var stage = embed.querySelector('.estage');
       var img = embed.querySelector('.estage-img');
       var cap = embed.querySelector('.estage-cap');
-      tabs.forEach(function (b) {
-        b.addEventListener('click', function () {
-          tabs.forEach(function (x) { x.classList.remove('on'); });
-          b.classList.add('on');
-          if (cap) cap.textContent = b.dataset.cap;
-          if (img && b.dataset.img) img.src = b.dataset.img;
-        });
+      function activate(tab) {
+        tabs.forEach(function (x) { x.classList.remove('on'); });
+        tab.classList.add('on');
+        if (cap) cap.textContent = tab.dataset.cap;
+        if (img && tab.dataset.img) img.src = tab.dataset.img;
+        if (stage) stage.setAttribute('href', tab.getAttribute('href'));
+      }
+      tabs.forEach(function (tab) {
+        // hover/focus previews the view in the stage; click follows the link
+        tab.addEventListener('mouseenter', function () { activate(tab); });
+        tab.addEventListener('focus', function () { activate(tab); });
       });
     });
   })();
