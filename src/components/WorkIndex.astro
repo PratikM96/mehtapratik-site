@@ -1,47 +1,64 @@
 ---
 /**
- * WorkIndex.astro — the single, filterable-in-spirit work index with a sticky
- * live preview pane. Hover/focus a row to swap the preview image + meta.
+ * WorkIndex.astro — the single, filterable work index with a sticky live
+ * preview pane. Hover/focus a row to swap the preview image + meta; use the
+ * filter bar to narrow by the client/concept facet and by discipline.
  *
- * Client vs concept is a typed facet on each row (never separate sections).
- * Data here is the home teaser set; the future /work page + content collection
- * will own the canonical list. Covers resolve from the R2 CDN.
- *
- * NOTE: copy + the project set are placeholder until the content collection
- * lands (CLAUDE.md Phase 4). No metrics or claims are introduced here.
+ * Data is sourced from the `work` content collection (the canonical list), so
+ * the index reflects the real case studies and links straight to /work/[slug].
+ * Client vs concept is a typed facet on each row, never a separate section.
  */
+import { getCollection } from 'astro:content';
 import SectionLabel from './SectionLabel.astro';
 
-const CDN = 'https://cdn.mehtapratik.com/covers';
+// Canonical list from the collection. Sorted featured-first, then by title.
+const entries = (await getCollection('work')).sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  return a.data.title.localeCompare(b.data.title);
+});
 
-type Project = {
-  n: string;
-  name: string;
-  type: 'client' | 'concept';
-  disc: string; // short, shown in the row
-  year: string;
-  slug: string; // cover file slug
-  detail: string; // full discipline line, shown in the preview
-};
+// In the index, a year range collapses to its earliest year (e.g. 2023—2024 -> 2023).
+// The full range stays on the case-study page itself.
+const earliestYear = (y: string) => y.match(/\d{4}/g)?.at(0) ?? y;
 
-const projects: Project[] = [
-  { n: '01', name: 'SPORTIME Clubs', type: 'client', disc: 'Brand · Campaign', year: '2023', slug: 'sportime-clubs', detail: 'Brand · Campaign · Motion · Photo · Client' },
-  { n: '02', name: 'The Ninth', type: 'concept', disc: 'Brand · UI · AI', year: '2024', slug: 'the-ninth', detail: 'Brand · UI/UX · AI · Motion · Concept' },
-  { n: '03', name: 'Level', type: 'concept', disc: 'UI/UX · Product', year: '2024', slug: 'level', detail: 'UI/UX · Product · Motion · Concept' },
-  { n: '04', name: 'WISP', type: 'concept', disc: 'UI · AI · Motion', year: '2024', slug: 'wisp', detail: 'UI/UX · AI · Motion · Concept' },
-  { n: '05', name: 'DealNews', type: 'client', disc: 'UI/UX · Brand', year: '2021', slug: 'dealnews', detail: 'UI/UX · Brand · Social · Client' },
-  { n: '06', name: 'Richard Attias & Associates', type: 'client', disc: 'Production · Brand', year: '2019', slug: 'raa', detail: 'Production · Brand · Print · Broadcast · Client' },
-  { n: '07', name: 'Pipeline Medical', type: 'client', disc: 'Brand · Product', year: '2018', slug: 'pipeline-medical', detail: 'Brand · Product · UI/UX · Client' },
-  { n: '08', name: 'Agency FiveEighty', type: 'client', disc: 'Motion · Brand', year: '2020', slug: 'agency-fiveeighty', detail: 'Motion · Brand · Campaign · Client' },
-  { n: '09', name: 'The Forest Road Company', type: 'client', disc: 'Brand · Motion', year: '2021', slug: 'frc', detail: 'Brand · Motion · Client' },
-  { n: '10', name: 'SR Love & Care', type: 'client', disc: 'Brand · Leadership', year: '2016', slug: 'sr-love-and-care', detail: 'Brand · Leadership · Nonprofit · Client' },
-];
+const projects = entries.map((e, i) => ({
+  n: String(i + 1).padStart(2, '0'),
+  name: e.data.title,
+  type: e.data.type,
+  disc: e.data.disciplines.slice(0, 2).join(' · '),
+  year: earliestYear(e.data.year),
+  href: `/work/${e.data.slug}`,
+  cover: e.data.cover,
+  disciplines: e.data.disciplines,
+  // preview shows the one-sentence description, not a disciplines + category repeat
+  desc: e.data.lede,
+}));
+
+// Discipline facet values, in first-seen order across the collection.
+const disciplines = [...new Set(entries.flatMap((e) => e.data.disciplines))];
 
 const first = projects[0]!;
 ---
 
 <section class="block" id="work">
   <SectionLabel code="02" title="The work · one index" more={{ href: '#work', label: 'View all →' }} />
+
+  <div class="idx-filter" role="group" aria-label="Filter work">
+    <div class="fg" data-facet="type">
+      <span class="fl">Type</span>
+      <button class="active" data-type="all" aria-pressed="true">All</button>
+      <button data-type="client" aria-pressed="false">Client</button>
+      <button data-type="concept" aria-pressed="false">Concept</button>
+    </div>
+    <div class="fg" data-facet="disc">
+      <span class="fl">Discipline</span>
+      <button class="active" data-disc="all" aria-pressed="true">All</button>
+      {disciplines.map((dsc) => (
+        <button data-disc={dsc} aria-pressed="false">{dsc}</button>
+      ))}
+    </div>
+  </div>
+
   <div class="index-wrap">
     <div class="idx">
       <div class="idx-head"><span>#</span><span>Project</span><span>Discipline</span><span>Year</span></div>
@@ -49,10 +66,12 @@ const first = projects[0]!;
         projects.map((p, i) => (
           <a
             class:list={['idx-row', i === 0 && 'active']}
-            href="#work"
-            data-img={`${CDN}/${p.slug}-cover.webp`}
+            href={p.href}
+            data-img={p.cover}
             data-t={p.name}
-            data-d={p.detail}
+            data-d={p.desc}
+            data-type={p.type}
+            data-disc={p.disciplines.join('|')}
           >
             <span class="ix">{p.n}</span>
             <span class="nm">
@@ -66,24 +85,29 @@ const first = projects[0]!;
           </a>
         ))
       }
+      <div class="idx-empty" hidden>No work matches that filter.</div>
     </div>
     <div class="preview">
       <div class="pv-img" id="pv-img"></div>
       <div class="pv-meta">
         <div class="pv-t" id="pv-t">{first.name}</div>
-        <div class="pv-d" id="pv-d">{first.detail}</div>
+        <div class="pv-d" id="pv-d">{first.desc}</div>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-  // Work index -> sticky preview. Lazily builds + cross-fades cover images.
+  // Work index -> sticky preview + facet/discipline filtering.
   const rows = [...document.querySelectorAll<HTMLAnchorElement>('.idx-row')];
   const pvImg = document.getElementById('pv-img');
   const pvT = document.getElementById('pv-t');
   const pvD = document.getElementById('pv-d');
+  const empty = document.querySelector<HTMLElement>('.idx-empty');
   const imgs: Record<string, HTMLImageElement> = {};
+
+  let facetType = 'all';
+  let facetDisc = 'all';
 
   function setPreview(r: HTMLAnchorElement) {
     if (!pvImg || !pvT || !pvD) return;
@@ -104,6 +128,41 @@ const first = projects[0]!;
     pvD.textContent = r.dataset.d ?? '';
   }
 
+  function matches(r: HTMLAnchorElement) {
+    const typeOk = facetType === 'all' || r.dataset.type === facetType;
+    const discOk = facetDisc === 'all' || (r.dataset.disc ?? '').split('|').includes(facetDisc);
+    return typeOk && discOk;
+  }
+
+  function applyFilter() {
+    let firstVisible: HTMLAnchorElement | null = null;
+    rows.forEach((r) => {
+      const ok = matches(r);
+      r.hidden = !ok;
+      if (ok && !firstVisible) firstVisible = r;
+    });
+    if (empty) empty.hidden = !!firstVisible;
+    if (firstVisible) setPreview(firstVisible);
+  }
+
+  // Filter button wiring: each group is single-select.
+  document.querySelectorAll<HTMLElement>('.idx-filter .fg').forEach((group) => {
+    const btns = [...group.querySelectorAll<HTMLButtonElement>('button')];
+    btns.forEach((b) => {
+      b.addEventListener('click', () => {
+        btns.forEach((x) => {
+          x.classList.remove('active');
+          x.setAttribute('aria-pressed', 'false');
+        });
+        b.classList.add('active');
+        b.setAttribute('aria-pressed', 'true');
+        if (group.dataset.facet === 'type') facetType = b.dataset.type ?? 'all';
+        else facetDisc = b.dataset.disc ?? 'all';
+        applyFilter();
+      });
+    });
+  });
+
   rows.forEach((r) => {
     r.addEventListener('mouseenter', () => setPreview(r));
     r.addEventListener('focus', () => setPreview(r));
@@ -112,11 +171,24 @@ const first = projects[0]!;
 </script>
 
 <style>
+  /* ===== filter bar ===== */
+  .idx-filter { display: flex; flex-wrap: wrap; gap: 28px; margin-bottom: 18px; }
+  .idx-filter .fg { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .idx-filter .fl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-right: 2px; }
+  .idx-filter button { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: none; border: 1px solid var(--border); padding: 5px 10px; border-radius: var(--radius-none); cursor: pointer; transition: color .2s var(--ease-standard), border-color .2s var(--ease-standard); }
+  .idx-filter button:hover { color: var(--text-secondary); border-color: var(--border-strong); }
+  .idx-filter button.active { color: var(--text); border-color: var(--text-muted); }
+  .idx-empty { padding: 28px 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+
   .index-wrap { display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start; }
   .idx-head, .idx-row { display: grid; grid-template-columns: 34px 1.6fr 0.8fr 60px; gap: 16px; align-items: center; }
   .idx-head { padding: 12px 0; border-bottom: 1px solid var(--border); }
   .idx-head span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  /* right-align the Year header to match the right-aligned year values */
+  .idx-head span:last-child { text-align: right; }
   .idx-row { padding: 20px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: padding-left .2s var(--ease-standard); }
+  /* filtered-out rows: override the explicit display:grid above so [hidden] takes effect */
+  .idx-row[hidden] { display: none; }
   .idx-row:hover, .idx-row.active { padding-left: 10px; }
   .idx-row .ix { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
   .idx-row.active .ix { color: var(--accent-text); }
@@ -133,7 +205,7 @@ const first = projects[0]!;
   .preview .pv-img :global(img.show) { opacity: 1; }
   .preview .pv-meta { padding: 18px; }
   .preview .pv-meta .pv-t { font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
-  .preview .pv-meta .pv-d { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); margin-top: 10px; line-height: 1.6; }
+  .preview .pv-meta .pv-d { font-family: var(--font-sans); font-size: 13.5px; color: var(--text-secondary); margin-top: 10px; line-height: 1.55; }
 
   @media (max-width: 1100px) {
     .index-wrap { grid-template-columns: 1fr; }

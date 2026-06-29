@@ -1,0 +1,204 @@
+---
+/**
+ * /work/[slug] — the single case-study route, rendered from the `work` content
+ * collection. One template serves both the client and concept variants: copy
+ * and structure come entirely from the entry data, so SPORTIME (client) and
+ * The Ninth (concept) render identically to the hand-built pages they replace.
+ *
+ * The only type-driven branches: the hero badge class, the rail Type line, the
+ * proof box (ResultBox vs ScopeBox), and the optional EmbeddedDemo. Orange stays
+ * reserved for verified client results; concept data is neutral throughout.
+ */
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import CaseSectionHead from '../../components/CaseSectionHead.astro';
+import Scoreboard from '../../components/Scoreboard.astro';
+import MarginRail from '../../components/MarginRail.astro';
+import SysFlow from '../../components/SysFlow.astro';
+import Decisions from '../../components/Decisions.astro';
+import OutputGrid from '../../components/OutputGrid.astro';
+import ResultBox from '../../components/ResultBox.astro';
+import ScopeBox from '../../components/ScopeBox.astro';
+import EmbeddedDemo from '../../components/EmbeddedDemo.astro';
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const d = entry.data;
+const isClient = d.type === 'client';
+
+// Rail (case-study variant) — section nav is constant; scoreboard derives from facet + role/year.
+const sections = [
+  { ix: '01', label: 'Problem', href: '#problem' },
+  { ix: '02', label: 'System', href: '#system' },
+  { ix: '03', label: 'Decisions', href: '#decisions' },
+  { ix: '04', label: 'Output', href: '#output' },
+  { ix: '05', label: 'Proof', href: '#proof' },
+];
+// A year range (more than one 4-digit year) pluralizes the rail label.
+const isYearRange = (d.year.match(/\d{4}/g)?.length ?? 0) > 1;
+const scoreboard = [
+  { k: 'Type', v: isClient ? 'Client' : 'Concept · self-initiated', client: isClient },
+  { k: 'Role', v: d.role },
+  { k: isYearRange ? 'Years' : 'Year', v: d.year },
+];
+
+const pageTitle = isClient
+  ? `${d.title} — Case study · Pratik Mehta`
+  : `${d.title} — Case study · concept · Pratik Mehta`;
+
+// Output tiles: map the data-driven `span` onto OutputGrid's `wide` flag.
+const outputTiles = d.output.tiles.map((t) => ({
+  wide: t.span === 'wide',
+  img: t.img,
+  alt: t.alt,
+  ph: t.ph,
+  caption: t.caption,
+}));
+---
+
+<Base
+  variant="case-study"
+  title={pageTitle}
+  description={d.description}
+  sections={sections}
+  scoreboard={scoreboard}
+  back={{ href: '/#work', label: '← Index · all work' }}
+>
+  {/* SCOREBOARD HERO */}
+  <header class="cs-hero">
+    <span class:list={['badge', isClient ? 'client' : 'concept', 'rev']}>{d.badge}</span>
+    <h1 class="rev">{d.title}</h1>
+    <p class="descr rev">{d.lede}</p>
+    <Scoreboard cells={d.hero} />
+    <div class="cs-wall rev">
+      <img src={d.cover} alt={d.coverAlt} />
+      <span class="cap">{d.coverCaption}</span>
+    </div>
+  </header>
+
+  {/* PROBLEM */}
+  <section class="cs-sec" id="problem">
+    <CaseSectionHead no="01" title="Problem" />
+    <div class="cs-body rev">
+      <div class="cs-main prose">
+        {d.problem.prose.map((p) => (
+          <p>{p.lead ? (<><strong>{p.lead}</strong>{' '}{p.text}</>) : p.text}</p>
+        ))}
+      </div>
+      <MarginRail modules={d.problem.margin} />
+    </div>
+  </section>
+
+  {/* SYSTEM */}
+  <section class="cs-sec" id="system">
+    <CaseSectionHead no="02" title="System" />
+    <div class="cs-body rev" style="margin-bottom:48px">
+      <div class="cs-main prose">
+        {d.system.prose.map((p) => (
+          <p>{p.lead ? (<><strong>{p.lead}</strong>{' '}{p.text}</>) : p.text}</p>
+        ))}
+      </div>
+      <MarginRail modules={d.system.margin} />
+    </div>
+    <SysFlow steps={d.system.steps} />
+  </section>
+
+  {/* DECISIONS */}
+  <section class="cs-sec" id="decisions">
+    <CaseSectionHead no="03" title="Decisions" />
+    <div class="cs-body rev" style="margin-bottom:40px">
+      <div class="cs-main prose">
+        {d.decisions.prose.map((p) => (
+          <p>{p.lead ? (<><strong>{p.lead}</strong>{' '}{p.text}</>) : p.text}</p>
+        ))}
+      </div>
+      <MarginRail modules={d.decisions.margin} />
+    </div>
+    <Decisions decisions={d.decisions.items} />
+  </section>
+
+  {/* OUTPUT */}
+  <section class="cs-sec" id="output">
+    <CaseSectionHead no="04" title="Output" />
+    <OutputGrid tiles={outputTiles} note={d.output.note} />
+    {d.demo && (
+      <EmbeddedDemo
+        heading={d.demo.heading}
+        tabs={d.demo.tabs}
+        openHref={`/concepts/${d.demo.project}/`}
+        foot={d.demo.foot}
+        alt={d.demo.alt}
+      />
+    )}
+  </section>
+
+  {/* PROOF */}
+  <section class="cs-sec" id="proof">
+    <CaseSectionHead no="05" title="Proof" />
+    {isClient ? (
+      <ResultBox metrics={d.proofMetrics!} testimonial={d.testimonial!} />
+    ) : (
+      <ScopeBox figures={d.scope!} rationale={d.rationale!} />
+    )}
+  </section>
+
+  {/* REFLECTION + NEXT */}
+  <section class="cs-sec">
+    <CaseSectionHead no="06" title="Reflection" />
+    <div class="cs-body rev">
+      <div class="cs-main sb-reflect">
+        {d.reflection.prose.map((p) => (
+          <p>{p.lead ? (<><strong>{p.lead}</strong>{' '}{p.text}</>) : p.text}</p>
+        ))}
+      </div>
+      <MarginRail modules={d.reflection.margin} />
+    </div>
+    <div class="cs-next">
+      <a href={d.next.href}>
+        <div><div class="k">{d.next.kicker}</div><div class="t">{d.next.title}</div></div>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ===== SCOREBOARD HERO ===== */
+  .cs-hero { padding: 96px 0 56px; }
+  .badge { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; border-radius: var(--radius-none); display: inline-block; }
+  .badge.client { background: rgba(255, 90, 31, .14); color: var(--accent-text); border: 1px solid rgba(255, 90, 31, .4); }
+  /* concept badge: neutral, bordered — no orange */
+  .badge.concept { background: var(--badge-concept-bg); color: var(--badge-concept-tx); border: 1px solid var(--border-strong); }
+  .cs-hero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(44px, 6.5vw, 86px); line-height: 0.95; letter-spacing: -0.035em; margin: 22px 0 0; }
+  .cs-hero .descr { font-size: 20px; line-height: 1.5; color: var(--text-secondary); max-width: 54ch; margin-top: 26px; }
+  .cs-wall { position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--img-frame); margin-top: 48px; aspect-ratio: 16/8; background: var(--surface); }
+  .cs-wall img { width: 100%; height: 100%; object-fit: cover; }
+  .cs-wall .cap { position: absolute; left: 16px; bottom: 14px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: rgba(11, 11, 10, .55); backdrop-filter: blur(6px); padding: 5px 10px; border-radius: var(--radius-none); }
+
+  /* ===== SECTIONS / PROSE / BODY ===== */
+  .cs-sec { padding: 96px 0; border-top: 1px solid var(--border); }
+  .prose { max-width: 68ch; }
+  .prose p { font-size: 17px; line-height: 1.66; color: var(--text-secondary); margin-bottom: 18px; }
+  .prose p strong { color: var(--text); font-weight: 600; }
+  .cs-body { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 56px; align-items: start; }
+  .cs-main { max-width: 68ch; }
+
+  /* ===== REFLECTION + NEXT ===== */
+  .sb-reflect { max-width: 64ch; }
+  .sb-reflect p { font-size: 17px; line-height: 1.66; color: var(--text-secondary); }
+  .cs-next { border-top: 1px solid var(--border); margin-top: 72px; }
+  .cs-next a { display: flex; align-items: center; justify-content: space-between; padding: 48px 0; gap: 24px; transition: padding-left .25s var(--ease-standard); }
+  .cs-next a:hover { padding-left: 12px; }
+  .cs-next .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+  .cs-next .t { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 46px); letter-spacing: -0.03em; line-height: 1; margin-top: 10px; }
+  .cs-next .arrow { font-family: var(--font-display); font-size: 34px; color: var(--accent-text); }
+
+  /* ===== responsive ===== */
+  @media (max-width: 1100px) { .cs-body { grid-template-columns: 1fr; gap: 32px; } }
+  @media (max-width: 900px) { .cs-hero { padding: 64px 0 40px; } }
+</style>
