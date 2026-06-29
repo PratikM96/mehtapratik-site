@@ -23,12 +23,29 @@ import ProofBox from '../../components/ProofBox.astro';
 import EmbeddedDemo from '../../components/EmbeddedDemo.astro';
 
 export const getStaticPaths = (async () => {
-  const entries = await getCollection('work');
-  return entries.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+  // Same order as the /work index (featured first, then title) so the footer
+  // "next case study" walks the work page in order and loops back to the first.
+  const all = (await getCollection('work')).sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    return a.data.title.localeCompare(b.data.title);
+  });
+  return all.map((entry, i) => {
+    const nx = all[(i + 1) % all.length].data;
+    return {
+      params: { slug: entry.data.slug },
+      props: { entry, nextEntry: { type: nx.type, title: nx.title, slug: nx.slug } },
+    };
+  });
 }) satisfies GetStaticPaths;
 
-const { entry } = Astro.props;
+const { entry, nextEntry } = Astro.props;
 const d = entry.data;
+// Footer "next" is computed from the work-page order, not the entry frontmatter.
+const csNext = {
+  kicker: `Next case study · ${nextEntry.type === 'client' ? 'Client' : 'Concept'}`,
+  title: nextEntry.title,
+  href: `/work/${nextEntry.slug}`,
+};
 const isClient = d.type === 'client';
 
 // Rail (case-study variant) — section nav is constant; scoreboard derives from facet + role/year.
@@ -156,8 +173,8 @@ const outputTiles = d.output.tiles.map((t) => ({
       <MarginRail modules={d.reflection.margin} />
     </div>
     <div class="cs-next">
-      <a href={d.next.href}>
-        <div><div class="k">{d.next.kicker}</div><div class="t">{d.next.title}</div></div>
+      <a href={csNext.href}>
+        <div><div class="k">{csNext.kicker}</div><div class="t">{csNext.title}</div></div>
         <div class="arrow">→</div>
       </a>
     </div>

@@ -5,6 +5,7 @@
  * (large display figure + optional accent unit), the same for every entry.
  * There is no metric-vs-scope distinction.
  */
+import StatFigure from './StatFigure.astro';
 type Cell = {
   k: string;
   v: string;
@@ -24,10 +25,7 @@ const { cells } = Astro.props;
     cells.map((c) => (
       <div class:list={['sb-cell', c.stat && 'stat']}>
         <div class="k">{c.k}</div>
-        <div class="v">
-          {c.v}
-          {c.stat && c.unit && <span class="u">{c.unit}</span>}
-        </div>
+        <div class="v">{c.stat ? <StatFigure value={c.v} unit={c.unit} /> : c.v}</div>
       </div>
     ))
   }
@@ -42,9 +40,8 @@ const { cells } = Astro.props;
   .sb-cell { background: var(--surface); padding: 22px 20px; container-type: inline-size; }
   .sb-cell .k { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
   .sb-cell .v { font-family: var(--font-sans); font-weight: 600; font-size: 16px; color: var(--text); line-height: 1.35; }
-  /* stat figure scales to the cell (container query) and stays on one line; unit is a smaller secondary run */
-  .sb-cell.stat .v { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 16cqi, 34px); letter-spacing: -0.02em; white-space: nowrap; }
-  .sb-cell.stat .v .u { font-size: 0.55em; color: var(--accent-text); margin-left: 0.05em; }
+  /* stat figure scales to the cell (container query) and stays on one line; number/accent split is in StatFigure */
+  .sb-cell.stat .v { font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 16cqi, 34px); letter-spacing: -0.02em; white-space: nowrap; }
 
   @media (max-width: 1100px) { .sb-board { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .sb-board { grid-template-columns: 1fr; } }

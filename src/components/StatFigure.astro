@@ -1,0 +1,22 @@
+---
+/**
+ * StatFigure.astro — the single renderer for every stat number on the site
+ * (ProofBox, hero Scoreboard, MarginRail stats, the resume metrics band). The
+ * neutral/accent split is decided by figureRuns (numbers + separators neutral;
+ * special characters always accent; a standalone word-unit accent). One size
+ * everywhere — accent only changes color, never size. One implementation.
+ */
+import { figureRuns } from '../lib/figure';
+interface Props {
+  value: string;
+  unit?: string;
+}
+const { value, unit = '' } = Astro.props;
+const runs = figureRuns(value + unit);
+---
+
+{runs.map((r) => (r.accent ? <span class="u">{r.t}</span> : <Fragment>{r.t}</Fragment>))}
+
+<style>
+  .u { color: var(--accent-text); }
+</style>

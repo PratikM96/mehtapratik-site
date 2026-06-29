@@ -4,6 +4,7 @@
  * modules beside the prose. Module types: meta | stat | quote | note (single
  * or stacked, in any order). Data-driven so a section only shows what it has.
  */
+import StatFigure from './StatFigure.astro';
 type Module =
   | { type: 'meta'; label: string; rows: { k: string; v: string }[] }
   | { type: 'stat'; label: string; value: string; unit?: string; desc: string }
@@ -32,7 +33,7 @@ const { modules } = Astro.props;
         return (
           <div class="m-stat">
             <div class="m-label">{m.label}</div>
-            <div class="f">{m.value}{m.unit && <span class="u">{m.unit}</span>}</div>
+            <div class="f"><StatFigure value={m.value} unit={m.unit} /></div>
             <div class="d">{m.desc}</div>
           </div>
         );
@@ -61,7 +62,6 @@ const { modules } = Astro.props;
   .cs-margin .m-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
   .m-stat { border-top: 1px solid var(--border-strong); padding-top: 16px; }
   .m-stat .f { font-family: var(--font-display); font-weight: 700; font-size: 42px; letter-spacing: -0.025em; line-height: 1; }
-  .m-stat .f .u { color: var(--accent-text); }
   .m-stat .d { font-size: 13px; line-height: 1.5; color: var(--text-secondary); margin-top: 10px; }
   .m-note { border-left: 2px solid var(--border-strong); padding-left: 16px; }
   .m-note p { font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); }

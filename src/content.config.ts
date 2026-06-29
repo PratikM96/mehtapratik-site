@@ -60,7 +60,8 @@ const work = defineCollection({
       role: z.string(), // rail scoreboard Role
       year: z.string(), // rail scoreboard Year
       disciplines: z.array(z.string()),
-      cover: z.string().url(),
+      // accepts a real URL or "" (image not yet supplied — ships as a placeholder)
+      cover: z.string().url().or(z.literal('')),
       featured: z.boolean().default(false),
       description: z.string(), // <meta name="description">
 
@@ -96,7 +97,8 @@ const work = defineCollection({
           z.object({
             // data-driven grid span: a 'wide' asset takes its own full-width row
             span: z.enum(['standard', 'wide']).default('standard'),
-            img: z.string().url().optional(),
+            img: z.string().url().or(z.literal('')).optional(), // "" or omitted -> placeholder tile
+
             alt: z.string().optional(),
             ph: z.string().optional(),
             caption: z.string(),
@@ -129,7 +131,7 @@ const work = defineCollection({
             z.object({
               label: z.string(),
               cap: z.string(),
-              img: z.string().url(),
+              img: z.string().url().or(z.literal('')).optional(), // preview image, supplied later
               href: z.string(),
               featured: z.boolean().optional(),
             }),
