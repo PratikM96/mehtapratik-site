@@ -1,0 +1,347 @@
+---
+/**
+ * Resume — Pratik Mehta. Layout ported from _reference/resume.html; CONTENT is
+ * now sourced from the authoritative Resume Master (Drive), so every role gets a
+ * full entry rather than collapsing earlier work into a footnote.
+ *
+ * FILLED from Resume Master: all roles, titles, dates, employment types, metrics,
+ *   the self-initiated systems, education, expertise + tools. Verified facts
+ *   (NYU, SPORTIME metrics, client list, LinkedIn) carried through.
+ * PLACEHOLDER: the PDF download target (no file uploaded yet).
+ * Nothing invented; copy may still be tightened for voice in Phase 4.
+ */
+import Base from '../layouts/Base.astro';
+
+const PDF = '#'; // TODO(resume-master): point at the real resume PDF once uploaded
+const LINKEDIN = 'https://www.linkedin.com/in/pratikm96';
+
+// Chronological work history (Resume Master). Each role is its own entry.
+const experience = [
+  {
+    title: 'Independent Creative Systems Practice',
+    org: 'Self-directed · AI-assisted creative systems practice',
+    meta: 'New York',
+    when: 'Apr 2024 — Present',
+    bullets: [
+      'Rebuilt creative workflow around AI-assisted production across research, positioning, concepting, copy iteration, UI/UX, motion, content systems, and quality control.',
+      'Developed The Ninth, Level, and WISP as self-initiated portfolio systems showing current creative direction across brand, product UI, AI interaction models, motion, and social-first launch thinking.',
+      'Built concept systems spanning product screens, AI-assisted feature models, motion states, brand and UI components, campaign routes, and content structures across gaming, tech, and live media use cases.',
+      'Supported select small brand and marketing projects for local companies and online brands, using the period to test practical AI-assisted workflows in real creative contexts.',
+    ],
+    note: 'The Ninth · Level · WISP are self-initiated, not client work',
+  },
+  {
+    title: 'Marketing Manager',
+    org: 'SPORTIME Clubs',
+    meta: 'Full-Time · New York',
+    when: 'Jan 2023 — Mar 2024',
+    bullets: [
+      'Owned marketing across 13+ clubs and 25+ social accounts during a major growth period, directing 3 to 4 social and design reports plus club-level creative leads.',
+      'Built and led a video-first social program that drove 11.7M cross-platform impressions and nearly 17,000 net new followers in one year.',
+      'Increased Instagram publishing by 510% and Reels output by 2,115% year over year through a higher-volume content system across Instagram, Facebook, LinkedIn, X/Twitter, and TikTok.',
+      'Launched the SPORTIME Pickleball vertical as it scaled across the club network, shaping the brand, social, and content.',
+      'Directed creative around the $75M JMTA flagship expansion, connecting campaign messaging, social content, video, and club-level marketing needs.',
+    ],
+  },
+  {
+    title: 'Social Media Director',
+    org: 'The Forest Road Company',
+    meta: 'Full-Time · Remote',
+    when: 'May 2022 — Dec 2022',
+    bullets: [
+      'Directed social media for a media-finance firm, conceiving and executing still and video campaigns across brand channels.',
+      'Built campaign tracking across LinkedIn paid and daily X/Twitter content, translating performance into recommendations for senior leadership.',
+      'Measured LinkedIn Sponsored Content CTRs of 0.44% to 0.65%, Lead Gen Form conversion of 6% to 10%, and CPL of roughly $75 to $150 depending on target and offer.',
+    ],
+  },
+  {
+    title: 'Social and Graphic Manager',
+    org: 'DealNews',
+    meta: 'Full-Time · Remote',
+    when: 'Jul 2020 — May 2022',
+    bullets: [
+      'Managed social content and paid campaigns across a primary audience of roughly 110,000 Facebook followers, 15,000 Instagram followers, and 5,000 LinkedIn followers.',
+      'Served as lead in-house designer across social, paid, email, landing pages, mobile app updates, infographics, logos, and new business proposals.',
+      'Supported ecommerce marketing with email performance of 29.81% open rate and 1.74% click rate, plus landing-page conversion around 6.6% median where measured.',
+      'Ran paid-search campaigns with performance around 6.66% CTR, $5.26 CPC, 7.52% conversion rate, and $70.11 CPL.',
+    ],
+  },
+  {
+    title: 'Associate Designer',
+    org: 'Richard Attias and Associates',
+    meta: 'Full-Time · New York',
+    when: 'Apr 2019 — Dec 2019',
+    bullets: [
+      'Produced environmental, print, digital, social, website, app prototype, and brochure assets for large-scale global conferences and high-profile events.',
+      'Built and supported the FII 2019 design platform across digital, print, and environmental assets for an event with nearly 300 speakers from 30+ countries and 6,000+ senior-level attendees.',
+      'Managed high-volume production across roughly 300 digital assets, nearly 60 environmental or signage pieces, over 50 print pages, and 5 asset families.',
+      'Coordinated 3 international handoffs and 4 on-site production days to keep creative consistent from screen to room to printed program.',
+    ],
+  },
+  {
+    title: 'Graphic and Motion Designer',
+    org: 'Agency FiveEighty',
+    meta: 'Internship · New York',
+    when: 'Sep 2018 — Feb 2019',
+    bullets: [
+      'Produced motion graphics, title sequences, and broadcast-ready marketing collateral from concept to final delivery for Spectrum, the New York Jets, Coca-Cola, and FISLL.',
+      'Delivered 15-second and 30-second cutdowns across 3 aspect ratios, managing over 5 revision rounds and over 10 deliverable formats per campaign.',
+    ],
+  },
+  {
+    title: 'Designer',
+    org: 'Pipeline Medical',
+    meta: 'Internship · Remote',
+    when: 'Jun 2017 — Aug 2017',
+    bullets: [
+      "Built Pipeline Medical's brand identity and B2B supplier marketplace from zero, designing the logo system and core procurement screens around bulk and repeat purchasing.",
+      'Designed roughly 15 core screens, 4 procurement flows, 20 UI components, and developer handoff assets for launch.',
+      'Rounded out the platform with display ads, social assets, buyer-education collateral, and implementation support for the programming team.',
+    ],
+  },
+  {
+    title: 'Marketing and Design Team Lead',
+    org: 'SR Love and Care',
+    meta: 'Volunteer · New York',
+    when: 'Feb 2016 — May 2020',
+    bullets: [
+      'Built and led a volunteer marketing team for a global humanitarian nonprofit, growing it from 5 to over 15 members across four years.',
+      'Founded a dedicated 5-person design team as demand grew beyond core marketing, setting workflows, standards, and mentorship before handing off the function.',
+      'Created social media assets and supported paid marketing campaigns across social, print, and Google Ads.',
+    ],
+    note: 'Self-initiated nonprofit, built and handed off',
+  },
+  {
+    title: 'Marketing Manager',
+    org: 'Kumon',
+    meta: 'Part-Time · New York',
+    when: 'Mar 2014 — Aug 2019',
+    bullets: [
+      'Produced print and digital marketing collateral, ran paid marketing campaigns, and managed social media for one Kumon center.',
+      'Built the early operating model for connecting creative production, local lead generation, seasonal campaigns, and marketing performance.',
+    ],
+  },
+];
+
+// Self-initiated portfolio systems (concepts — scope, not client results).
+const concepts = [
+  {
+    title: 'The Ninth',
+    sub: 'Esports Membership OS',
+    when: '2026',
+    disc: 'Brand · UI/UX · AI · Motion',
+    bullets: [
+      'Designed an esports membership system that treats fans as members rather than a passive audience, using fandom, community, and year-round engagement logic.',
+      'Built the brand system, product UI/UX, 3 membership tiers, 8 AI-assisted features, 40 screens, motion states, UI components, campaign routes, and social launch assets.',
+    ],
+  },
+  {
+    title: 'Level',
+    sub: 'Responsible Prediction Market App',
+    when: '2025',
+    disc: 'Brand · UI/UX · AI · Motion',
+    bullets: [
+      'Designed a prediction-market app around responsible use and product trust, building brand and product UX with guardrail flows, risk context, probability education, and onboarding logic.',
+      'Created 30 screens, 5 responsible-use guardrail flows, 5 probability/risk visualizations, and over 40 UI components.',
+    ],
+  },
+  {
+    title: 'WISP',
+    sub: 'Live AI Host Presence',
+    when: '2024',
+    disc: 'UI/UX · AI · Motion',
+    bullets: [
+      'Built a real-time AI host presence for live and streamed formats, combining interaction logic, interface design, prompt behavior, and motion.',
+      'Designed 12 core screens, 3 live/streamed use cases, over 50 prompt/response patterns, and 6 motion states.',
+    ],
+  },
+];
+
+const metrics = [
+  { v: '11.7', u: 'M', l: 'Cross-platform impressions, one year' },
+  { v: '16.8', u: 'K', l: 'Net new followers, one year' },
+  { v: '+510', u: '%', l: 'Instagram publishing volume' },
+  { v: '+2,115', u: '%', l: 'Reels output' },
+];
+
+const expertise = [
+  'Brand Strategy', 'Creative Direction', 'Social Media Strategy', 'Content Systems',
+  'Video-First Creative', 'Motion Graphics', 'Campaign Strategy', 'Performance Marketing',
+  'Marketing Analytics', 'UI/UX', 'AI-Assisted Production', 'Team Direction',
+];
+const toolsCreative = [
+  'Figma', 'Photoshop', 'Illustrator', 'InDesign', 'After Effects', 'Premiere Pro',
+  'DaVinci Resolve', 'Cinema 4D', 'Framer', 'Webflow', 'Shopify', 'WordPress', 'HTML/CSS', 'Git',
+];
+const toolsMarketing = [
+  'Meta Ads', 'Google Ads', 'GA4', 'Google Tag Manager', 'Looker Studio', 'Tableau', 'SQL',
+  'HubSpot', 'Klaviyo', 'Mailchimp', 'Sprout Social', 'Hootsuite', 'ChatGPT', 'Claude',
+  'Firefly', 'Midjourney', 'Runway', 'Sora', 'ElevenLabs', 'Descript',
+];
+---
+
+<Base
+  title="Resume · Pratik Mehta"
+  description="Pratik Mehta — creative marketing lead with 10+ years across brand, social, content, motion, UI/UX, and performance, built as one connected system."
+  activeNav="resume"
+>
+  <header class="rhead">
+    <div class="k rev">[ Resume ]</div>
+    <h1 class="rev">Pratik Mehta</h1>
+    <div class="sub rev">Creative &amp; Marketing Strategist · Brand · Social · Content · UI/UX · Motion · Performance</div>
+    <div class="hrow rev">
+      <div class="contact">
+        <a href="mailto:mehtadpratik@gmail.com">mehtadpratik@gmail.com</a>
+        <span>New York</span>
+        <a href={LINKEDIN} target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/">mehtapratik.com</a>
+      </div>
+      <a class="btn btn-p dl" href={PDF}>Download PDF ↓</a>
+    </div>
+  </header>
+
+  <div class="rgrid">
+    <div class="rmain">
+      {/* SUMMARY */}
+      <section class="rsec rev">
+        <div class="blabel"><span class="c">[ 01 ]</span><span class="t">Summary</span><span class="rule"></span></div>
+        <p class="summary"><strong>Creative marketing lead with 10+ years across brand, social, content, motion, UI/UX, and performance.</strong> I build the creative and the system around it: campaign strategy, social-first content, product concepts, reporting, and the performance loop after launch. At SPORTIME, led a video-first program across 25+ accounts that drove 11.7M cross-platform impressions, nearly 17,000 net new followers, 510% more Instagram publishing, and 2,115% more Reels output year over year. Since SPORTIME, I have rebuilt my process around AI-assisted production through self-initiated concept systems and select brand/marketing projects across strategy, UI, motion, and campaign development.</p>
+      </section>
+
+      {/* EXPERIENCE — full history */}
+      <section class="rsec rev">
+        <div class="blabel"><span class="c">[ 02 ]</span><span class="t">Experience</span><span class="rule"></span></div>
+        {
+          experience.map((x) => (
+            <div class="exp">
+              <div class="top">
+                <div>
+                  <h3>{x.title}</h3>
+                  <div class="org">{x.org}</div>
+                  {x.meta && <div class="emeta">{x.meta}</div>}
+                </div>
+                <div class="when">{x.when}</div>
+              </div>
+              <ul>{x.bullets.map((b) => <li set:html={b} />)}</ul>
+              {x.note && <span class="conceptnote">{x.note}</span>}
+            </div>
+          ))
+        }
+      </section>
+
+      {/* SELF-INITIATED SYSTEMS */}
+      <section class="rsec rev">
+        <div class="blabel"><span class="c">[ 03 ]</span><span class="t">Self-initiated systems · concepts</span><span class="rule"></span></div>
+        <p class="rsec-note">Self-initiated concept systems. These carry scope and direction, not client performance results.</p>
+        {
+          concepts.map((c) => (
+            <div class="exp">
+              <div class="top">
+                <div>
+                  <h3>{c.title}</h3>
+                  <div class="org">{c.sub}</div>
+                  <div class="emeta">{c.disc}</div>
+                </div>
+                <div class="when">{c.when}</div>
+              </div>
+              <ul>{c.bullets.map((b) => <li>{b}</li>)}</ul>
+            </div>
+          ))
+        }
+      </section>
+
+      {/* SELECTED RESULTS — verified highlight reel */}
+      <section class="rsec rev">
+        <div class="blabel"><span class="c">[ 04 ]</span><span class="t">Selected results · SPORTIME Clubs</span><span class="rule"></span></div>
+        <div class="rmet">
+          {metrics.map((m) => (
+            <div class="c"><div class="f">{m.v}<span class="u">{m.u}</span></div><div class="l">{m.l}</div></div>
+          ))}
+          <div class="src">Verified client results · SPORTIME Clubs · 2023—2024</div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="raside rev">
+      <div class="rblock">
+        <h4>Education</h4>
+        <div class="edu"><div class="d">B.S. Computer Science</div><div class="s">New York University · 2014 — 2017</div></div>
+      </div>
+      <div class="rblock">
+        <h4>Expertise</h4>
+        <div class="skg"><div class="kk">Creative &amp; Marketing</div><div class="chips">{expertise.map((x) => <span>{x}</span>)}</div></div>
+      </div>
+      <div class="rblock">
+        <h4>Tools</h4>
+        <div class="skills">
+          <div class="skg"><div class="kk">Design, Video &amp; Product</div><div class="chips">{toolsCreative.map((x) => <span>{x}</span>)}</div></div>
+          <div class="skg"><div class="kk">Marketing, Analytics &amp; AI</div><div class="chips">{toolsMarketing.map((x) => <span>{x}</span>)}</div></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  /* header */
+  .rhead { padding: 104px 0 40px; border-bottom: 1px solid var(--border); }
+  .rhead .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 22px; }
+  .rhead h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 5vw, 68px); line-height: .96; letter-spacing: -.03em; }
+  .rhead .sub { font-family: var(--font-mono); font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-secondary); margin-top: 18px; }
+  .rhead .hrow { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-top: 18px; }
+  .rhead .contact { display: flex; flex-wrap: wrap; gap: 18px; }
+  .rhead .contact a, .rhead .contact span { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .03em; color: var(--text-secondary); }
+  .rhead .contact a:hover { color: var(--accent-text); }
+  .rhead .dl { flex: none; }
+
+  /* layout */
+  .rgrid { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 64px; padding: 56px 0 96px; align-items: start; }
+  .rmain { min-width: 0; }
+  .rsec { margin-bottom: 56px; }
+  /* section intro caption (e.g. the concept scope disclaimer) — sits under the label */
+  .rsec-note { font-size: 13.5px; line-height: 1.5; color: var(--text-muted); margin: -8px 0 28px; max-width: 62ch; }
+  .summary { font-size: 18px; line-height: 1.6; color: var(--text-secondary); max-width: 66ch; }
+  .summary strong { color: var(--text); font-weight: 600; }
+
+  /* experience */
+  .exp { padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .exp:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .exp .top { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; flex-wrap: wrap; }
+  .exp h3 { font-family: var(--font-display); font-weight: 600; font-size: 21px; letter-spacing: -.02em; }
+  .exp .org { font-family: var(--font-sans); font-weight: 500; font-size: 15px; color: var(--accent-text); margin-top: 4px; }
+  .exp .emeta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); margin-top: 6px; }
+  .exp .when { font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; text-align: right; }
+  .exp ul { list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .exp li { font-size: 14.5px; line-height: 1.55; color: var(--text-secondary); padding-left: 18px; position: relative; }
+  .exp li::before { content: "—"; position: absolute; left: 0; color: var(--text-muted); }
+  .exp li :global(b) { color: var(--text); font-weight: 600; }
+  .exp .conceptnote { font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); border: 1px solid var(--border-strong); border-radius: var(--radius-none); padding: 3px 7px; display: inline-block; margin-top: 14px; }
+
+  /* metrics band */
+  .rmet { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+  .rmet .c { background: var(--surface); padding: 20px; }
+  .rmet .f { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.6vw, 30px); letter-spacing: -.02em; line-height: 1; }
+  .rmet .f .u { color: var(--accent-text); }
+  .rmet .l { font-size: 11.5px; line-height: 1.45; color: var(--text-secondary); margin-top: 9px; }
+  .rmet .src { grid-column: 1 / -1; background: var(--surface); padding: 12px 20px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); }
+
+  /* aside */
+  .raside { position: sticky; top: 40px; display: flex; flex-direction: column; gap: 34px; }
+  .rblock h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .rblock .edu .d { font-family: var(--font-sans); font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
+  .rblock .edu .s { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+  .skills { display: flex; flex-direction: column; gap: 18px; }
+  .skg .kk { font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 10px; }
+  .skg .vv { font-size: 13px; line-height: 1.55; color: var(--text-secondary); }
+  /* expertise + tools as small mono "system label" chips (sharp, data-layer) */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .02em; color: var(--text-secondary); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-none); padding: 4px 8px; line-height: 1.3; }
+
+  @media (max-width: 1000px) {
+    .rgrid { grid-template-columns: 1fr; gap: 40px; }
+    .raside { position: static; }
+    .rmet { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) { .rhead { padding: 56px 0 32px; } }
+  @media (max-width: 560px) { .exp .when { text-align: left; } }
+</style>
