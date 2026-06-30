@@ -8,7 +8,7 @@ Pratik Mehta's personal portfolio, rebuilt from scratch in **Astro**, launching 
 ## Stack & infra
 - **Framework:** Astro (TypeScript)
 - **Deploy:** Cloudflare Workers (page serving) via `@astrojs/cloudflare`
-- **Assets:** Cloudflare R2 is **media + font only**, served from `cdn.mehtapratik.com`. Page source lives in this repo. Never blur this line.
+- **Assets:** ALL assets live in this repo and are served same-origin by the Worker (which edge-caches globally). No external CDN / R2. Images go in `src/assets/` (run through Astro's pipeline: responsive widths, hashing, CLS-safe dims); files that can't be processed — video, fonts, favicons — go in `public/` (`/hero`, `/fonts`, etc.) and are served verbatim at the site root. Keep only web-optimized deliverables in the repo (webp / webm / ffmpeg mp4 / woff2); raw masters stay in `_reference/` (gitignored), never committed. Cloudflare's per-file cap on Worker static assets is 25 MiB — design large case-study video around it. (Historical: assets were briefly planned on R2 at `cdn.mehtapratik.com`; that was dropped — the asset volume never justified a separate bucket. Any lingering `cdn.mehtapratik.com` URL in code is stale and should become a local path.)
 - **Repo:** this is the NEW repo. The OLD site (hand-edited HTML/CSS/JS, teal/coral brand) still serves production from a separate repo + Worker.
 
 ## Deploy safety (do not violate)
@@ -34,19 +34,22 @@ Signal orange: `--o-300:#FF8F66 --o-400:#FF7038 --o-500:#FF5A1F (signal) --o-600
 Token naming (reconciled — brand kit is the source of truth): the build's `src/styles/tokens.css` mirrors the brand `Design-Tokens/one-system-tokens.css`. Code uses the brand names, not the old mockup names: `--accent-50…900` (not `--o-*`), `--font-display` / `--font-sans` / `--font-mono`, `--radius-none/sm/md/lg/xl/full`, `--ease-standard` / `--ease-exit` / `--ease-in-out`, `--surface-raised`, `--text-secondary`, plus the full type scale (`--h1…`, `--body…`, etc.), spacing (`--space-2xs…5xl`), and grid tokens. The signal fill is `--accent-fill` (= `--accent-500`); orange text is `--accent-text` (= accent-400 dark / accent-700 light). Site-only additions layered on top: `--rail`, `--badge-concept-bg` / `--badge-concept-tx`, `--img-frame`, and the light/dark `[data-theme]` switch. The `--n-*` ramp names are unchanged.
 
 Type:
-- Headlines: **Clash Display** 700 (Fontshare)
-- Body: **Clash Grotesk** 400/600/700 (Fontshare; weights locked to 400/600/700 per brand README)
-- System layer (labels, coordinates, data, console rail): **Berkeley Mono (TX-02)**, self-hosted from R2.
+- Headlines: **Clash Display** 600/700 (self-hosted)
+- Body: **Clash Grotesk** 400/600/700 (self-hosted; weights locked to 400/600/700 per brand README)
+- System layer (labels, coordinates, data, console rail): **Berkeley Mono (TX-02)** 400/500, self-hosted.
 
-Font wiring (already proven in the mockups):
+All fonts are self-hosted, same-origin, **woff2 only** — no third-party font CDN (no Fontshare, no Google Fonts). The cut list mirrors actual usage (7 files): Berkeley Mono 400/500, Clash Display 600/700, Clash Grotesk 400/600/700. Files live in `public/fonts/` (flat); otf/woff masters stay in `_reference/Fonts/` (gitignored).
+
+Font wiring:
 ```css
---font-mono: 'Berkeley Mono','JetBrains Mono',ui-monospace,monospace; /* Berkeley FIRST */
-@font-face{font-family:'Berkeley Mono';font-weight:400;font-display:swap;src:url('https://cdn.mehtapratik.com/Fonts/TX-02/WOFF2/TX-02-Regular.woff2') format('woff2')}
-@font-face{font-family:'Berkeley Mono';font-weight:500;font-display:swap;src:url('https://cdn.mehtapratik.com/Fonts/TX-02/WOFF2/TX-02-Medium.woff2') format('woff2')}
+--font-mono: 'Berkeley Mono','JetBrains Mono',ui-monospace,monospace; /* Berkeley FIRST; JetBrains is a local-install fallback only, not network-loaded */
+@font-face{font-family:'Berkeley Mono';font-weight:400;font-display:swap;src:url('/fonts/TX-02-Regular.woff2') format('woff2')}
+@font-face{font-family:'Berkeley Mono';font-weight:500;font-display:swap;src:url('/fonts/TX-02-Medium.woff2') format('woff2')}
+/* + Clash Display 600/700 and Clash Grotesk 400/600/700, same pattern */
 ```
-JetBrains Mono stays only as a network-failure fallback. (Confirm the embedded TX-02 license tier permits public web embedding before launch.)
+(Confirm the embedded TX-02 license tier permits public web embedding before launch.)
 
-CSS / `<head>` split (confirmed): `src/styles/tokens.css` owns the design tokens (ramp, signal orange, font/radius/motion vars, theme maps) and the Berkeley Mono `@font-face` blocks. The font **`<link rel="preconnect">` + Fontshare/Google `<link rel="stylesheet">` tags live in `Base.astro` `<head>`**, not in tokens.css, because those are HTML head elements and cannot exist in a CSS file. Clash (Display 600/700, Grotesk 400/600/700) loads from Fontshare; JetBrains Mono loads from Google Fonts as the mono fallback. `src/styles/global.css` holds the reset, shared primitives, and site chrome (console rail, mobile bar, footer). Future option (not yet done, needs WOFF2 uploaded to R2): self-host Clash on R2 like Berkeley Mono to drop the third-party preconnects + Fontshare dependency.
+CSS / `<head>` split (confirmed): `src/styles/tokens.css` owns the design tokens (ramp, signal orange, font/radius/motion vars, theme maps) and **all** `@font-face` blocks. `Base.astro` `<head>` carries only `<link rel="preload">` for the three above-the-fold faces (Display 700, Grotesk 400, Mono 400; `crossorigin`) — there are no font stylesheet/preconnect tags anymore. `src/styles/global.css` holds the reset, shared primitives, and site chrome (console rail, mobile bar, footer).
 
 Radius: **sharp 0** on mono/data layer; 8–12 on content; pill on actions. This split is a deliberate brand tell.
 Spacing (locked): page-head padding 104/64, section 96, horizontal margin 64px (28 tablet, 20 mobile), console rail 264px.

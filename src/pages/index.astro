@@ -15,8 +15,6 @@ import DisciplineStrip from '../components/DisciplineStrip.astro';
 import WorkIndex from '../components/WorkIndex.astro';
 import StatFigure from '../components/StatFigure.astro';
 
-const CDN = 'https://cdn.mehtapratik.com';
-
 // Curated "Selected work" for the home index. The featured pair (SPORTIME + The
 // Ninth) is showcased in the Bento above, so it's omitted here; the full set
 // lives on /work (linked via "View all").
@@ -41,7 +39,23 @@ const selectedWork = SELECTED.map((s) => bySlug.get(s)).filter((e) => e !== unde
         <div class="btn-row rev"><a class="btn btn-p" href="/work">See the work →</a><a class="btn btn-g" href="/contact">Start a conversation →</a></div>
       </div>
       <figure class="hero-figure rev">
-        <div class="frame"><div class="ph-fill ph-bg ph-1x1"></div></div>
+        {/* 1:1 brand-mark animation. Self-hosted (public/hero), webm→mp4.
+            Loops, pauses off-screen + on click; reduced-motion shows the
+            poster still and never autoplays. JS hook: data-hero-video. */}
+        <div class="frame">
+          <button class="hero-video" type="button" data-hero-video
+            aria-label="Play or pause the intro animation" aria-pressed="true">
+            <video
+              poster="/hero/hero-poster.webp"
+              width="1080" height="1080"
+              muted loop playsinline autoplay preload="metadata"
+            >
+              <source src="/hero/hero-web_1080.webm" type="video/webm" />
+              <source src="/hero/hero-web_1080.mp4" type="video/mp4" />
+            </video>
+            <span class="hero-video-state" aria-hidden="true">❚❚ Pause</span>
+          </button>
+        </div>
       </figure>
     </div>
   </section>
@@ -124,6 +138,53 @@ const selectedWork = SELECTED.map((s) => bySlug.get(s)).filter((e) => e !== unde
     </div>
   </section>
 
+  {/* Hero animation: loop + pause off-screen + click-to-toggle + reduced-motion */}
+  <script>
+    (function () {
+      var btn = document.querySelector('[data-hero-video]');
+      if (!btn) return;
+      var video = btn.querySelector('video');
+      var chip = btn.querySelector('.hero-video-state');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var userPaused = false; // explicit click choice — overrides auto-resume
+      var inView = true;
+
+      function sync() {
+        var playing = !video.paused;
+        btn.setAttribute('aria-pressed', String(playing));
+        if (chip) chip.textContent = playing ? '❚❚ Pause' : '▶ Play';
+      }
+      function autoPlay() {
+        if (userPaused || reduce.matches || !inView) return;
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+
+      // reduced motion: never autoplay, rest on the poster still
+      if (reduce.matches) { video.removeAttribute('autoplay'); video.pause(); }
+
+      // pause when scrolled out of view, resume when back (saves CPU/battery)
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            inView = e.isIntersecting;
+            if (inView) autoPlay(); else video.pause();
+          });
+        }, { threshold: 0.25 }).observe(btn);
+      }
+
+      // click anywhere on the video toggles play/pause (a deliberate choice)
+      btn.addEventListener('click', function () {
+        if (video.paused) { userPaused = false; var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+        else { userPaused = true; video.pause(); }
+      });
+
+      video.addEventListener('play', sync);
+      video.addEventListener('pause', sync);
+      sync();
+    })();
+  </script>
+
   {/* CLOSE */}
   <section class="close" id="contact">
     <div class="rev">
@@ -144,10 +205,35 @@ const selectedWork = SELECTED.map((s) => bySlug.get(s)).filter((e) => e !== unde
   .hero .lead { margin-top: 26px; }
   .hero .btn-row { margin-top: 36px; }
   .hero-figure { position: relative; display: flex; flex-direction: column; }
-  /* square (1:1) to host the planned square brand-highlight animation; swap the
-     <img> for a <video>/animation when it's ready and the frame already fits */
+  /* square (1:1) frame hosting the brand-mark animation (public/hero) */
   .hero-figure .frame { aspect-ratio: var(--ratio-square); border: 1px solid var(--img-frame); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); }
   .hero-figure .frame img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* video is wrapped in a button so the whole surface is a click-to-pause
+     target (keyboard-operable, labelled). The state chip fades in on hover
+     or while paused, so the pause gesture is discoverable, not hidden. */
+  .hero-video { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; position: relative; }
+  .hero-video video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .hero-video-state {
+    position: absolute; bottom: 12px; right: 12px;
+    /* fixed box + centered label so Play/Pause swap doesn't resize/shift it */
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 84px; height: 26px; box-sizing: border-box;
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
+    line-height: 1; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--n-50); background: rgba(11, 11, 10, .55);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    padding: 0 9px; border-radius: var(--radius-none);
+    opacity: 0; transition: opacity .2s var(--ease-standard); pointer-events: none;
+  }
+  .hero-video:hover .hero-video-state,
+  .hero-video:focus-visible .hero-video-state,
+  .hero-video[aria-pressed="false"] .hero-video-state { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    /* show the poster still only; no controls affordance */
+    .hero-video { cursor: default; }
+    .hero-video-state { display: none; }
+  }
 
   /* ===== BENTO — two equal feature cards + a general stat strip ===== */
   /* The feature cards teaser the work. The stat strip carries GENERAL practice

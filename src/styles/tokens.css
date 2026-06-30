@@ -9,9 +9,8 @@
    scale, spacing, grid, radius, and motion tokens.
 
    On top of the brand file this adds ONLY:
-   - the self-hosted Berkeley Mono (TX-02) @font-face blocks,
-   - 'JetBrains Mono' as a network-failure fallback in --font-mono
-     (per CLAUDE.md; the brand stack omits it),
+   - the self-hosted @font-face blocks (all families, served same-origin
+     from /public/fonts; no third-party font CDNs),
    - site-specific tokens not in the brand kit: --rail (console rail
      width), --badge-concept-bg/-tx (concept badge), --img-frame.
 
@@ -27,20 +26,64 @@
      NEVER --accent-500.
    ============================================================= */
 
-/* ===== Self-hosted system font: Berkeley Mono (TX-02), from R2 ===== */
+/* ===== Self-hosted fonts (served from /public/fonts, same origin) =====
+   woff2 only — universal support, with a system fallback in --font-mono.
+   Cut list mirrors actual usage: Berkeley Mono 400/500, Clash Display 600/700,
+   Clash Grotesk 400/600/700. Above-the-fold faces are preloaded in Base.astro. */
+
+/* System layer — Berkeley Mono (TX-02): labels, data, console rail */
 @font-face {
   font-family: 'Berkeley Mono';
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url('https://cdn.mehtapratik.com/Fonts/TX-02/WOFF2/TX-02-Regular.woff2') format('woff2');
+  src: url('/fonts/TX-02-Regular.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Berkeley Mono';
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: url('https://cdn.mehtapratik.com/Fonts/TX-02/WOFF2/TX-02-Medium.woff2') format('woff2');
+  src: url('/fonts/TX-02-Medium.woff2') format('woff2');
+}
+
+/* Display — Clash Display: hero / headings (600, 700) */
+@font-face {
+  font-family: 'Clash Display';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/ClashDisplay-Semibold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Clash Display';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/ClashDisplay-Bold.woff2') format('woff2');
+}
+
+/* Body — Clash Grotesk: headings + body (400, 600, 700) */
+@font-face {
+  font-family: 'Clash Grotesk';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/ClashGrotesk-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Clash Grotesk';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/ClashGrotesk-Semibold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Clash Grotesk';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/ClashGrotesk-Bold.woff2') format('woff2');
 }
 
 :root {
